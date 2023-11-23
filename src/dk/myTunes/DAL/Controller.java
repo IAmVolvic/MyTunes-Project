@@ -2,18 +2,22 @@ package dk.myTunes.DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 
 public class Controller {
     private final SQLServerDataSource ds;
+    Dotenv dotenv = Dotenv.load();
 
     public Controller() {
         ds = new SQLServerDataSource();
-        ds.setDatabaseName("CSe23B_31_School");
-        ds.setUser("CSe2023b_e_31");
-        ds.setPassword("CSe2023bE31#23");
-        ds.setServerName("EASV-DB4");
+
+        ds.setDatabaseName(dotenv.get("DBDB"));
+        ds.setUser(dotenv.get("DBUSER"));
+        ds.setPassword(dotenv.get("DBPASSWORD"));
+        ds.setServerName(dotenv.get("DBSERVERNAME"));
+
         ds.setTrustServerCertificate(true);
     }
 
