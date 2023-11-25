@@ -17,8 +17,8 @@
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
          <children>
-            <Pane minWidth="190.0" prefHeight="600.0" prefWidth="190.0" styleClass="bg-grad" HBox.hgrow="NEVER" />
-            <Pane prefHeight="600.0" prefWidth="1090.0" HBox.hgrow="ALWAYS">
+            <Pane minWidth="220.0" prefHeight="580.0" prefWidth="220.0" styleClass="bg-grad" />
+            <Pane prefHeight="580.0" prefWidth="1060.0" HBox.hgrow="ALWAYS">
                <styleClass>
                   <String fx:value="bg-normal" />
                   <String fx:value="left-border" />
@@ -73,9 +73,9 @@
    <top>
       <HBox prefHeight="60.0" prefWidth="1062.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="60.0" prefWidth="190.0" HBox.hgrow="ALWAYS">
+            <HBox alignment="CENTER" minWidth="220.0" prefHeight="60.0" prefWidth="220.0" HBox.hgrow="NEVER">
                <children>
-                  <Text layoutX="64.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ITune Player">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ITune Player">
                      <styleClass>
                         <String fx:value="bold" />
                         <String fx:value="t-montserrat" />
@@ -83,8 +83,8 @@
                      </styleClass>
                   </Text>
                </children>
-            </Pane>
-            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1090.0" HBox.hgrow="ALWAYS">
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1060.0" HBox.hgrow="ALWAYS">
                <children>
                   <FontAwesomeIconView glyphName="SEARCH" size="16" styleClass="t-white">
                      <font>
