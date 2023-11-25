@@ -1,4 +1,4 @@
-package dk.myTunes.DLL;
+package DLL;
 
 public class Controller {
 }

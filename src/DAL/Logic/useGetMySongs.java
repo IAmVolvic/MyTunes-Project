@@ -1,4 +1,4 @@
-package dk.myTunes.DAL.Logic;
+package DAL.Logic;
 
 public class useGetMySongs {
 }

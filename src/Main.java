@@ -1,5 +1,3 @@
-package dk.myTunes;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +16,10 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainWindow.fxml"));
 
         Parent root = loader.load();
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(root, 1280 , 720));
+        primaryStage.setTitle("ITunes Project");
+        primaryStage.setResizable(true);
+
         primaryStage.show();
     }
 }

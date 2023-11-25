@@ -1,0 +1,45 @@
+BorderPane {
+    -fx-background-color: #111214;
+}
+
+.t-white {
+    -fx-fill: #fff;
+}
+
+.bold {
+    -fx-font-family: 'Montserrat_Bold', sans-serif;
+    -fx-font-weight: 900;
+}
+
+.normal {
+    -fx-font-family: 'Montserrat_Light', sans-serif;
+    -fx-font-weight: 200;
+}
+
+.bg-normal {
+    -fx-background-color: #111214
+}
+
+.bg-sub {
+    -fx-background-color: #222326
+}
+
+.bg-grad {
+    -fx-background-color: linear-gradient(from 0% 0% to 500% 900%, #111214, #610dad);
+}
+
+.left-border {
+    -fx-border-width: 0px 0px 0px 1px;
+    -fx-border-color: #222326;
+    -fx-border-style: solid;
+}
+
+.top-border {
+    -fx-border-width: 1px 0px 0px 0px;
+    -fx-border-color: #222326;
+    -fx-border-style: solid;
+}
+
+.input-area {
+    -fx-text-inner-color: #fff;
+}

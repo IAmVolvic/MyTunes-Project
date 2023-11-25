@@ -1,14 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="dk.myTunes.GUI.MainController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<BorderPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styles/main.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainController">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+         <children>
+            <Pane minWidth="190.0" prefHeight="600.0" prefWidth="190.0" styleClass="bg-grad" HBox.hgrow="NEVER" />
+            <Pane prefHeight="600.0" prefWidth="1090.0" HBox.hgrow="ALWAYS">
+               <styleClass>
+                  <String fx:value="bg-normal" />
+                  <String fx:value="left-border" />
+               </styleClass></Pane>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="80.0" prefWidth="1062.0" spacing="15.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" style="-fx-: 50; -fx-padding: 10;">
+               <image>
+                  <Image url="@images/My.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="133.0">
+               <children>
+                  <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Love &amp; Hate" wrappingWidth="199.13671875" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="bold" />
+                        <String fx:value="t-white" />
+                        <String fx:value="t-montserrat" />
+                     </styleClass>
+                  </Text>
+                  <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Kyle Sword, Thom Browne" wrappingWidth="190.0" VBox.vgrow="ALWAYS">
+                     <styleClass>
+                        <String fx:value="normal" />
+                        <String fx:value="t-white" />
+                        <String fx:value="t-montserrat" />
+                     </styleClass></Text>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+         <styleClass>
+            <String fx:value="bg-normal" />
+            <String fx:value="top-border" />
+         </styleClass>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="60.0" prefWidth="1062.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="60.0" prefWidth="190.0">
+               <children>
+                  <Text layoutX="64.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ITune Player">
+                     <styleClass>
+                        <String fx:value="bold" />
+                        <String fx:value="t-montserrat" />
+                        <String fx:value="t-white" />
+                     </styleClass>
+                  </Text>
+               </children>
+            </Pane>
+            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="1090.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <FontAwesomeIconView glyphName="SEARCH" size="16" styleClass="t-white">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </FontAwesomeIconView>
+                  <TextField focusTraversable="false" prefHeight="35.0" prefWidth="160.0" promptText="Search">
+                     <styleClass>
+                        <String fx:value="bg-sub" />
+                        <String fx:value="input-area" />
+                     </styleClass>
+                  </TextField>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
