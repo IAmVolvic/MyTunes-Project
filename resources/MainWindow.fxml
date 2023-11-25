@@ -73,7 +73,7 @@
    <top>
       <HBox prefHeight="60.0" prefWidth="1062.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="60.0" prefWidth="190.0">
+            <Pane prefHeight="60.0" prefWidth="190.0" HBox.hgrow="ALWAYS">
                <children>
                   <Text layoutX="64.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ITune Player">
                      <styleClass>

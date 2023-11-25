@@ -16,10 +16,13 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/MainWindow.fxml"));
 
         Parent root = loader.load();
+
         primaryStage.setScene(new Scene(root, 1280 , 720));
+        primaryStage.setMinHeight(500);
+        primaryStage.setMinWidth(500);
+
         primaryStage.setTitle("ITunes Project");
         primaryStage.setResizable(true);
-
         primaryStage.show();
     }
 }
