@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -22,6 +23,12 @@ public class Main extends Application {
         primaryStage.setMinWidth(500);
 
         primaryStage.setTitle("ITunes Project");
+
+        primaryStage.getIcons().addAll(
+                new Image("/AppIcons/med.png"),
+                new Image("/AppIcons/low.png")
+        );
+
         primaryStage.setResizable(true);
         primaryStage.show();
     }
