@@ -9,4 +9,8 @@ public class Song {
         this.id = id;
         this.name = name;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

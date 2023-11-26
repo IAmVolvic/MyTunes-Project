@@ -12,7 +12,7 @@ public class DllController {
         ArrayList<Song> songList = songManager.getAllSongs();
 
         for (Song song : songList) {
-            System.out.println(song);
+            System.out.println(song.getName());
         }
     }
 }
