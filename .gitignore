@@ -30,3 +30,7 @@ bin/
 
 ### Environment Variables ###
 src/.env
+
+
+### IGNORE JAVAFX LIB FILE ( CREATING PROBLEMS ###
+.idea/libraries/lib.xml
