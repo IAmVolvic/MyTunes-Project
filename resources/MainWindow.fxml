@@ -30,6 +30,12 @@
                </styleClass>
                <children>
                   <Button layoutX="492.0" layoutY="270.0" mnemonicParsing="false" onAction="#newScreen1" opacity="0.0" text="Test Button" />
+                  <Text fx:id="debugVolume" layoutX="51.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DEBUG VOLUME: 50%" wrappingWidth="327.9830722808838">
+                     <styleClass>
+                        <String fx:value="bold" />
+                        <String fx:value="t-white" />
+                     </styleClass>
+                  </Text>
                </children></Pane>
          </children>
       </HBox>
