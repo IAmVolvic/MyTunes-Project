@@ -24,7 +24,6 @@ public class MainController {
     public FontAwesomeIconView iPlay;
     public JFXSlider volume;
     public Button testRightClick;
-    private StackPane layout = new StackPane();
     Parent root;
     Stage stage;
 
@@ -80,12 +79,12 @@ public class MainController {
                 double value = newValue.doubleValue();
                 System.out.println("Slider value: " + value);
             });
+            conMenu();
         });
     }
 
     private void conMenu(){
         ContextMenu cm = new ContextMenu();
-        layout.getChildren().add(testRightClick);
         MenuItem edit = new MenuItem("Edit");
         MenuItem delete = new MenuItem("Delete");
         MenuItem add = new MenuItem("Add");
