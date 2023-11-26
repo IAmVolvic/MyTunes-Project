@@ -9,7 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
@@ -19,7 +23,8 @@ import java.util.Objects;
 public class MainController {
     public FontAwesomeIconView iPlay;
     public JFXSlider volume;
-
+    public Button testRightClick;
+    private StackPane layout = new StackPane();
     Parent root;
     Stage stage;
 
@@ -76,5 +81,15 @@ public class MainController {
                 System.out.println("Slider value: " + value);
             });
         });
+    }
+
+    private void conMenu(){
+        ContextMenu cm = new ContextMenu();
+        layout.getChildren().add(testRightClick);
+        MenuItem edit = new MenuItem("Edit");
+        MenuItem delete = new MenuItem("Delete");
+        MenuItem add = new MenuItem("Add");
+        cm.getItems().addAll(edit,delete,add);
+        testRightClick.setContextMenu(cm);
     }
 }
