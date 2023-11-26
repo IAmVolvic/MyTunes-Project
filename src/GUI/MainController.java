@@ -65,7 +65,7 @@ public class MainController {
 
         playState = !playState;
 
-        System.out.println("Worked");
+        System.out.println("Worked?");
     }
 
     public void setVolume(MouseEvent mouseEvent) {
