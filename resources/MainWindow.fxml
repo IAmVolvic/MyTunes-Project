@@ -73,7 +73,10 @@
                <styleClass>
                   <String fx:value="bg-normal" />
                   <String fx:value="left-border" />
-               </styleClass></Pane>
+               </styleClass>
+               <children>
+                  <Button layoutX="312.0" layoutY="228.0" mnemonicParsing="false" onAction="#printSongs" text="Print Songs" />
+               </children></Pane>
          </children>
       </HBox>
    </center>
@@ -93,7 +96,7 @@
                         <String fx:value="bold" />
                      </styleClass>
                   </Label>
-                  <Label prefHeight="17.0" prefWidth="160.0" text="Kyle Sword, Thom Browne dsadsadsadsadsddddddddddddddddddddadsadsad" textFill="WHITE">
+                  <Label prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne dsadsadsadsadsddddddddddddddddddddadsadsad" textFill="WHITE">
                      <styleClass>
                         <String fx:value="t-white" />
                         <String fx:value="normal" />

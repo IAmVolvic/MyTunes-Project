@@ -6,17 +6,16 @@ import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 
-public class Controller {
+public class ConnectionManager {
     private final SQLServerDataSource ds;
-    Dotenv dotenv = Dotenv.load();
 
-    public Controller() {
+    public ConnectionManager() {
         ds = new SQLServerDataSource();
 
-        ds.setDatabaseName(dotenv.get("DBDB"));
-        ds.setUser(dotenv.get("DBUSER"));
-        ds.setPassword(dotenv.get("DBPASSWORD"));
-        ds.setServerName(dotenv.get("DBSERVERNAME"));
+        ds.setDatabaseName("CSe2023b_e_14_MyTunes");
+        ds.setUser("CSe2023b_e_14");
+        ds.setPassword("CSe2023bE14#23");
+        ds.setServerName("10.176.111.34");
 
         ds.setTrustServerCertificate(true);
     }

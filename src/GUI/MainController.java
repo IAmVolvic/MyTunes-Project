@@ -1,5 +1,7 @@
 package GUI;
 
+
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXSlider;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
@@ -7,15 +9,14 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 
 
+
 import javafx.scene.input.MouseEvent;
 
-
-
+import DLL.DllController;
 
 public class MainController {
     public FontAwesomeIconView iPlay;
     public JFXSlider volume;
-
 
     Boolean playState = true;
 
@@ -47,5 +48,13 @@ public class MainController {
                 System.out.println("Slider value: " + value);
             });
         });
+    }
+
+    public void printSongs(ActionEvent actionEvent) {
+        DllController dllController = new DllController();
+        dllController.getSongs();
+
+//        Dotenv dotenv = Dotenv.load();
+//        System.out.println(dotenv.get("DBDB"));
     }
 }
