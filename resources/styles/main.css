@@ -12,6 +12,18 @@ BorderPane {
     -fx-text-fill: #464950;
 }
 
+.t-sm {
+    -fx-font-size: 11px;
+}
+
+.t-nm {
+    -fx-font-size: 12px;
+}
+
+.t-lg {
+    -fx-font-size: 13px;
+}
+
 .bold {
     -fx-font-family: 'Montserrat_Bold', sans-serif;
     -fx-font-weight: 900;
