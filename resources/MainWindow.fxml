@@ -105,10 +105,7 @@
                <styleClass>
                   <String fx:value="bg-normal" />
                   <String fx:value="left-border" />
-               </styleClass>
-               <children>
-                  <Button layoutX="312.0" layoutY="228.0" mnemonicParsing="false" onAction="#printSongs" text="Print Songs" />
-               </children></Pane>
+               </styleClass></Pane>
          </children>
       </HBox>
    </center>
