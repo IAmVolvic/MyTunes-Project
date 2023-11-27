@@ -2,17 +2,22 @@ package DLL;
 
 import DAL.Logic.UseGetMySongs;
 import BE.Song;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class DllController {
     public DllController() {}
 
-    public void getSongs() {
-        UseGetMySongs songManager = new UseGetMySongs();
-        ArrayList<Song> songList = songManager.getAllSongs();
+    public ObservableList getSongs() {
+        ArrayList songManager = new UseGetMySongs().getAllSongs();
 
-        for (Song song : songList) {
-            System.out.println(song.getName());
+        ObservableList<Song> songData = FXCollections.observableArrayList();
+
+        for (Object song : songManager) {
+            songData.add((Song) song);
         }
+        return songData;
     }
 }

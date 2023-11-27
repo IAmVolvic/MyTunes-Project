@@ -2,6 +2,7 @@ package DAL.Logic;
 
 import BE.Song;
 import DAL.ConnectionManager;
+import javafx.scene.control.Button;
 
 import java.sql.*;
 
@@ -24,10 +25,12 @@ public class UseGetMySongs {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()){
-                int id          = rs.getInt("playlist_id");
-                String name     = rs.getString("song_name");
+                int id              = rs.getInt("song_id");
+                String name         = rs.getString("song_name");
+                Button button       = new Button("Bob");
+                button.getStyleClass().add("playlist");
 
-                Song song = new Song(id, name);
+                Song song = new Song(id, name, button);
                 songList.add(song);
             }
 

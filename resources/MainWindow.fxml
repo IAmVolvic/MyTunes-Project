@@ -11,13 +11,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -60,7 +61,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </HBox>
-                  <ScrollPane fitToWidth="true" prefHeight="525.0" prefWidth="300.0" styleClass="bg-grad" VBox.vgrow="ALWAYS">
+                  <ScrollPane fitToWidth="true" prefHeight="525.0" prefWidth="300.0" styleClass="bg-transparent" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox prefHeight="500.0" prefWidth="300.0">
                            <children>
@@ -169,11 +170,75 @@
                   </ScrollPane>
                </children>
             </VBox>
-            <Pane prefHeight="580.0" prefWidth="980.0" HBox.hgrow="ALWAYS">
-               <styleClass>
-                  <String fx:value="bg-normal" />
-                  <String fx:value="left-border" />
-               </styleClass></Pane>
+            <VBox prefHeight="580.0" prefWidth="980.0" spacing="40.0" styleClass="left-border" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="980.0" spacing="25.0" styleClass="bg-grad">
+                     <children>
+                        <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" style="-fx-: 50; -fx-padding: 10;">
+                           <image>
+                              <Image url="@images/My.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="400.0" spacing="3.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="400.0" text="Summer Songs" textFill="WHITE">
+                                 <styleClass>
+                                    <String fx:value="t-white" />
+                                    <String fx:value="bold" />
+                                    <String fx:value="t-2xlg" />
+                                 </styleClass>
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
+                                 <styleClass>
+                                    <String fx:value="t-white" />
+                                    <String fx:value="normal" />
+                                    <String fx:value="t-lg" />
+                                 </styleClass>
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="40.0" right="40.0" top="40.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="390.0" prefWidth="980.0" spacing="25.0" styleClass="bg-transparent" VBox.vgrow="ALWAYS">
+                     <padding>
+                        <Insets left="40.0" right="40.0" />
+                     </padding>
+                     <children>
+                        <TableView fx:id="songList" prefHeight="390.0" prefWidth="980.0" HBox.hgrow="ALWAYS">
+                          <columns>
+                            <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="#" />
+                            <TableColumn fx:id="col2" editable="false" maxWidth="610.0" minWidth="120.0" prefWidth="610.0" resizable="false" text="Title" />
+                              <TableColumn fx:id="col3" editable="false" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" resizable="false" text="Date added" />
+                              <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false">
+                                 <graphic>
+                                    <FontAwesomeIconView glyphName="CLOCK_ALT" size="16" styleClass="t-sub2">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </FontAwesomeIconView>
+                                 </graphic></TableColumn>
+                          </columns>
+                           <styleClass>
+                              <String fx:value="bg-transparent" />
+                              <String fx:value="t-white" />
+                           </styleClass>
+                        </TableView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </children>
       </HBox>
    </center>
@@ -197,7 +262,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne dsadsadsadsadsddddddddddddddddddddadsadsad" textFill="WHITE">
+                  <Label prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne" textFill="WHITE">
                      <styleClass>
                         <String fx:value="t-white" />
                         <String fx:value="normal" />
@@ -346,5 +411,6 @@
       <URL value="@styles/main.css" />
       <URL value="@styles/customScroll.css" />
       <URL value="@styles/customProgress.css" />
+      <URL value="@styles/customTableView.css" />
    </stylesheets>
 </BorderPane>
