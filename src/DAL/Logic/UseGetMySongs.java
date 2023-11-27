@@ -17,7 +17,7 @@ public class UseGetMySongs {
 
         try(Connection con = cm.getConnection())
         {
-            String sql = "SELECT * FROM songs WHERE playlist_id=?";
+            String sql = "SELECT * FROM songs WHERE playlist_id=? ";
             PreparedStatement pstmt = con.prepareStatement(sql);
 
             pstmt.setInt(1, 1);
