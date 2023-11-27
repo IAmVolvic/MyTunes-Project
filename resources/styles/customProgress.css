@@ -1,0 +1,22 @@
+.progress-bar {
+    -fx-shadow-highlight-color: transparent;
+}
+
+.progress-bar > .track {
+    -fx-text-box-border: transparent;
+    -fx-control-inner-background: #222326;
+}
+
+.progress-bar .bar {
+
+    -fx-text-box-border: transparent;
+    -fx-shadow-highlight-color: transparent;
+
+    -fx-background-radius: 100px;
+
+
+    -fx-background-color: white;
+
+    -fx-background-insets: 1.5 0 1.5 0;
+    -fx-padding: 2.5px;
+}
