@@ -109,3 +109,13 @@ BorderPane {
 .bg-transparent {
     -fx-background-color: transparent;
 }
+
+
+.playlist {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+}
+
+.playlist-active {
+    -fx-background-color: #222326!important;
+}
