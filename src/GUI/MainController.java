@@ -1,19 +1,20 @@
 package GUI;
 
 
-import BE.Song;
-import javafx.application.Platform;
+import DLL.DllController;
 import com.jfoenix.controls.JFXSlider;
+// import com.sun.media.jfxmedia.MediaPlayer;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-
-import DLL.DllController;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.collections.ObservableList;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+// import javax.print.attribute.standard.Media;
+import java.io.File;
+import java.util.ArrayList;
 
 public class MainController {
     public FontAwesomeIconView iPlay;
@@ -23,6 +24,16 @@ public class MainController {
     public TableColumn col3;
     public TableColumn col4;
     public TableView songList;
+    public Button playBtn, nextButton, previousButton;
+    public ProgressBar songProgressBar;
+    public Label songLabel;
+    private File directory;
+    private File[] files;
+    private ArrayList<File> songs;
+    private int songNumber;
+    private boolean running;
+    private Media media;
+    private MediaPlayer mediaPlayer;
 
     Boolean playState = true;
 
@@ -70,8 +81,43 @@ public class MainController {
         DllController dllController = new DllController();
 
         songList.setItems(dllController.getSongs());
+
+        //delete later --TESTING
+        songs = new ArrayList<File>();
+        directory = new File("resources/music");
+        files = directory.listFiles();
+
+        if(files != null){
+            for(File file : files){
+                songs.add(file);
+                System.out.println(file);
+            }
+        }
+        media = new Media(songs.get(songNumber).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+
+        songLabel.setText(songs.get(songNumber).getName());
+
     }
 
 
-    public void printSongs(ActionEvent actionEvent) {}
+    public void printSongs(ActionEvent actionEvent) {
+
+    }
+
+    public void previousMedia(ActionEvent actionEvent) {
+    }
+
+    public void playMedia() {
+
+        mediaPlayer.play();
+    }
+
+    public void nextMedia(ActionEvent actionEvent) {
+    }
+
+    public void beginTimer() {      //timer for progress bar
+    }
+    public void cancelTimer() {
+    }
 }
