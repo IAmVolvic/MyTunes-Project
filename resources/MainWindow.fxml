@@ -12,6 +12,7 @@
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -47,6 +48,12 @@
                                  </padding>
                               </HBox>
                            </graphic>
+                           <tooltip>
+                              <Tooltip text="Create a playlist" />
+                           </tooltip>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
                         </Button>
                      </children>
                      <padding>
@@ -73,12 +80,18 @@
                                                       <String fx:value="t-white" />
                                                       <String fx:value="bold" />
                                                    </styleClass>
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
                                                 </Label>
                                                 <Label prefHeight="17.0" prefWidth="160.0" text="Playlist - 0 songs" textFill="WHITE">
                                                    <styleClass>
                                                       <String fx:value="t-white" />
                                                       <String fx:value="normal" />
                                                    </styleClass>
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
                                                 </Label>
                                              </children>
                                              <opaqueInsets>
@@ -115,12 +128,18 @@
                                                       <String fx:value="t-white" />
                                                       <String fx:value="bold" />
                                                    </styleClass>
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font>
                                                 </Label>
                                                 <Label prefHeight="17.0" prefWidth="160.0" text="Playlist - 0 songs" textFill="WHITE">
                                                    <styleClass>
                                                       <String fx:value="t-white" />
                                                       <String fx:value="normal" />
                                                    </styleClass>
+                                                   <font>
+                                                      <Font size="11.0" />
+                                                   </font>
                                                 </Label>
                                              </children>
                                              <opaqueInsets>
@@ -169,12 +188,18 @@
                         <String fx:value="t-white" />
                         <String fx:value="bold" />
                      </styleClass>
+                     <font>
+                        <Font size="13.0" />
+                     </font>
                   </Label>
                   <Label prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne dsadsadsadsadsddddddddddddddddddddadsadsad" textFill="WHITE">
                      <styleClass>
                         <String fx:value="t-white" />
                         <String fx:value="normal" />
                      </styleClass>
+                     <font>
+                        <Font size="11.0" />
+                     </font>
                   </Label>
                </children>
                <opaqueInsets>
