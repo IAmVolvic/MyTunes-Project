@@ -1,18 +1,14 @@
 package GUI;
 
 
-import io.github.cdimascio.dotenv.Dotenv;
 import javafx.application.Platform;
 import com.jfoenix.controls.JFXSlider;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 
-
-
-import javafx.scene.input.MouseEvent;
-
 import DLL.DllController;
+
 
 public class MainController {
     public FontAwesomeIconView iPlay;
@@ -21,8 +17,10 @@ public class MainController {
     Boolean playState = true;
 
     public MainController() {
-        System.out.println("Worked");
-        initialize();
+        System.out.println("Project Started");
+
+        // Run later when everything is being created
+        Platform.runLater(this::PostInitialize);
     }
 
 
@@ -38,23 +36,19 @@ public class MainController {
         System.out.println("Worked?");
     }
 
-    public void setVolume(MouseEvent mouseEvent) {
-    }
 
-    public void initialize() {
-        Platform.runLater(() -> {
-            volume.valueProperty().addListener((observable, oldValue, newValue) -> {
-                double value = newValue.doubleValue();
-                System.out.println("Slider value: " + value);
-            });
+    public void PostInitialize() {
+
+        // Volume Listener
+        volume.valueProperty().addListener((observable, oldValue, newValue) -> {
+            Number value = observable.getValue();
+            System.out.println("Slider value: " + value);
         });
     }
+
 
     public void printSongs(ActionEvent actionEvent) {
         DllController dllController = new DllController();
         dllController.getSongs();
-
-//        Dotenv dotenv = Dotenv.load();
-//        System.out.println(dotenv.get("DBDB"));
     }
 }

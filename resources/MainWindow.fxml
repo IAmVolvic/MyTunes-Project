@@ -278,7 +278,7 @@
             </VBox>
             <HBox alignment="CENTER" minWidth="70.0" prefHeight="65.0" prefWidth="120.0">
                <children>
-                  <JFXSlider fx:id="volume" onMousePressed="#setVolume" value="1.0" />
+                  <JFXSlider fx:id="volume" value="1.0" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" />
