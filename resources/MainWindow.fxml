@@ -23,7 +23,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainController">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainController">
    <center>
       <HBox prefHeight="100.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,7 +31,7 @@
                <children>
                   <HBox alignment="TOP_CENTER" minHeight="55.0" prefHeight="55.0" prefWidth="300.0" styleClass="bg-transparent" VBox.vgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#printSongs" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
+                        <Button mnemonicParsing="false" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
                            <graphic>
                               <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
                                  <children>
@@ -281,7 +281,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="65.0" prefWidth="140.0" spacing="10.0">
                      <children>
-                        <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#previousMedia" styleClass="media-button">
+                        <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="media-button">
                            <graphic>
                               <FontAwesomeIconView glyphName="BACKWARD" size="15" styleClass="media-button-child" translateX="-1.0">
                                  <rotationAxis>
@@ -293,7 +293,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="playBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#playMedia" styleClass="media-button-outline">
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#playBtn" styleClass="media-button-outline">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
@@ -301,7 +301,7 @@
                               <FontAwesomeIconView fx:id="iPlay" glyphName="PLAY" size="15" styleClass="media-button-child" textAlignment="CENTER" translateX="0.5" />
                            </graphic>
                         </Button>
-                        <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#nextMedia" styleClass="media-button">
+                        <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="media-button">
                            <graphic>
                               <FontAwesomeIconView glyphName="FORWARD" size="15" styleClass="media-button-child" translateX="1.0" />
                            </graphic>
