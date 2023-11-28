@@ -2,6 +2,7 @@ package DLL;
 
 import DLL.Components.MediaController;
 import DLL.Components.FileController;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
@@ -20,12 +21,13 @@ public class DllController {
     public void PlaySong(){
         mediaController.playSong(fileController.getSong(currentSong));
     }
+
     public void PauseSong(){
         mediaController.pauseSong();
     }
 
 
     public void SetVolume(Double newVolume){
-        mediaController.setVolume(mediaController.getCurrentSong(), newVolume);
+        mediaController.setVolume(newVolume);
     }
 }

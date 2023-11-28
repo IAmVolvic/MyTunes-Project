@@ -7,20 +7,20 @@ public class VolumeControl {
     private final JFXSlider volumeControl;
 
     // Controller
-    private final DllController dllController = new DllController();
+    private final DllController dllController;
 
-
-    public VolumeControl(JFXSlider volume){
+    public VolumeControl(JFXSlider volume, DllController dllController){
         volumeControl = volume;
+        this.dllController = dllController;
     }
 
 
     public void Initialize() {
-        volumeControl.valueProperty().addListener((observable, oldValue, newValue) -> {
-            double value = newValue.doubleValue();
-            System.out.println("Slider value: " + value/100);
+        volumeControl.valueProperty().addListener(e -> {
+            //Debug
+            System.out.println(volumeControl.getValue());
 
-            dllController.SetVolume(value/100);
+            dllController.SetVolume(volumeControl.getValue()/100);
         });
     }
 }

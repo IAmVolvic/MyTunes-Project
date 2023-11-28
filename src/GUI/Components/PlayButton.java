@@ -12,12 +12,12 @@ public class PlayButton {
     public FontAwesomeIconView iPlay;
     private Boolean playState = false;
 
-    // Controller
-    private final DllController dllController = new DllController();
+    private final DllController dllController;
 
     //Constructor
-    public PlayButton(FontAwesomeIconView Icon){
+    public PlayButton(FontAwesomeIconView Icon, DllController dllController){
         iPlay   = Icon;
+        this.dllController = dllController;
     }
 
 

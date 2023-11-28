@@ -1,3 +1,4 @@
+
 BorderPane {
     -fx-background-color: #111214;
 }
@@ -31,12 +32,10 @@ BorderPane {
 
 
 .bold {
-    -fx-font-family: 'Montserrat_Bold', sans-serif;
     -fx-font-weight: 900;
 }
 
 .normal {
-    -fx-font-family: 'Montserrat_Light', sans-serif;
     -fx-font-weight: 200;
 }
 

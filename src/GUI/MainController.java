@@ -1,6 +1,7 @@
 package GUI;
 
 
+import DLL.DllController;
 import GUI.Components.PlayButton;
 import GUI.Components.SongList;
 import GUI.Components.VolumeControl;
@@ -31,6 +32,8 @@ public class MainController {
 
     //Controllers
     private PlayButton playBTNController;
+    private VolumeControl volumeController;
+    private final DllController dllController = new DllController();
 
 
     //Constructor
@@ -44,6 +47,7 @@ public class MainController {
     public void playBtn(ActionEvent actionEvent) {
         //Send Button Logic to its own container
         playBTNController.PlayButtonClicked(actionEvent);
+        volumeController.Initialize();
     }
 
 
@@ -51,7 +55,7 @@ public class MainController {
     // Post Initialize
     private void PostInitialize() {
         //Set PlayButton Controller
-        playBTNController = new PlayButton(iPlay);
+        playBTNController = new PlayButton(iPlay, dllController);
 
 
         // Get and start the songs table / initialize it
@@ -59,7 +63,7 @@ public class MainController {
         tableController.Initialize();
 
         // Get and start the volume controller / initialize it
-        VolumeControl volumeController = new VolumeControl(volume);
+        volumeController = new VolumeControl(volume, dllController);
         volumeController.Initialize();
     }
 }
