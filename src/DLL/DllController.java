@@ -1,12 +1,23 @@
 package DLL;
 
-import java.io.File;
+import DLL.Components.MediaController;
 import DLL.Components.FileController;
 
-public class DllController {
-    FileController fileController = new FileController();
+import java.io.File;
 
-    public File getSongName(String songName){
-        return fileController.getSong(songName);
+
+public class DllController {
+    private final String currentSong = "Test.mp3";
+
+    // Controllers
+    FileController fileController = new FileController();
+    MediaController mediaController = new MediaController();
+
+    public String getSongName(String songName){
+        return fileController.getSong(songName).getName();
+    }
+
+    public void PlaySong(){
+        mediaController.playSong(fileController.getSong(currentSong));
     }
 }

@@ -22,14 +22,18 @@ public class PlayButton {
 
 
     public void PlayButtonClicked(ActionEvent actionEvent){
-        System.out.println(dllController.getSongName("Test.mp3").getName());
+        System.out.println(dllController.getSongName("Test.mp3"));
 
         changeIcon();
+        playSong();
+
         playState = !playState;
     }
 
 
-
+    private void playSong(){
+        dllController.PlaySong();
+    }
 
     private void changeIcon(){
         String switcherIcon = (playState) ? "PAUSE" : "PLAY";

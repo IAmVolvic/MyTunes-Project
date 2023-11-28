@@ -2,7 +2,6 @@ package DAL;
 
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 
