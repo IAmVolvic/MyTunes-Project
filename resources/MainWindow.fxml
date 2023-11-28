@@ -31,7 +31,7 @@
                <children>
                   <HBox alignment="TOP_CENTER" minHeight="55.0" prefHeight="55.0" prefWidth="300.0" styleClass="bg-transparent" VBox.vgrow="NEVER">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#printSongs" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
+                        <Button mnemonicParsing="false" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
                            <graphic>
                               <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
                                  <children>
@@ -252,7 +252,7 @@
             </ImageView>
             <VBox alignment="CENTER_LEFT" minWidth="70.0" prefHeight="65.0" prefWidth="205.0" spacing="3.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="160.0" text="Love &amp; Hate" textFill="WHITE">
+                  <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" text="Love &amp; Hate" textFill="WHITE">
                      <styleClass>
                         <String fx:value="t-white" />
                         <String fx:value="bold" />
@@ -262,7 +262,7 @@
                         <Font size="13.0" />
                      </font>
                   </Label>
-                  <Label prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne" textFill="WHITE">
+                  <Label fx:id="songLabelCreator" prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne" textFill="WHITE">
                      <styleClass>
                         <String fx:value="t-white" />
                         <String fx:value="normal" />
@@ -281,7 +281,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="65.0" prefWidth="140.0" spacing="10.0">
                      <children>
-                        <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="media-button">
+                        <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="media-button">
                            <graphic>
                               <FontAwesomeIconView glyphName="BACKWARD" size="15" styleClass="media-button-child" translateX="-1.0">
                                  <rotationAxis>
@@ -301,7 +301,7 @@
                               <FontAwesomeIconView fx:id="iPlay" glyphName="PLAY" size="15" styleClass="media-button-child" textAlignment="CENTER" translateX="0.5" />
                            </graphic>
                         </Button>
-                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="media-button">
+                        <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="media-button">
                            <graphic>
                               <FontAwesomeIconView glyphName="FORWARD" size="15" styleClass="media-button-child" translateX="1.0" />
                            </graphic>
@@ -323,7 +323,7 @@
                               <Font size="11.0" />
                            </font>
                         </Text>
-                        <ProgressBar prefWidth="705.0" progress="0.25" />
+                        <ProgressBar fx:id="songProgressBar" prefWidth="705.0" progress="0.25" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                            <styleClass>
                               <String fx:value="bold" />

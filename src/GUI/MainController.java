@@ -1,77 +1,65 @@
 package GUI;
 
 
-import BE.Song;
-import javafx.application.Platform;
-import com.jfoenix.controls.JFXSlider;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import GUI.Components.PlayButton;
+import GUI.Components.SongList;
+import GUI.Components.VolumeControl;
 
-import DLL.DllController;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.collections.ObservableList;
-import javafx.scene.control.cell.PropertyValueFactory;
+
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
+import com.jfoenix.controls.JFXSlider;
+
+
 
 public class MainController {
-    public FontAwesomeIconView iPlay;
+    // Volume slider
     public JFXSlider volume;
-    public TableColumn col1;
-    public TableColumn col2;
-    public TableColumn col3;
-    public TableColumn col4;
-    public TableView songList;
 
-    Boolean playState = true;
+    // Getting the table columns
+    public TableColumn<String, Integer> col1;
+    public TableColumn<String, String>  col2;
+    public TableColumn<String, Button>  col3;
+    public TableColumn<String, String>  col4;
 
+    //Icons
+    public FontAwesomeIconView iPlay;
+
+    //Controllers
+    private PlayButton playBTNController;
+
+
+    //Constructor
     public MainController() {
-        System.out.println("Project Started");
-
         // Run later when everything is being created
         Platform.runLater(this::PostInitialize);
     }
 
 
+    //Play Button
     public void playBtn(ActionEvent actionEvent) {
-        String switcherIcon = (playState) ? "PAUSE" : "PLAY";
-        double switcherTransform = (playState) ? -0.5 : 1;
-
-        iPlay.setIcon(FontAwesomeIcon.valueOf(switcherIcon));
-        iPlay.setTranslateX(switcherTransform);
-
-        playState = !playState;
-
-        System.out.println("Worked?");
+        //Send Button Logic to its own container
+        playBTNController.PlayButtonClicked(actionEvent);
     }
 
 
-    public void PostInitialize() {
 
-        // Volume Listener
-        volume.valueProperty().addListener((observable, oldValue, newValue) -> {
-            Number value = observable.getValue();
-            System.out.println("Slider value: " + value);
-        });
+    // Post Initialize
+    private void PostInitialize() {
+        //Set PlayButton Controller
+        playBTNController = new PlayButton(iPlay);
 
 
-        // Disable Resort
-        col1.setReorderable(false);
-        col2.setReorderable(false);
-        col3.setReorderable(false);
-        col4.setReorderable(false);
+        // Get and start the songs table / initialize it
+        SongList tableController = new SongList(col1, col2, col3, col4);
+        tableController.Initialize();
 
-
-        col1.setCellValueFactory(new PropertyValueFactory<>("id"));
-        col2.setCellValueFactory(new PropertyValueFactory<>("name"));
-        col3.setCellValueFactory(new PropertyValueFactory<>("button"));
-
-        DllController dllController = new DllController();
-
-        songList.setItems(dllController.getSongs());
+        // Get and start the volume controller / initialize it
+        VolumeControl volumeController = new VolumeControl(volume);
+        volumeController.Initialize();
     }
-
-
-    public void printSongs(ActionEvent actionEvent) {}
 }
