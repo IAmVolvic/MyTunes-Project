@@ -10,7 +10,7 @@ public class MediaController {
     public MediaPlayer mPlayer;
     private Boolean fileLoaded = false;
 
-    private double lastVolume = 0.1;
+    private double lastVolume = 0.01;
 
 
     public void playSong(File Song) {
