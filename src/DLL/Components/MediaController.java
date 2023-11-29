@@ -33,8 +33,8 @@ public class MediaController {
     public void setVolume(Double newVolume) {
         if(fileLoaded){
             mPlayer.setVolume(newVolume);
-            lastVolume = newVolume;
         }
+        lastVolume = newVolume;
     }
 
 }
