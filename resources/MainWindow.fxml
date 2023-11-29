@@ -209,6 +209,35 @@
                                     <Insets />
                                  </opaqueInsets>
                               </VBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#addSong" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
+                                       <graphic>
+                                          <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
+                                             <children>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="PLUS" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Song">
+                                                   <styleClass>
+                                                      <String fx:value="bold" />
+                                                      <String fx:value="t-montserrat" />
+                                                      <String fx:value="t-white" />
+                                                   </styleClass>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets left="5.0" right="5.0" />
+                                             </padding>
+                                          </HBox>
+                                       </graphic>
+                                       <tooltip>
+                                          <Tooltip text="Create a playlist" />
+                                       </tooltip>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                            <padding>
                               <Insets left="40.0" right="40.0" top="40.0" />

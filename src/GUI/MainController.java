@@ -56,6 +56,9 @@ public class MainController {
         modalController.openModal();
     }
 
+    public void addSong(ActionEvent actionEvent) {
+        modalController.openModal();
+    }
 
     //Play Button
     public void playBtn(ActionEvent actionEvent) {

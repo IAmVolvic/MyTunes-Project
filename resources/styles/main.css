@@ -43,6 +43,10 @@ BorderPane {
     -fx-background-color: #111214
 }
 
+.bg-prim {
+    -fx-background-color: #610dad
+}
+
 .bg-sub {
     -fx-background-color: #222326
 }
