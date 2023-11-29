@@ -8,7 +8,7 @@ import java.io.File;
 
 
 public class DllController {
-    private final String currentSong = "ThxSoMchHate.mp3";
+    private final String currentSong = "ThxSoMchHate1.mp3";
 
     // Controllers
     FileController fileController = new FileController();
@@ -19,7 +19,9 @@ public class DllController {
     }
 
     public void PlaySong(){
-        mediaController.playSong(fileController.getSong(currentSong));
+        if(fileController.getSong(currentSong) != null){
+            mediaController.playSong(fileController.getSong(currentSong));
+        }
     }
 
     public void PauseSong(){

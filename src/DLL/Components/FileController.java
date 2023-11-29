@@ -15,15 +15,15 @@ public class FileController {
     }
 
     public File getSong(String songName) {
-        if (!isValid()) {
-            return null;
-        }
+        isValid();
 
         for (File file : listOfFiles) {
             if (file.getName().equals(songName)) {
                 return file;
             }
         }
+
+        System.out.println("Song not found");
         return null;
     }
 
