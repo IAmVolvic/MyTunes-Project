@@ -10,7 +10,7 @@ public class MediaController {
     public MediaPlayer mPlayer;
     private Boolean fileLoaded = false;
 
-    private double vol = 0.0;
+    private double lastVolume = 0.1;
 
 
     public void playSong(File Song) {
@@ -22,8 +22,7 @@ public class MediaController {
             mPlayer = new MediaPlayer(media);
         }
 
-        System.out.println(vol);
-
+        mPlayer.setVolume(lastVolume);
         mPlayer.play();
     }
 
@@ -32,7 +31,10 @@ public class MediaController {
     }
 
     public void setVolume(Double newVolume) {
-        mPlayer.setVolume(newVolume);
+        if(fileLoaded){
+            mPlayer.setVolume(newVolume);
+            lastVolume = newVolume;
+        }
     }
 
 }

@@ -17,9 +17,6 @@ public class VolumeControl {
 
     public void initialize() {
         volumeControl.valueProperty().addListener(e -> {
-            //Debug
-            System.out.println(volumeControl.getValue());
-
             dllController.SetVolume(volumeControl.getValue()/100);
         });
     }
