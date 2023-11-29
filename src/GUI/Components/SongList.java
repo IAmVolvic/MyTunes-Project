@@ -20,7 +20,7 @@ public class SongList {
     }
 
 
-    public void Initialize() {
+    public void initialize() {
         // Disable Resort
         col1.setReorderable(false);
         col2.setReorderable(false);

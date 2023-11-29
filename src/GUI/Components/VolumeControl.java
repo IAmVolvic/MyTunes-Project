@@ -15,7 +15,7 @@ public class VolumeControl {
     }
 
 
-    public void Initialize() {
+    public void initialize() {
         volumeControl.valueProperty().addListener(e -> {
             //Debug
             System.out.println(volumeControl.getValue());

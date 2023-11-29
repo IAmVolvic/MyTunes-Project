@@ -21,7 +21,7 @@ public class PlayButton {
     }
 
 
-    public void PlayButtonClicked(ActionEvent actionEvent){
+    public void playButtonClicked(ActionEvent actionEvent){
         playSong();
     }
 
