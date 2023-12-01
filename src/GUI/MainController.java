@@ -1,6 +1,7 @@
 package GUI;
 
 
+import BE.Playlist;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.Modal.ModalController;
@@ -19,6 +20,8 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import com.jfoenix.controls.JFXSlider;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 
 public class MainController {
@@ -100,10 +103,18 @@ public class MainController {
     }
 
     private void createButtonTEST(){
-        PlaylistButton plzwork = new PlaylistButton();
-        plzwork.setTitle("Cool Songs");
-        plzwork.toggleActive();
+        int index = 0;
+        ArrayList<Playlist> playlist = dllController.getPlaylists();
 
-        playlist_list.getChildren().add(plzwork.getButton());
+        for(Playlist val : playlist){
+            PlaylistButton playlistButton = new PlaylistButton();
+            playlistButton.setTitle(val.PlaylistName());
+            if(index < 1){
+                playlistButton.toggleActive();
+            }
+
+            playlist_list.getChildren().add(playlistButton.getButton());
+            index++;
+        }
     }
 }

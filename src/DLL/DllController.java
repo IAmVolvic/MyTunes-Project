@@ -5,6 +5,7 @@ import DAL.Logic.MyPlaylistController;
 import DLL.Components.MediaController;
 import DLL.Components.FileController;
 import java.io.File;
+import java.util.ArrayList;
 
 public class DllController {
     private final String currentSong = "ThxSoMchHate1.mp3";
@@ -32,6 +33,9 @@ public class DllController {
         mediaController.setVolume(newVolume);
     }
 
+    public ArrayList<Playlist> getPlaylists() {
+        return myPlaylist.getAllPlaylists();
+    }
 
 
     private void createPlaylistPath(){
@@ -49,6 +53,5 @@ public class DllController {
             }
         }
     }
-
 
 }
