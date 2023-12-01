@@ -1,11 +1,10 @@
 package DLL;
 
+import BE.Playlist;
+import DAL.Logic.MyPlaylistController;
 import DLL.Components.MediaController;
 import DLL.Components.FileController;
-import javafx.scene.media.MediaPlayer;
-
 import java.io.File;
-
 
 public class DllController {
     private final String currentSong = "ThxSoMchHate1.mp3";
@@ -13,7 +12,7 @@ public class DllController {
     // Controllers
     FileController fileController = new FileController();
     MediaController mediaController = new MediaController();
-
+    MyPlaylistController myPlaylist = new MyPlaylistController();
     public DllController(){
         createPlaylistPath();
     }
@@ -36,6 +35,20 @@ public class DllController {
 
 
     private void createPlaylistPath(){
+        int numberOfPlaylists = myPlaylist.getAllPlaylists().size();
+        String playlistPath = "resources/Playlists/";
 
+        for(Playlist playlist : myPlaylist.getAllPlaylists()){
+            File theDir = new File(playlistPath + playlist.PlaylistName());
+
+            System.out.println(numberOfPlaylists);
+            if (numberOfPlaylists > 0){
+                if (theDir.mkdirs()) {
+                    System.out.println("Folder created successfully.");
+                }
+            }
+        }
     }
+
+
 }
