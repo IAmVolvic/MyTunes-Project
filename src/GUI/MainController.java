@@ -2,6 +2,7 @@ package GUI;
 
 
 import DLL.DllController;
+import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.Modal.ModalController;
 import GUI.Components.PlayButton;
 import GUI.Components.SongList;
@@ -9,6 +10,7 @@ import GUI.Components.VolumeControl;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 
@@ -16,9 +18,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 
 public class MainController {
+    // Playlist list container
+    public VBox playlist_list;
+
     // Volume slider
     public JFXSlider volume;
 
@@ -89,5 +95,15 @@ public class MainController {
 
         // Get and start the modal controller
         modalController = new ModalController(modal_main);
+
+        createButtonTEST();
+    }
+
+    private void createButtonTEST(){
+        PlaylistButton plzwork = new PlaylistButton();
+        plzwork.setTitle("Cool Songs");
+        plzwork.toggleActive();
+
+        playlist_list.getChildren().add(plzwork.getButton());
     }
 }
