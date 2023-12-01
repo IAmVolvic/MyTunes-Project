@@ -8,7 +8,7 @@ import java.sql.*;
 
 import java.util.ArrayList;
 
-public class UseGetMySongs {
+public class MySongsController {
     private final ConnectionManager cm = new ConnectionManager();
 
 

@@ -14,8 +14,8 @@ public class DllController {
     FileController fileController = new FileController();
     MediaController mediaController = new MediaController();
 
-    public String getSongName(String songName){
-        return fileController.getSong(songName).getName();
+    public DllController(){
+        createPlaylistPath();
     }
 
     public void PlaySong(){
@@ -31,5 +31,11 @@ public class DllController {
 
     public void SetVolume(Double newVolume){
         mediaController.setVolume(newVolume);
+    }
+
+
+
+    private void createPlaylistPath(){
+
     }
 }

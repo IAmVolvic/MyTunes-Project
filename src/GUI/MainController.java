@@ -68,9 +68,9 @@ public class MainController {
     }
 
     //Close Modal Button /s
-    public void closeModal(ActionEvent mouseEvent) {
-        modalController.closeModal();
-    }
+//    public void closeModal(ActionEvent mouseEvent) {
+//        modalController.closeModal();
+//    }
 
 
     // Post Initialize
