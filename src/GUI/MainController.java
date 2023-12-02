@@ -77,9 +77,9 @@ public class MainController {
     }
 
     //Close Modal Button /s
-//    public void closeModal(ActionEvent mouseEvent) {
-//        modalController.closeModal();
-//    }
+    public void closeModal(ActionEvent mouseEvent) {
+        modalController.closeModal();
+    }
 
 
     // Post Initialize
@@ -92,13 +92,14 @@ public class MainController {
         SongList tableController = new SongList(col1, col2, col3, col4);
         tableController.initialize();
 
+
         // Get and start the volume controller / initialize it
         volumeController = new VolumeControl(volume, dllController);
         volumeController.initialize();
 
+
         // Get and start the modal controller
         modalController = new ModalController(modal_main);
-
         createButtonTEST();
     }
 
