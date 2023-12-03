@@ -130,8 +130,4 @@ public class MainController {
             index++;
         }
     }
-
-    public void createPlaylist(){
-        System.out.println("btn clicked");
-    }
 }
