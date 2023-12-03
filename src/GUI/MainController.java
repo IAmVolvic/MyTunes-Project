@@ -70,8 +70,8 @@ public class MainController {
     }
 
 
-
     public void addSong(ActionEvent actionEvent) {}
+
 
     //Play Button
     public void playBtn(ActionEvent actionEvent) {
@@ -79,6 +79,7 @@ public class MainController {
         playBTNController.playButtonClicked(actionEvent);
         volumeController.initialize();
     }
+
 
     //Close Modal Button /s
     public void closeModal(ActionEvent mouseEvent) {
@@ -106,6 +107,7 @@ public class MainController {
         modalController = new ModalController(modal_main);
         createButtonTEST();
     }
+
 
     private void createButtonTEST(){
         int index = 0;

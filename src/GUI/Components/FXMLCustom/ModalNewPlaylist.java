@@ -143,14 +143,14 @@ public class ModalNewPlaylist {
     public HBox getNewPlaylistModal() { return modalBase; }
 
 
-    
+
     private void useCreatePlaylist(){
         if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || pathToImage == null){
             System.out.println("Something went wrong");
             return;
         }
 
-        Boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+        boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
 
         if(creatPlaylist){
             File icon = dllController.getFile("resources/Playlists/"+playlistTitleInput.getText(), "icon");
@@ -161,6 +161,5 @@ public class ModalNewPlaylist {
             playlist_list.getChildren().add(playlistButton.getButton());
         }
     }
-
 }
 
