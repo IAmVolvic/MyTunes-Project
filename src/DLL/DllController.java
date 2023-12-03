@@ -47,7 +47,18 @@ public class DllController {
         return fileController.promptFilerChooser(event);
     }
 
-    public void createPlaylist(String iconPath, String playlistTitle){
 
+    public boolean createPlaylist(String iconPath, String playlistTitle){
+        //Add the Data to the DB
+        myPlaylist.createPlaylist(playlistTitle);
+
+        //Create the Folder
+        fileController.createPlaylistPathSingle(playlistTitle);
+
+        //Add the image to the folder
+        fileController.createPlaylistIcon(iconPath, playlistTitle);
+
+
+        return true;
     }
 }

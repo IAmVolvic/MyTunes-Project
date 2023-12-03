@@ -7,6 +7,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,6 +18,11 @@ import javafx.scene.text.Text;
 import java.io.File;
 
 public class ModalNewPlaylist {
+    // Outside Content
+    private VBox playlist_list;
+    private DllController dllController;
+
+
     private final HBox modalBase = new HBox();
     private final VBox modalBaseChild = new VBox();
     private final Label modalTitle = new Label();
@@ -29,13 +35,15 @@ public class ModalNewPlaylist {
     private final Button modalAction = new Button();
     private final HBox modalActionBody = new HBox();
     private final Text modalActionTitle = new Text();
-    private DllController dllController;
 
+
+    // Extra
     private String pathToImage;
 
 
-    public ModalNewPlaylist(DllController dllController1) {
-        dllController = dllController1;
+    public ModalNewPlaylist(DllController dc, VBox pl) {
+        playlist_list = pl;
+        dllController = dc;
 
         modalBase.setId("modalView");
         modalBase.getStyleClass().add("modal-main");
@@ -118,8 +126,16 @@ public class ModalNewPlaylist {
     public HBox getNewPlaylistModal() { return modalBase; }
 
     private void testing(){
-        if (playlistTitleInput.getText() != null || !playlistTitleInput.getText().isEmpty() && pathToImage != null){
+        if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || pathToImage == null){
+            System.out.println("Something went wrong");
+            return;
+        }
 
+        Boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+        if(creatPlaylist){
+            PlaylistButton playlistButton = new PlaylistButton();
+            playlistButton.setTitle(playlistTitleInput.getText());
+            playlist_list.getChildren().add(playlistButton.getButton());
         }
     }
 

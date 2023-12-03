@@ -64,7 +64,7 @@ public class MainController {
 
     //New Playlist Button
     public void newPlaylist(ActionEvent actionEvent) {
-        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController);
+        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController, playlist_list);
         modalController.openModal(modalPlaylistView.getNewPlaylistModal());
     }
 

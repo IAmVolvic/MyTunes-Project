@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.*;
+
 import javafx.scene.Node;
 
 public class FileController {
@@ -15,19 +18,12 @@ public class FileController {
     File musicFolder = new File("resources/music");
     File[] listOfFiles = musicFolder.listFiles();
 
+
+
     public FileController(MyPlaylistController mPlayList) {
         myPlaylist = mPlayList;
         createPlaylistPath();
         playlistPathCleanup();
-    }
-
-
-    private boolean isValid() {
-        if (listOfFiles == null) {
-            System.out.println("No files found in the specified directory: " + musicFolder.getAbsolutePath());
-            return false;
-        }
-        return true;
     }
 
 
@@ -45,12 +41,59 @@ public class FileController {
     }
 
 
+    public void createPlaylistPathSingle(String folderName) {
+        createPath(playlistPath + folderName);
+    }
+
+    public void createPlaylistIcon(String icon, String playlistName){
+        copyTo(icon, playlistPath+playlistName);
+    }
+
+
+    private void copyTo(String filePath, String toPath) {
+        Path from = Paths.get(filePath);
+        Path to = Paths.get(toPath);
+
+        CopyOption[] options = new CopyOption[]{
+                StandardCopyOption.REPLACE_EXISTING,
+                StandardCopyOption.COPY_ATTRIBUTES
+        };
+
+        try {
+            Files.copy(from, to, options);
+            Files.move(to, to.resolveSibling("icon"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private String getFileExtension(String fileName) {
+        int dotIndex = fileName.lastIndexOf('.');
+        if (dotIndex == -1 || dotIndex == fileName.length() - 1) {
+            // No file extension or the dot is at the end of the filename
+            return "";
+        } else {
+            return fileName.substring(dotIndex + 1);
+        }
+    }
+
+
+    private boolean isValid() {
+        if (listOfFiles == null) {
+            System.out.println("No files found in the specified directory: " + musicFolder.getAbsolutePath());
+            return false;
+        }
+        return true;
+    }
+
+
     private void createPlaylistPath(){
         int numberOfPlaylists = myPlaylist.getAllPlaylists().size();
 
         for(Playlist playlist : myPlaylist.getAllPlaylists()){
             if (numberOfPlaylists > 0){
-                createPath(playlist.PlaylistName());
+                createPath(playlistPath + playlist.PlaylistName());
             }
         }
     }
@@ -79,9 +122,8 @@ public class FileController {
     }
 
 
-
-    private void createPath(String fileName){
-        File theDir = new File(playlistPath + fileName);
+    private void createPath(String path){
+        File theDir = new File(path);
 
         if (theDir.mkdirs()) {
             System.out.println("Folder created successfully.");
@@ -98,6 +140,7 @@ public class FileController {
         }
         return path.delete();
     }
+
 
     public File promptFilerChooser(ActionEvent event){
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
