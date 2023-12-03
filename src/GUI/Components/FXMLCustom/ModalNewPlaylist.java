@@ -1,8 +1,10 @@
 package GUI.Components.FXMLCustom;
 
+import DLL.DllController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -11,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.io.File;
 
 public class ModalNewPlaylist {
     private final HBox modalBase = new HBox();
@@ -25,9 +29,14 @@ public class ModalNewPlaylist {
     private final Button modalAction = new Button();
     private final HBox modalActionBody = new HBox();
     private final Text modalActionTitle = new Text();
+    private DllController dllController;
+
+    private String pathToImage;
 
 
-    public ModalNewPlaylist() {
+    public ModalNewPlaylist(DllController dllController1) {
+        dllController = dllController1;
+
         modalBase.setId("modalView");
         modalBase.getStyleClass().add("modal-main");
         modalBase.setMaxHeight(300);
@@ -47,7 +56,17 @@ public class ModalNewPlaylist {
         modalBody.setPrefHeight(150);
         modalBody.setPrefWidth(420);
 
+
         //Body Inputs
+        imageSelect.setOnAction(event -> {
+            File file = dllController.callFileChooser(event);
+
+            if(file != null){
+                pathToImage = file.getPath();
+            }
+        });
+
+
         imageSelect.setCursor(Cursor.HAND);
         imageSelect.getStyleClass().add("modal-imgButton");
         imageSelect.setPrefWidth(210);
@@ -64,6 +83,10 @@ public class ModalNewPlaylist {
 
 
         // Action Button
+        modalAction.setOnAction(event -> {
+            testing();
+        });
+
         modalAction.setCursor(Cursor.HAND);
         modalAction.getStyleClass().add("modal-actionButton");
 
@@ -79,6 +102,8 @@ public class ModalNewPlaylist {
         modalAction.setGraphic(modalActionBody);
 
 
+
+
         // Build the node
         modalBody.getChildren().add(imageSelect);
         modalBody.getChildren().add(playlistTitleInput);
@@ -91,4 +116,12 @@ public class ModalNewPlaylist {
     }
 
     public HBox getNewPlaylistModal() { return modalBase; }
+
+    private void testing(){
+        if (playlistTitleInput.getText() != null || !playlistTitleInput.getText().isEmpty() && pathToImage != null){
+
+        }
+    }
+
 }
+

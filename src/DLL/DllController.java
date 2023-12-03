@@ -4,6 +4,9 @@ import BE.Playlist;
 import DAL.Logic.MyPlaylistController;
 import DLL.Components.MediaController;
 import DLL.Components.FileController;
+import javafx.event.ActionEvent;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class DllController {
@@ -38,5 +41,13 @@ public class DllController {
 
     public ArrayList<Playlist> getPlaylists() {
         return myPlaylist.getAllPlaylists();
+    }
+
+    public File callFileChooser(ActionEvent event){
+        return fileController.promptFilerChooser(event);
+    }
+
+    public void createPlaylist(String iconPath, String playlistTitle){
+
     }
 }

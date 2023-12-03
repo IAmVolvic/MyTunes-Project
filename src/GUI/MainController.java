@@ -64,7 +64,7 @@ public class MainController {
 
     //New Playlist Button
     public void newPlaylist(ActionEvent actionEvent) {
-        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist();
+        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController);
         modalController.openModal(modalPlaylistView.getNewPlaylistModal());
     }
 
@@ -120,5 +120,9 @@ public class MainController {
             playlist_list.getChildren().add(playlistButton.getButton());
             index++;
         }
+    }
+
+    public void createPlaylist(){
+        System.out.println("btn clicked");
     }
 }
