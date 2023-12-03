@@ -22,6 +22,7 @@ import com.jfoenix.controls.JFXSlider;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -111,8 +112,15 @@ public class MainController {
         ArrayList<Playlist> playlist = dllController.getPlaylists();
 
         for(Playlist val : playlist){
+            File icon = dllController.getFile("resources/Playlists/"+val.PlaylistName(), "icon");
+
             PlaylistButton playlistButton = new PlaylistButton();
             playlistButton.setTitle(val.PlaylistName());
+
+            if(icon != null){
+                playlistButton.setIcon(icon);
+            }
+
             if(index < 1){
                 playlistButton.toggleActive();
             }

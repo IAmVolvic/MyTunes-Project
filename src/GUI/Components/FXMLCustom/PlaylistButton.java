@@ -9,7 +9,10 @@ import javafx.scene.layout.HBox;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.io.File;
 
 public class PlaylistButton{
     //Button Settings
@@ -22,7 +25,7 @@ public class PlaylistButton{
     // HBox Base
     HBox hboxBase           = new HBox();
     // PlayList Icon
-    ImageView plIcon        = new ImageView();
+    Pane plIcon             = new Pane();
     // VBox Base
     VBox vboxBase           = new VBox();
     // Title Label
@@ -43,12 +46,15 @@ public class PlaylistButton{
         buttonBase.setCursor(Cursor.HAND);
 
         //HBox Base
+        hboxBase.setFillHeight(false);
         hboxBase.setSpacing(10);
 
         //Playlist Icon
-        plIcon.setImage(new Image("images/My.png"));
-        plIcon.setFitHeight(50);
-        plIcon.setFitWidth(50);
+        plIcon.getStyleClass().add("Image");
+        plIcon.setMinHeight(50);
+        plIcon.setMinWidth(50);
+        plIcon.setMaxHeight(50);
+        plIcon.setMaxWidth(50);
 
         //VBox Base
         vboxBase.setAlignment(Pos.CENTER_LEFT);
@@ -87,6 +93,10 @@ public class PlaylistButton{
 
     public void setTitle(String newTitle){
         this.playlistTitle.setText(newTitle);
+    }
+
+    public void setIcon(File newIcon) {
+        this.plIcon.setStyle("-fx-background-image: url('" + newIcon.toURI().toString() + "'); ");
     }
 
     public void toggleActive(){

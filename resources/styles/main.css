@@ -144,3 +144,9 @@ BorderPane {
 .playlist-active {
     -fx-background-color: #222326!important;
 }
+
+.Image {
+    -fx-background-image: url("../images/My.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+}

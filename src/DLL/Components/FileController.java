@@ -6,14 +6,16 @@ import javafx.event.ActionEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.Optional;
 
 import javafx.scene.Node;
 
 public class FileController {
-    private MyPlaylistController myPlaylist;
-    private String playlistPath = "resources/Playlists/";
+    private final MyPlaylistController myPlaylist;
+    private final String playlistPath = "resources/Playlists/";
 
     File musicFolder = new File("resources/music");
     File[] listOfFiles = musicFolder.listFiles();
@@ -46,13 +48,27 @@ public class FileController {
     }
 
     public void createPlaylistIcon(String icon, String playlistName){
-        copyTo(icon, playlistPath+playlistName);
+        copyTo(icon, playlistPath + playlistName + "/");
+    }
+
+
+    public File findFile(String directoryPath, String filter) {
+        File[] allContents = Paths.get(directoryPath).toFile().listFiles();
+
+        if (allContents != null) {
+            for (File file : allContents) {
+                if(file.getName().startsWith(filter)){
+                    return file;
+                }
+            }
+        }
+        return null;
     }
 
 
     private void copyTo(String filePath, String toPath) {
         Path from = Paths.get(filePath);
-        Path to = Paths.get(toPath);
+        Path to = Paths.get(toPath + from.getFileName());
 
         CopyOption[] options = new CopyOption[]{
                 StandardCopyOption.REPLACE_EXISTING,
@@ -61,7 +77,11 @@ public class FileController {
 
         try {
             Files.copy(from, to, options);
-            Files.move(to, to.resolveSibling("icon"));
+            Files.move(
+                to,
+                to.resolveSibling("icon." + getFileExtension( from.getFileName().toString() ) ),
+                StandardCopyOption.REPLACE_EXISTING
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

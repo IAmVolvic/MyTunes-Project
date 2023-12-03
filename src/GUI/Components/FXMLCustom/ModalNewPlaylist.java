@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -29,7 +30,11 @@ public class ModalNewPlaylist {
     private final HBox  modalBody = new HBox();
 
     private final Button imageSelect = new Button();
+    private final StackPane imageSelectStack = new StackPane();
+    private final Label imageSelectSelected = new Label();
     private FontAwesomeIconView btnIcon = new FontAwesomeIconView();
+
+
     private TextField playlistTitleInput = new TextField();
 
     private final Button modalAction = new Button();
@@ -70,6 +75,7 @@ public class ModalNewPlaylist {
             File file = dllController.callFileChooser(event);
 
             if(file != null){
+                imageSelectSelected.setText(file.getName());
                 pathToImage = file.getPath();
             }
         });
@@ -79,10 +85,21 @@ public class ModalNewPlaylist {
         imageSelect.getStyleClass().add("modal-imgButton");
         imageSelect.setPrefWidth(210);
         imageSelect.setPrefHeight(170);
+
+
         btnIcon.setIcon(FontAwesomeIcon.IMAGE);
         btnIcon.setSize("55");
         btnIcon.getStyleClass().add("t-sub2");
-        imageSelect.setGraphic(btnIcon);
+
+        imageSelectSelected.setText(" ");
+        imageSelectSelected.getStyleClass().add("t-white");
+        imageSelectSelected.getStyleClass().add("t-sm");
+        imageSelectSelected.getStyleClass().add("bold");
+        imageSelectSelected.setTranslateY(55);
+
+        imageSelectStack.getChildren().add(btnIcon);
+        imageSelectStack.getChildren().add(imageSelectSelected);
+        imageSelect.setGraphic(imageSelectStack);
 
         playlistTitleInput.getStyleClass().add("modal-input");
         playlistTitleInput.setPromptText("Playlist Name");
@@ -92,7 +109,7 @@ public class ModalNewPlaylist {
 
         // Action Button
         modalAction.setOnAction(event -> {
-            testing();
+            useCreatePlaylist();
         });
 
         modalAction.setCursor(Cursor.HAND);
@@ -125,16 +142,22 @@ public class ModalNewPlaylist {
 
     public HBox getNewPlaylistModal() { return modalBase; }
 
-    private void testing(){
+
+    
+    private void useCreatePlaylist(){
         if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || pathToImage == null){
             System.out.println("Something went wrong");
             return;
         }
 
         Boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+
         if(creatPlaylist){
+            File icon = dllController.getFile("resources/Playlists/"+playlistTitleInput.getText(), "icon");
+
             PlaylistButton playlistButton = new PlaylistButton();
             playlistButton.setTitle(playlistTitleInput.getText());
+            playlistButton.setIcon(icon);
             playlist_list.getChildren().add(playlistButton.getButton());
         }
     }

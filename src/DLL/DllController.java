@@ -48,6 +48,10 @@ public class DllController {
     }
 
 
+    public File getFile(String path, String filter) {
+        return fileController.findFile(path, filter);
+    }
+
     public boolean createPlaylist(String iconPath, String playlistTitle){
         //Add the Data to the DB
         myPlaylist.createPlaylist(playlistTitle);

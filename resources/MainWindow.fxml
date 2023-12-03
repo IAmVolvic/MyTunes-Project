@@ -15,10 +15,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -77,13 +76,9 @@
                   </VBox>
                   <VBox prefHeight="580.0" prefWidth="980.0" spacing="40.0" styleClass="left-border" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="980.0" spacing="25.0" styleClass="bg-grad">
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="150.0" prefWidth="980.0" spacing="25.0" styleClass="bg-grad">
                            <children>
-                              <ImageView fitHeight="125.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" style="-fx-: 50; -fx-padding: 10;">
-                                 <image>
-                                    <Image url="@images/My.png" />
-                                 </image>
-                              </ImageView>
+                              <Pane maxHeight="125.0" maxWidth="125.0" minHeight="125.0" minWidth="125.0" styleClass="Image" />
                               <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="400.0" spacing="3.0">
                                  <children>
                                     <Label prefHeight="17.0" prefWidth="400.0" text="Summer Songs" textFill="WHITE">
@@ -180,11 +175,7 @@
          <bottom>
             <HBox prefHeight="80.0" prefWidth="1062.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" style="-fx-: 50; -fx-padding: 10;">
-                     <image>
-                        <Image url="@images/My.png" />
-                     </image>
-                  </ImageView>
+                  <Pane maxHeight="65.0" maxWidth="65.0" minHeight="65.0" minWidth="65.0" styleClass="Image" />
                   <VBox alignment="CENTER_LEFT" minWidth="70.0" prefHeight="65.0" prefWidth="205.0" spacing="3.0">
                      <children>
                         <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" text="Love &amp; Hate" textFill="WHITE">
