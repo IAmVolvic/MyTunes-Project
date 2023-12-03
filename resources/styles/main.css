@@ -1,3 +1,4 @@
+
 BorderPane {
     -fx-background-color: #111214;
 }
@@ -31,17 +32,19 @@ BorderPane {
 
 
 .bold {
-    -fx-font-family: 'Montserrat_Bold', sans-serif;
     -fx-font-weight: 900;
 }
 
 .normal {
-    -fx-font-family: 'Montserrat_Light', sans-serif;
     -fx-font-weight: 200;
 }
 
 .bg-normal {
     -fx-background-color: #111214
+}
+
+.bg-prim {
+    -fx-background-color: #610dad
 }
 
 .bg-sub {
@@ -140,4 +143,10 @@ BorderPane {
 
 .playlist-active {
     -fx-background-color: #222326!important;
+}
+
+.Image {
+    -fx-background-image: url("../images/My.png");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
 }

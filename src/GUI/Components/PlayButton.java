@@ -10,33 +10,39 @@ import javafx.event.ActionEvent;
 
 public class PlayButton {
     public FontAwesomeIconView iPlay;
-    private Boolean playState = true;
+    private Boolean playState = false;
 
-    // Controller
-    private final DllController dllController = new DllController();
+    private final DllController dllController;
 
     //Constructor
-    public PlayButton(FontAwesomeIconView Icon){
+    public PlayButton(FontAwesomeIconView Icon, DllController dllController){
         iPlay   = Icon;
+        this.dllController = dllController;
     }
 
 
-    public void PlayButtonClicked(ActionEvent actionEvent){
-        System.out.println(dllController.getSongName("Test.mp3").getName());
+    public void playButtonClicked(ActionEvent actionEvent){
+        playSong();
+    }
 
+
+    private void playSong(){
+        if (playState){
+            dllController.PauseSong();
+        }else{
+            dllController.PlaySong();
+        }
         changeIcon();
+
         playState = !playState;
     }
 
 
-
-
     private void changeIcon(){
-        String switcherIcon = (playState) ? "PAUSE" : "PLAY";
-        double switcherTransform = (playState) ? -0.5 : 1;
+        String switcherIcon = (!playState) ? "PAUSE" : "PLAY";
+        double switcherTransform = (!playState) ? -0.5 : 1;
 
         iPlay.setIcon(FontAwesomeIcon.valueOf(switcherIcon));
         iPlay.setTranslateX(switcherTransform);
     }
-
 }
