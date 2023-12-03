@@ -1,7 +1,5 @@
 package GUI.Components;
 
-import BE.Playlist;
-
 public class PlaylistButton {
 
     int playlistId;
