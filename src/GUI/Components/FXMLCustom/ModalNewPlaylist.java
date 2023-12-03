@@ -19,27 +19,22 @@ import java.io.File;
 
 public class ModalNewPlaylist {
     // Outside Content
-    private VBox playlist_list;
-    private DllController dllController;
+    private final VBox playlist_list;
+    private final DllController dllController;
 
-
+    // FXML Elements
     private final HBox modalBase = new HBox();
     private final VBox modalBaseChild = new VBox();
     private final Label modalTitle = new Label();
     private final HBox  modalBody = new HBox();
-
     private final Button imageSelect = new Button();
     private final StackPane imageSelectStack = new StackPane();
     private final Label imageSelectSelected = new Label();
     private FontAwesomeIconView btnIcon = new FontAwesomeIconView();
-
-
-    private TextField playlistTitleInput = new TextField();
-
+    private final TextField playlistTitleInput = new TextField();
     private final Button modalAction = new Button();
     private final HBox modalActionBody = new HBox();
     private final Text modalActionTitle = new Text();
-
 
     // Extra
     private String pathToImage;
