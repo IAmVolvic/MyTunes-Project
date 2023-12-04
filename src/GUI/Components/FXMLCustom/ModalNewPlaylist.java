@@ -139,7 +139,13 @@ public class ModalNewPlaylist {
 
 
     private void useCreatePlaylist(){
-        if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || pathToImage == null){
+        //  Make sure the file selected isn't null
+        //  Make sure title isn't null or empty
+        //  Make sure title can follow set of rules
+        //  1, The string cannot have a space at the beginning or end of the string ( anywhere in between is fine ) : [a-zA-Z0-9]...
+        //  2, The string cannot at any point have any special characters : ...[a-zA-Z0-9\s]...
+        //  4, The string can only be up to 32 characters long : ...{0,30}
+        if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || !playlistTitleInput.getText().matches("^[a-zA-Z0-9][a-zA-Z0-9\\s]{0,30}[a-zA-Z0-9]$") || pathToImage == null) {
             System.out.println("Something went wrong");
             return;
         }
