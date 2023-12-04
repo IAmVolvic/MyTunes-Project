@@ -1,6 +1,9 @@
 package GUI.Components.FXMLCustom;
 
+import BE.Playlist;
 import DLL.DllController;
+import GUI.Components.Modal.ModalController;
+import GUI.PlaylistController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
@@ -21,6 +24,8 @@ public class ModalNewPlaylist {
     // Outside Content
     private final VBox playlist_list;
     private final DllController dllController;
+    private final ModalController modalController;
+    private final PlaylistController playlistController;
 
     // FXML Elements
     private final HBox modalBase = new HBox();
@@ -40,9 +45,11 @@ public class ModalNewPlaylist {
     private String pathToImage;
 
 
-    public ModalNewPlaylist(DllController dc, VBox pl) {
+    public ModalNewPlaylist(DllController dc, ModalController modalC, PlaylistController plC, VBox pl) {
         playlist_list = pl;
         dllController = dc;
+        modalController = modalC;
+        playlistController = plC;
 
         modalBase.setId("modalView");
         modalBase.getStyleClass().add("modal-main");
@@ -103,7 +110,7 @@ public class ModalNewPlaylist {
 
         // Action Button
         modalAction.setOnAction(event -> {
-            useCreatePlaylist();
+            createPlaylist();
         });
 
         modalAction.setCursor(Cursor.HAND);
@@ -138,7 +145,7 @@ public class ModalNewPlaylist {
 
 
 
-    private void useCreatePlaylist(){
+    private void createPlaylist(){
         //  Make sure the file selected isn't null
         //  Make sure title isn't null or empty
         //  Make sure title can follow set of rules
@@ -150,15 +157,18 @@ public class ModalNewPlaylist {
             return;
         }
 
-        boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+        Playlist creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
 
-        if(creatPlaylist){
+        if(creatPlaylist != null){
             File icon = dllController.getFile("resources/Playlists/"+playlistTitleInput.getText(), "icon");
 
-            PlaylistButton playlistButton = new PlaylistButton();
+            PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setTitle(playlistTitleInput.getText());
             playlistButton.setIcon(icon);
+            playlistButton.setId(creatPlaylist.playlistId());
             playlist_list.getChildren().add(playlistButton.getButton());
+
+            modalController.closeModal();
         }
     }
 }

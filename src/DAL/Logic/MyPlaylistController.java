@@ -39,19 +39,30 @@ public class MyPlaylistController {
         }
     }
 
-    public void createPlaylist(String playlistTitle) {
+    public Playlist createPlaylist(String playlistTitle) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
-
 
         try(Connection con = cm.getConnection())
         {
             String sql = "INSERT INTO playlists(name, created_date) VALUES (?, ?)";
-            PreparedStatement pt = con.prepareStatement(sql);
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pt.setString(1, playlistTitle);
             pt.setString(2, dateFormat.format(cal.getTime()));
-            pt.execute();
+            int affectedRows = pt.executeUpdate();
 
+            if (affectedRows == 0) {
+                throw new SQLException("Creating playlist failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = pt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return new Playlist(playlistTitle, generatedKeys.getInt(1), dateFormat.format(cal.getTime()));
+                }
+                else {
+                    throw new SQLException("Creating playlist failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

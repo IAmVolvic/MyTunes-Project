@@ -112,7 +112,7 @@ public class FileController {
 
         for(Playlist playlist : myPlaylist.getAllPlaylists()){
             if (numberOfPlaylists > 0){
-                createPath(playlistPath + playlist.PlaylistName());
+                createPath(playlistPath + playlist.playlistName());
             }
         }
     }
@@ -133,7 +133,7 @@ public class FileController {
 
     private boolean checkIfPlaylistExists(String check) {
         for (Playlist playlist : myPlaylist.getAllPlaylists()) {
-            if (playlist.PlaylistName().equals(check)) {
+            if (playlist.playlistName().equals(check)) {
                 return false;
             }
         }

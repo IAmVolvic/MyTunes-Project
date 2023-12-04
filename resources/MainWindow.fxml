@@ -81,7 +81,7 @@
                               <Pane maxHeight="125.0" maxWidth="125.0" minHeight="125.0" minWidth="125.0" styleClass="Image" />
                               <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="400.0" spacing="3.0">
                                  <children>
-                                    <Label prefHeight="17.0" prefWidth="400.0" text="Summer Songs" textFill="WHITE">
+                                    <Label prefHeight="17.0" prefWidth="400.0" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="bold" />
@@ -91,7 +91,7 @@
                                           <Font size="25.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
+                                    <Label prefHeight="17.0" prefWidth="400.0" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="normal" />
@@ -108,7 +108,7 @@
                               </VBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#addSong" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
+                                    <Button mnemonicParsing="false" onAction="#addSong" opacity="0.5" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
                                        <graphic>
                                           <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
                                              <children>

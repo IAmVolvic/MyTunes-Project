@@ -52,9 +52,9 @@ public class DllController {
         return fileController.findFile(path, filter);
     }
 
-    public boolean createPlaylist(String iconPath, String playlistTitle){
+    public Playlist createPlaylist(String iconPath, String playlistTitle){
         //Add the Data to the DB
-        myPlaylist.createPlaylist(playlistTitle);
+        Playlist newPlaylist = myPlaylist.createPlaylist(playlistTitle);
 
         //Create the Folder
         fileController.createPlaylistPathSingle(playlistTitle);
@@ -62,7 +62,6 @@ public class DllController {
         //Add the image to the folder
         fileController.createPlaylistIcon(iconPath, playlistTitle);
 
-
-        return true;
+        return newPlaylist;
     }
 }

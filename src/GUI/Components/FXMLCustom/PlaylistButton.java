@@ -1,5 +1,6 @@
 package GUI.Components.FXMLCustom;
 
+import GUI.PlaylistController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -14,9 +15,9 @@ import java.io.File;
 
 public class PlaylistButton{
     //Button Settings
-    int perWidth = 300;
-    int perHeight = 66;
-    boolean isActive;
+    private int perWidth = 300;
+    private int perHeight = 66;
+    private int btnID;
 
     // ButtonBase
     Button buttonBase       = new Button("");
@@ -31,11 +32,12 @@ public class PlaylistButton{
     // Num of songs Label
     Label numOfSongs        = new Label();
 
-
-    public PlaylistButton(){
-        this.isActive = false;
-
+    public PlaylistButton(PlaylistController playlistController){
         //Button Base
+        buttonBase.setOnAction(event -> {
+            playlistController.setPlaylistView(this.btnID, this);
+        });
+
         buttonBase.setPadding(new Insets(10));
         buttonBase.setPrefWidth(perWidth);
         buttonBase.setPrefHeight(perHeight);
@@ -97,13 +99,11 @@ public class PlaylistButton{
         this.plIcon.setStyle("-fx-background-image: url('" + newIcon.toURI().toString() + "'); ");
     }
 
-    public void toggleActive(){
-        this.isActive = !this.isActive;
+    public void setId(int newId) {
+        this.btnID = newId;
+    }
 
-        if(this.isActive){
-            buttonBase.getStyleClass().add("playlist-active");
-        }else{
-            buttonBase.getStyleClass().remove("playlist-active");
-        }
+    public void toggleActive(){
+        buttonBase.getStyleClass().add("playlist-active");
     }
 }

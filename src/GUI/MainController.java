@@ -50,6 +50,7 @@ public class MainController {
     private PlayButton playBTNController;
     private VolumeControl volumeController;
     private ModalController modalController;
+    private final PlaylistController playlistController = new PlaylistController();
 
     // Backend Controllers
     private final DllController dllController = new DllController();
@@ -64,7 +65,7 @@ public class MainController {
 
     //New Playlist Button
     public void newPlaylist(ActionEvent actionEvent) {
-        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController, playlist_list);
+        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController, modalController, playlistController, playlist_list);
         modalController.openModal(modalPlaylistView.getNewPlaylistModal());
     }
 
@@ -104,19 +105,22 @@ public class MainController {
 
         // Get and start the modal controller
         modalController = new ModalController(modal_main);
-        createButtonTEST();
+        buildPlaylistButtons();
+
+        playlistController.setParentNode(playlist_list);
     }
 
 
-    private void createButtonTEST(){
+    private void buildPlaylistButtons(){
         int index = 0;
         ArrayList<Playlist> playlist = dllController.getPlaylists();
 
         for(Playlist val : playlist){
-            File icon = dllController.getFile("resources/Playlists/"+val.PlaylistName(), "icon");
+            File icon = dllController.getFile("resources/Playlists/"+val.playlistName(), "icon");
 
-            PlaylistButton playlistButton = new PlaylistButton();
-            playlistButton.setTitle(val.PlaylistName());
+            PlaylistButton playlistButton = new PlaylistButton(playlistController);
+            playlistButton.setId(val.playlistId());
+            playlistButton.setTitle(val.playlistName());
 
             if(icon != null){
                 playlistButton.setIcon(icon);
