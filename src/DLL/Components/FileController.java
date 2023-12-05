@@ -1,4 +1,5 @@
 package DLL.Components;
+import APP_SETTINGS.AppConfig;
 
 import BE.Playlist;
 import DAL.Logic.MyPlaylistController;
@@ -14,7 +15,7 @@ import javafx.scene.Node;
 
 public class FileController {
     private final MyPlaylistController myPlaylist;
-    private final String playlistPath = "resources/Playlists/";
+    private final String playlistPath = AppConfig.getPlaylistPath();
 
     File musicFolder = new File("resources/music");
     File[] listOfFiles = musicFolder.listFiles();
@@ -42,12 +43,12 @@ public class FileController {
     }
 
 
-    public void createPlaylistPathSingle(String folderName) {
-        createPath(playlistPath + folderName);
+    public void createPlaylistPathSingle(String folderName, int playlistID) {
+        createPath(playlistPath + playlistID + "_" + folderName);
     }
 
-    public void createPlaylistIcon(String icon, String playlistName){
-        copyTo(icon, playlistPath + playlistName + "/");
+    public void createPlaylistIcon(String icon, String playlistName, int playlistId){
+        copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/");
     }
 
 
@@ -112,7 +113,7 @@ public class FileController {
 
         for(Playlist playlist : myPlaylist.getAllPlaylists()){
             if (numberOfPlaylists > 0){
-                createPath(playlistPath + playlist.playlistName());
+                createPath(playlistPath + playlist.playlistId() + "_" + playlist.playlistName());
             }
         }
     }
@@ -123,7 +124,10 @@ public class FileController {
 
         if (allContents != null) {
             for (File file : allContents) {
-                if (checkIfPlaylistExists(file.getName())) {
+                String originalString = file.getName();
+                int startIndex = originalString.indexOf("_") + 1;
+
+                if (checkIfPlaylistExists(originalString.substring(startIndex))) {
                     deletePath(file);
                 }
             }

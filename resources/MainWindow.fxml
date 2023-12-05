@@ -78,10 +78,10 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="150.0" prefWidth="980.0" spacing="25.0" styleClass="bg-grad">
                            <children>
-                              <Pane maxHeight="125.0" maxWidth="125.0" minHeight="125.0" minWidth="125.0" styleClass="Image" />
+                              <Pane fx:id="playlistViewIcon" maxHeight="125.0" maxWidth="125.0" minHeight="125.0" minWidth="125.0" styleClass="Image" />
                               <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="400.0" spacing="3.0">
                                  <children>
-                                    <Label prefHeight="17.0" prefWidth="400.0" textFill="WHITE">
+                                    <Label fx:id="playlistViewTitle" prefHeight="17.0" prefWidth="400.0" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="bold" />
@@ -91,7 +91,7 @@
                                           <Font size="25.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="400.0" textFill="WHITE">
+                                    <Label prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="normal" />
@@ -249,7 +249,7 @@
                                     <Font size="11.0" />
                                  </font>
                               </Text>
-                              <ProgressBar fx:id="songProgressBar" prefWidth="705.0" progress="0.25" />
+                              <ProgressBar fx:id="songProgressBar" prefWidth="705.0" progress="0.0" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                                  <styleClass>
                                     <String fx:value="bold" />

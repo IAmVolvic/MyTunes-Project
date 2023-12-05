@@ -19,6 +19,9 @@ public class PlaylistButton{
     private int perHeight = 66;
     private int btnID;
 
+    //Controller
+    private final PlaylistController playlistController;
+
     // ButtonBase
     Button buttonBase       = new Button("");
     // HBox Base
@@ -32,10 +35,12 @@ public class PlaylistButton{
     // Num of songs Label
     Label numOfSongs        = new Label();
 
-    public PlaylistButton(PlaylistController playlistController){
+    public PlaylistButton(PlaylistController plController){
+        playlistController = plController;
+
         //Button Base
         buttonBase.setOnAction(event -> {
-            playlistController.setPlaylistView(this.btnID, this);
+            setPlaylistView(this);
         });
 
         buttonBase.setPadding(new Insets(10));
@@ -103,7 +108,18 @@ public class PlaylistButton{
         this.btnID = newId;
     }
 
-    public void toggleActive(){
+    public int getId() {
+        return this.btnID;
+    }
+
+
+    public void setActiveStyle(){
         buttonBase.getStyleClass().add("playlist-active");
+    }
+
+
+
+    private void setPlaylistView(PlaylistButton btn) {
+        playlistController.setPlaylistView(btn);
     }
 }

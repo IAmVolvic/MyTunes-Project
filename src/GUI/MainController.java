@@ -1,6 +1,7 @@
 package GUI;
 
 
+import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.ModalNewPlaylist;
@@ -13,11 +14,13 @@ import GUI.Components.VolumeControl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -26,8 +29,11 @@ import java.util.ArrayList;
 
 
 public class MainController {
-    // Playlist list container
+    // Playlist list nodes
     public VBox playlist_list;
+    public Pane playlistViewIcon;
+    public Label playlistViewTitle;
+
 
     // Volume slider
     public JFXSlider volume;
@@ -89,6 +95,15 @@ public class MainController {
 
     // Post Initialize
     private void postInitialize() {
+        //Set Playlist Controller
+        playlistController.setNodes(
+                dllController,
+                playlist_list,
+                playlistViewIcon,
+                playlistViewTitle
+        );
+
+
         //Set PlayButton Controller
         playBTNController = new PlayButton(iPlay, dllController);
 
@@ -106,8 +121,6 @@ public class MainController {
         // Get and start the modal controller
         modalController = new ModalController(modal_main);
         buildPlaylistButtons();
-
-        playlistController.setParentNode(playlist_list);
     }
 
 
@@ -116,7 +129,10 @@ public class MainController {
         ArrayList<Playlist> playlist = dllController.getPlaylists();
 
         for(Playlist val : playlist){
-            File icon = dllController.getFile("resources/Playlists/"+val.playlistName(), "icon");
+            File icon = dllController.getFile(
+                    AppConfig.getPlaylistPath() + val.playlistId() + "_" + val.playlistName(),
+                    "icon"
+            );
 
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setId(val.playlistId());
@@ -127,7 +143,7 @@ public class MainController {
             }
 
             if(index < 1){
-                playlistButton.toggleActive();
+                playlistController.setPlaylistView(playlistButton);
             }
 
             playlist_list.getChildren().add(playlistButton.getButton());

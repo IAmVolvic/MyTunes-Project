@@ -1,5 +1,6 @@
 package GUI.Components.FXMLCustom;
 
+import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import DLL.DllController;
 import GUI.Components.Modal.ModalController;
@@ -160,13 +161,18 @@ public class ModalNewPlaylist {
         Playlist creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
 
         if(creatPlaylist != null){
-            File icon = dllController.getFile("resources/Playlists/"+playlistTitleInput.getText(), "icon");
+            File icon = dllController.getFile(
+                    AppConfig.getPlaylistPath() + creatPlaylist.playlistId() + "_" + playlistTitleInput.getText(),
+                    "icon"
+            );
 
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setTitle(playlistTitleInput.getText());
             playlistButton.setIcon(icon);
             playlistButton.setId(creatPlaylist.playlistId());
             playlist_list.getChildren().add(playlistButton.getButton());
+
+            playlistController.setPlaylistView(playlistButton);
 
             modalController.closeModal();
         }
