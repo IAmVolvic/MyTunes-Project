@@ -1,6 +1,10 @@
 package GUI.Components.FXMLCustom;
 
+import APP_SETTINGS.AppConfig;
+import BE.Playlist;
 import DLL.DllController;
+import GUI.Components.Modal.ModalController;
+import GUI.PlaylistController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
@@ -19,35 +23,34 @@ import java.io.File;
 
 public class ModalNewPlaylist {
     // Outside Content
-    private VBox playlist_list;
-    private DllController dllController;
+    private final VBox playlist_list;
+    private final DllController dllController;
+    private final ModalController modalController;
+    private final PlaylistController playlistController;
 
-
+    // FXML Elements
     private final HBox modalBase = new HBox();
     private final VBox modalBaseChild = new VBox();
     private final Label modalTitle = new Label();
     private final HBox  modalBody = new HBox();
-
     private final Button imageSelect = new Button();
     private final StackPane imageSelectStack = new StackPane();
     private final Label imageSelectSelected = new Label();
     private FontAwesomeIconView btnIcon = new FontAwesomeIconView();
-
-
-    private TextField playlistTitleInput = new TextField();
-
+    private final TextField playlistTitleInput = new TextField();
     private final Button modalAction = new Button();
     private final HBox modalActionBody = new HBox();
     private final Text modalActionTitle = new Text();
-
 
     // Extra
     private String pathToImage;
 
 
-    public ModalNewPlaylist(DllController dc, VBox pl) {
+    public ModalNewPlaylist(DllController dc, ModalController modalC, PlaylistController plC, VBox pl) {
         playlist_list = pl;
         dllController = dc;
+        modalController = modalC;
+        playlistController = plC;
 
         modalBase.setId("modalView");
         modalBase.getStyleClass().add("modal-main");
@@ -108,7 +111,7 @@ public class ModalNewPlaylist {
 
         // Action Button
         modalAction.setOnAction(event -> {
-            useCreatePlaylist();
+            createPlaylist();
         });
 
         modalAction.setCursor(Cursor.HAND);
@@ -143,21 +146,35 @@ public class ModalNewPlaylist {
 
 
 
-    private void useCreatePlaylist(){
-        if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || pathToImage == null){
+    private void createPlaylist(){
+        //  Make sure the file selected isn't null
+        //  Make sure title isn't null or empty
+        //  Make sure title can follow set of rules
+        //  1, The string cannot have a space at the beginning or end of the string ( anywhere in between is fine ) : [a-zA-Z0-9]...
+        //  2, The string cannot at any point have any special characters : ...[a-zA-Z0-9\s]...
+        //  4, The string can only be up to 32 characters long : ...{0,30}
+        if (playlistTitleInput.getText() == null || playlistTitleInput.getText().trim().isEmpty() || !playlistTitleInput.getText().matches("^[a-zA-Z0-9][a-zA-Z0-9\\s]{0,30}[a-zA-Z0-9]$") || pathToImage == null) {
             System.out.println("Something went wrong");
             return;
         }
 
-        boolean creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+        Playlist creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
 
-        if(creatPlaylist){
-            File icon = dllController.getFile("resources/Playlists/"+playlistTitleInput.getText(), "icon");
+        if(creatPlaylist != null){
+            File icon = dllController.getFile(
+                    AppConfig.getPlaylistPath() + creatPlaylist.playlistId() + "_" + playlistTitleInput.getText(),
+                    "icon"
+            );
 
-            PlaylistButton playlistButton = new PlaylistButton();
+            PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setTitle(playlistTitleInput.getText());
             playlistButton.setIcon(icon);
+            playlistButton.setId(creatPlaylist.playlistId());
             playlist_list.getChildren().add(playlistButton.getButton());
+
+            playlistController.setPlaylistView(playlistButton);
+
+            modalController.closeModal();
         }
     }
 }

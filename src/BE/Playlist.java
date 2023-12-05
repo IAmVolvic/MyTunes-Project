@@ -9,7 +9,10 @@ public class Playlist {
         playlistId = id;
         playlistDate = date;
     }
-    public String PlaylistName(){
+    public String playlistName(){
         return this.playlistName;
+    }
+    public int playlistId(){
+        return this.playlistId;
     }
 }

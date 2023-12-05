@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class DllController {
     private final String currentSong = "ThxSoMchHate.mp3";
 
+
+
     // Controllers
     MyPlaylistController myPlaylist = new MyPlaylistController();
     FileController fileController = new FileController(myPlaylist);
@@ -52,17 +54,16 @@ public class DllController {
         return fileController.findFile(path, filter);
     }
 
-    public boolean createPlaylist(String iconPath, String playlistTitle){
+    public Playlist createPlaylist(String iconPath, String playlistTitle){
         //Add the Data to the DB
-        myPlaylist.createPlaylist(playlistTitle);
+        Playlist newPlaylist = myPlaylist.createPlaylist(playlistTitle);
 
         //Create the Folder
-        fileController.createPlaylistPathSingle(playlistTitle);
+        fileController.createPlaylistPathSingle(playlistTitle, newPlaylist.playlistId());
 
         //Add the image to the folder
-        fileController.createPlaylistIcon(iconPath, playlistTitle);
+        fileController.createPlaylistIcon(iconPath, playlistTitle, newPlaylist.playlistId());
 
-
-        return true;
+        return newPlaylist;
     }
 }

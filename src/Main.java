@@ -1,3 +1,4 @@
+import APP_SETTINGS.AppConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,6 +9,7 @@ import javafx.scene.image.Image;
 public class Main extends Application {
 
     public static void main(String[] args){
+        AppConfig.setPlaylistPath("resources/Playlists/");
         Application.launch();
     }
 
