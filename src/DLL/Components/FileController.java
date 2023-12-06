@@ -165,18 +165,35 @@ public class FileController {
     }
 
 
-    public File promptFilerChooser(ActionEvent event){
+    public File promptFilerChooser(ActionEvent event, String filters){
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
+        String fileTitle;
+        FileChooser.ExtensionFilter fileFilters = null;
 
-        fileChooser.setTitle("Playlist Icon");
+        switch (filters) {
+            case "music_edit":
+                fileTitle = "Edit Song";
+                fileFilters = new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3", "*.wav", "*.ogg");
+                break;
 
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif")
-        );
+            case "music_add":
+                fileTitle = "Add Song";
+                fileFilters = new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3", "*.wav", "*.ogg");
+                break;
 
-        File file = fileChooser.showOpenDialog(stage);
+            case "playlist_edit", "playlist_add":
+                fileTitle = "Playlist Icon";
+                fileFilters = new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif");
+                break;
 
-        return file;
+            default:
+                return null;
+        }
+
+        fileChooser.setTitle(fileTitle);
+        fileChooser.getExtensionFilters().addAll(fileFilters);
+
+        return fileChooser.showOpenDialog(stage);
     }
 }

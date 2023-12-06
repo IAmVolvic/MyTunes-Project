@@ -45,8 +45,8 @@ public class DllController {
         return myPlaylist.getAllPlaylists();
     }
 
-    public File callFileChooser(ActionEvent event){
-        return fileController.promptFilerChooser(event);
+    public File callFileChooser(ActionEvent event, String filters){
+        return fileController.promptFilerChooser(event, filters);
     }
 
 

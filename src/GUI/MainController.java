@@ -4,8 +4,8 @@ package GUI;
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import DLL.DllController;
-import GUI.Components.FXMLCustom.ModalNewPlaylist;
 import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
 import GUI.Components.Modal.ModalController;
 import GUI.Components.PlayButton;
 import GUI.Components.SongList;
@@ -70,13 +70,16 @@ public class MainController {
 
 
     //New Playlist Button
-    public void newPlaylist(ActionEvent actionEvent) {
-        ModalNewPlaylist modalPlaylistView = new ModalNewPlaylist(dllController, modalController, playlistController, playlist_list);
-        modalController.openModal(modalPlaylistView.getNewPlaylistModal());
+    public void newPlaylist(ActionEvent o) {
+        NewPlaylistModalView modalView = new NewPlaylistModalView(dllController, modalController, playlistController, playlist_list);
+        modalController.openModal(modalView.getView());
     }
 
 
-    public void addSong(ActionEvent actionEvent) {}
+    public void newSong(ActionEvent actionEvent) {
+//        ModalView modalView = new ModalView();
+//        modalController.openModal(modalView.getModalView());
+    }
 
 
     //Play Button

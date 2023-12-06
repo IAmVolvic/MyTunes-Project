@@ -1,80 +1,68 @@
-package GUI.Components.FXMLCustom;
+package GUI.Components.Modal.ModalConfigs;
 
 import APP_SETTINGS.AppConfig;
-import BE.Playlist;
 import DLL.DllController;
+
+
+import BE.Playlist;
+
+import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.Modal.ModalController;
+import GUI.Components.Modal.ModalView;
 import GUI.PlaylistController;
+import javafx.scene.Cursor;
+import javafx.scene.layout.HBox;
+
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-
-
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 import java.io.File;
 
-public class ModalNewPlaylist {
-    // Outside Content
-    private final VBox playlist_list;
-    private final DllController dllController;
-    private final ModalController modalController;
-    private final PlaylistController playlistController;
+public class NewPlaylistModalView extends ModalView {
+    //Class verbs
+    String pathToImage;
 
-    // FXML Elements
-    private final HBox modalBase = new HBox();
-    private final VBox modalBaseChild = new VBox();
-    private final Label modalTitle = new Label();
-    private final HBox  modalBody = new HBox();
+    //View FXML Elements
     private final Button imageSelect = new Button();
     private final StackPane imageSelectStack = new StackPane();
     private final Label imageSelectSelected = new Label();
     private FontAwesomeIconView btnIcon = new FontAwesomeIconView();
     private final TextField playlistTitleInput = new TextField();
-    private final Button modalAction = new Button();
-    private final HBox modalActionBody = new HBox();
-    private final Text modalActionTitle = new Text();
-
-    // Extra
-    private String pathToImage;
 
 
-    public ModalNewPlaylist(DllController dc, ModalController modalC, PlaylistController plC, VBox pl) {
-        playlist_list = pl;
-        dllController = dc;
+    //Outside Controllers
+    DllController dllController;
+    ModalController modalController;
+    PlaylistController playlistController;
+    VBox playlist_list;
+
+
+    public NewPlaylistModalView(DllController dllC, ModalController modalC, PlaylistController plC, VBox pl) {
+        super();
+
+        //Setting outside controllers
+        dllController = dllC;
         modalController = modalC;
         playlistController = plC;
+        playlist_list = pl;
 
-        modalBase.setId("modalView");
-        modalBase.getStyleClass().add("modal-main");
-        modalBase.setMaxHeight(300);
-        modalBase.setMaxWidth(400);
+        this.setTitle("Create New Playlist");
+        this.createBody();
+        this.createActionButton();
+    }
 
-        modalBaseChild.setAlignment(Pos.TOP_RIGHT);
-        modalBaseChild.setSpacing(25);
+    protected void createBody() {
+        super.createBody();
 
-        modalTitle.setText("Create New Playlist");
-        modalTitle.setPrefWidth(600);
-        modalTitle.setPrefHeight(30);
-        modalTitle.getStyleClass().add("t-white");
-        modalTitle.getStyleClass().add("t-2xlg");
-        modalTitle.getStyleClass().add("bold");
-
-        modalBody.setSpacing(25);
-        modalBody.setPrefHeight(150);
-        modalBody.setPrefWidth(420);
-
-
-        //Body Inputs
         imageSelect.setOnAction(event -> {
-            File file = dllController.callFileChooser(event);
+            File file = dllController.callFileChooser(event, "playlist_add");
 
             if(file != null){
                 imageSelectSelected.setText(file.getName());
@@ -82,12 +70,10 @@ public class ModalNewPlaylist {
             }
         });
 
-
         imageSelect.setCursor(Cursor.HAND);
         imageSelect.getStyleClass().add("modal-imgButton");
         imageSelect.setPrefWidth(210);
         imageSelect.setPrefHeight(170);
-
 
         btnIcon.setIcon(FontAwesomeIcon.IMAGE);
         btnIcon.setSize("55");
@@ -109,41 +95,16 @@ public class ModalNewPlaylist {
         playlistTitleInput.setPrefWidth(210);
 
 
-        // Action Button
+        modalBody.getChildren().addAll(imageSelect, playlistTitleInput);
+    }
+
+
+    protected void createActionButton() {
+        super.createActionButton();
         modalAction.setOnAction(event -> {
             createPlaylist();
         });
-
-        modalAction.setCursor(Cursor.HAND);
-        modalAction.getStyleClass().add("modal-actionButton");
-
-        modalActionBody.setAlignment(Pos.CENTER);
-        modalActionBody.setPrefHeight(25);
-        modalActionBody.setPrefWidth(100);
-
-        modalActionTitle.setText("Create");
-        modalActionTitle.getStyleClass().add("t-nm");
-        modalActionTitle.getStyleClass().add("bold");
-
-        modalActionBody.getChildren().add(modalActionTitle);
-        modalAction.setGraphic(modalActionBody);
-
-
-
-
-        // Build the node
-        modalBody.getChildren().add(imageSelect);
-        modalBody.getChildren().add(playlistTitleInput);
-
-        modalBaseChild.getChildren().add(modalTitle);
-        modalBaseChild.getChildren().add(modalBody);
-        modalBaseChild.getChildren().add(modalAction);
-
-        modalBase.getChildren().add(modalBaseChild);
     }
-
-    public HBox getNewPlaylistModal() { return modalBase; }
-
 
 
     private void createPlaylist(){
@@ -177,5 +138,9 @@ public class ModalNewPlaylist {
             modalController.closeModal();
         }
     }
-}
 
+
+    public HBox getView() {
+        return this.getModalView();
+    }
+}
