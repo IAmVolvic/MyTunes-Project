@@ -2,37 +2,34 @@ package BE;
 
 import javafx.scene.control.Button;
 
+import java.util.Date;
+
 public class Song {
-    private int id=-1;
+    private int id;
     private String name;
+    private String date;
+    private long duration;
 
-    private Button buttonAction;
-
-    public Song(int id, String name, Button btn){
+    public Song(int id, String name, String date, long duration){
         this.id = id;
         this.name = name;
-        this.buttonAction = btn;
+        this.date = date;
+        this.duration = duration;
     }
 
     public int getId() {
         return this.id;
     }
+
     public String getName() {
         return this.name;
     }
 
-    public Button getButton() {
-        return this.buttonAction;
+    public String getDate() {
+        return this.date;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setButton(Button button) {
-        this.buttonAction = button;
+    public long getDuration() {
+        return this.duration;
     }
 }

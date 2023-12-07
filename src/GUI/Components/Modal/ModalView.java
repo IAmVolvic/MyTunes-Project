@@ -43,6 +43,9 @@ public class ModalView {
     protected void setTitle(String newTitle) {
         modalTitle.setText(newTitle);
     }
+    protected void setActionTitle(String newTitle) {
+        modalActionTitle.setText(newTitle);
+    }
 
     //Build the basic
     private void createModalBase(){
@@ -78,7 +81,6 @@ public class ModalView {
         modalActionBody.setPrefHeight(25);
         modalActionBody.setPrefWidth(100);
 
-        modalActionTitle.setText("Create");
         modalActionTitle.getStyleClass().add("t-nm");
         modalActionTitle.getStyleClass().add("bold");
 

@@ -147,10 +147,10 @@
                            <children>
                               <TableView fx:id="songList" prefHeight="390.0" prefWidth="980.0" HBox.hgrow="ALWAYS">
                                  <columns>
-                                    <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="#" />
-                                    <TableColumn fx:id="col2" editable="false" maxWidth="610.0" minWidth="120.0" prefWidth="610.0" resizable="false" text="Title" />
-                                    <TableColumn fx:id="col3" editable="false" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" resizable="false" text="Date added" />
-                                    <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false">
+                                    <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column" text="#" />
+                                    <TableColumn fx:id="col2" editable="false" maxWidth="2000.0" minWidth="120.0" prefWidth="610.0" text="Title" />
+                                    <TableColumn fx:id="col3" editable="false" maxWidth="200.0" minWidth="140.0" prefWidth="200.0" resizable="false" text="Date added" />
+                                    <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column">
                                        <graphic>
                                           <FontAwesomeIconView glyphName="CLOCK_ALT" size="16" styleClass="t-sub2">
                                              <font>
@@ -338,65 +338,6 @@
       <StackPane fx:id="modal_main" prefHeight="720.0" prefWidth="1280.0" styleClass="modal-bg-btn" visible="false">
          <children>
             <Button mnemonicParsing="false" onAction="#closeModal" prefHeight="1.7976931348623157E308" prefWidth="1.7976931348623157E308" style="-fx-background-color: transparent;" />
-            <HBox alignment="CENTER" maxHeight="300.0" maxWidth="400.0" styleClass="modal-main" StackPane.alignment="CENTER">
-               <children>
-                  <VBox alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="600.0" spacing="25.0">
-                     <children>
-                        <Label prefHeight="30.0" prefWidth="600.0" text="Create New Playlist">
-                           <styleClass>
-                              <String fx:value="t-white" />
-                              <String fx:value="t-2xlg" />
-                              <String fx:value="bold" />
-                           </styleClass>
-                        </Label>
-                        <HBox prefHeight="150.0" prefWidth="420.0" spacing="25.0">
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="170.0" prefWidth="210.0" styleClass="modal-imgButton">
-                                 <graphic>
-                                    <FontAwesomeIconView glyphName="IMAGE" size="55" styleClass="t-sub2">
-                                       <font>
-                                          <Font size="13.0" />
-                                       </font>
-                                    </FontAwesomeIconView>
-                                 </graphic>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </Button>
-                              <VBox prefHeight="170.0" prefWidth="210.0">
-                                 <children>
-                                    <TextField focusTraversable="false" prefHeight="40.0" prefWidth="210.0" promptText="Playlist Name" styleClass="modal-input" />
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                        <Button mnemonicParsing="false" onAction="#newPlaylist" styleClass="modal-actionButton">
-                           <graphic>
-                              <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Create">
-                                       <styleClass>
-                                          <String fx:value="bold" />
-                                          <String fx:value="t-montserrat" />
-                                          <String fx:value="t-nm" />
-                                       </styleClass>
-                                    </Text>
-                                 </children>
-                                 <padding>
-                                    <Insets left="5.0" right="5.0" />
-                                 </padding>
-                              </HBox>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
-               </padding></HBox>
          </children>
       </StackPane>
    </children>

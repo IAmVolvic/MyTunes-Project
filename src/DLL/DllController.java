@@ -1,7 +1,9 @@
 package DLL;
 
 import BE.Playlist;
+import BE.Song;
 import DAL.Logic.MyPlaylistController;
+import DAL.Logic.MySongsController;
 import DLL.Components.MediaController;
 import DLL.Components.FileController;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ public class DllController {
 
     // Controllers
     MyPlaylistController myPlaylist = new MyPlaylistController();
+    MySongsController mySongs = new MySongsController();
     FileController fileController = new FileController(myPlaylist);
     MediaController mediaController = new MediaController();
 
@@ -24,34 +27,35 @@ public class DllController {
     public DllController(){}
 
 
+
     public void PlaySong(){
         if(fileController.getSong(currentSong) != null){
             mediaController.playSong(fileController.getSong(currentSong));
         }
     }
 
-
     public void PauseSong(){
         mediaController.pauseSong();
     }
-
 
     public void SetVolume(Double newVolume){
         mediaController.setVolume(newVolume);
     }
 
 
-    public ArrayList<Playlist> getPlaylists() {
-        return myPlaylist.getAllPlaylists();
-    }
 
     public File callFileChooser(ActionEvent event, String filters){
         return fileController.promptFilerChooser(event, filters);
     }
 
-
     public File getFile(String path, String filter) {
         return fileController.findFile(path, filter);
+    }
+
+
+
+    public ArrayList<Playlist> getPlaylists() {
+        return myPlaylist.getAllPlaylists();
     }
 
     public Playlist createPlaylist(String iconPath, String playlistTitle){
@@ -65,5 +69,11 @@ public class DllController {
         fileController.createPlaylistIcon(iconPath, playlistTitle, newPlaylist.playlistId());
 
         return newPlaylist;
+    }
+
+
+
+    public ArrayList<Song> getSongs(int playlistId) {
+        return mySongs.getPlaylistSongs(playlistId);
     }
 }

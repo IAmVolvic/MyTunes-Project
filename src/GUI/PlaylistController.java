@@ -2,8 +2,11 @@ package GUI;
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
+import BE.Song;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.SongList;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -20,14 +23,16 @@ public class PlaylistController {
 
     //Dll Controller
     private DllController dllController;
+    private SongList tableController;
 
     //Extra
     private VBox playlist_list;
     private Pane playlist_viewIcon;
     private Label playlist_viewTitle;
 
-    public void setNodes(DllController dc, VBox pl, Pane viewIcon, Label viewTitle){
+    public void setNodes(DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle){
         dllController = dc;
+        tableController = tC;
 
         playlist_list = pl;
         playlist_viewIcon = viewIcon;
@@ -43,6 +48,7 @@ public class PlaylistController {
 
             changeButtonStyles();
             changeViewStyles();
+            setViewSongList();
         }
     }
 
@@ -66,6 +72,19 @@ public class PlaylistController {
         }
 
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
+    }
+
+
+    private void setViewSongList() {
+        ArrayList<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId());
+        ObservableList<Song> songData = FXCollections.observableArrayList();
+
+        for(Song val : songs){
+            Song songConstruct = new Song(val.getId(), val.getName(), val.getDate(), 0);
+            songData.add(songConstruct);
+        }
+
+        tableController.addSong(songData);
     }
 
 

@@ -54,6 +54,7 @@ public class NewPlaylistModalView extends ModalView {
         playlist_list = pl;
 
         this.setTitle("Create New Playlist");
+        this.setActionTitle("Create");
         this.createBody();
         this.createActionButton();
     }

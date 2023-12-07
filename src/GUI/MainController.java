@@ -5,6 +5,7 @@ import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.Modal.ModalConfigs.AddSongModalView;
 import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
 import GUI.Components.Modal.ModalController;
 import GUI.Components.PlayButton;
@@ -20,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,6 +31,8 @@ import java.util.ArrayList;
 
 
 public class MainController {
+    public StackPane globalBase;
+
     // Playlist list nodes
     public VBox playlist_list;
     public Pane playlistViewIcon;
@@ -39,10 +43,12 @@ public class MainController {
     public JFXSlider volume;
 
     // Getting the table columns
+    public TableView songList;
     public TableColumn<String, Integer> col1;
     public TableColumn<String, String>  col2;
-    public TableColumn<String, Button>  col3;
-    public TableColumn<String, String>  col4;
+    public TableColumn<String, String>  col3;
+    public TableColumn<String, Long>  col4;
+
 
     //Icons
     public FontAwesomeIconView iPlay;
@@ -57,6 +63,7 @@ public class MainController {
     private VolumeControl volumeController;
     private ModalController modalController;
     private final PlaylistController playlistController = new PlaylistController();
+    private SongList tableController;
 
     // Backend Controllers
     private final DllController dllController = new DllController();
@@ -77,8 +84,8 @@ public class MainController {
 
 
     public void newSong(ActionEvent actionEvent) {
-//        ModalView modalView = new ModalView();
-//        modalController.openModal(modalView.getModalView());
+        AddSongModalView modalView = new AddSongModalView(dllController, modalController, tableController);
+        modalController.openModal(modalView.getView());
     }
 
 
@@ -98,9 +105,14 @@ public class MainController {
 
     // Post Initialize
     private void postInitialize() {
+        // Get and start the songs table / initialize it
+        tableController = new SongList(songList, col1, col2, col3, col4);
+
+
         //Set Playlist Controller
         playlistController.setNodes(
                 dllController,
+                tableController,
                 playlist_list,
                 playlistViewIcon,
                 playlistViewTitle
@@ -109,11 +121,6 @@ public class MainController {
 
         //Set PlayButton Controller
         playBTNController = new PlayButton(iPlay, dllController);
-
-
-        // Get and start the songs table / initialize it
-        SongList tableController = new SongList(col1, col2, col3, col4);
-        tableController.initialize();
 
 
         // Get and start the volume controller / initialize it
