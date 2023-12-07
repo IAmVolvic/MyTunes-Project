@@ -1,5 +1,7 @@
 package APP_SETTINGS;
 
+import javafx.util.Duration;
+
 public class AppConfig {
     private static String playlistPath;
 
@@ -9,5 +11,12 @@ public class AppConfig {
 
     public static void setPlaylistPath(String path) {
         playlistPath = path;
+    }
+
+    public static String getTimeFormat(Duration currentTime){
+        int songInMins = (int) Math.floor(currentTime.toMinutes());
+        int songInSec = (int) Math.floor(currentTime.toSeconds());
+
+        return songInMins + ":" + String.format("%02d", songInSec % 60);
     }
 }

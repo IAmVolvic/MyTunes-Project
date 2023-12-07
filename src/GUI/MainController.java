@@ -23,6 +23,7 @@ import com.jfoenix.controls.JFXSlider;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class MainController {
 
     // Volume slider
     public ProgressBar songProgressBar;
+    public Text songProgressNum;
+    public Text songProgressNumTotal;
     public JFXSlider volume;
 
 
@@ -69,7 +72,6 @@ public class MainController {
 
     // Backend Controllers
     private final DllController dllController = new DllController();
-
     private MediaPlayerObservable mediaPlayerObservable;
 
 
@@ -136,7 +138,7 @@ public class MainController {
         modalController = new ModalController(modal_main);
         buildPlaylistButtons();
 
-        mediaPlayerObservable = new MediaPlayerObservable(songProgressBar);
+        mediaPlayerObservable = new MediaPlayerObservable(songProgressBar, songProgressNum, songProgressNumTotal);
         dllController.bindProgressObserver(this.mediaPlayerObservable);
     }
 

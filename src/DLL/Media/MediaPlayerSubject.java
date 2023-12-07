@@ -1,5 +1,7 @@
 package DLL.Media;
 
+import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +20,9 @@ public class MediaPlayerSubject {
         this.observers.remove(observable);
     }
 
-    public void update(double progress) {
+    public void update(Duration currentTime, Duration totalDuration) {
         this.observers.forEach((observable -> {
-            observable.update(progress);
+            observable.update(currentTime, totalDuration);
         }));
     }
 }

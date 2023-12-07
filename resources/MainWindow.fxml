@@ -240,7 +240,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="367.0" spacing="10.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
+                              <Text fx:id="songProgressNum" strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                                  <styleClass>
                                     <String fx:value="bold" />
                                     <String fx:value="t-montserrat" />
@@ -251,7 +251,7 @@
                                  </font>
                               </Text>
                               <ProgressBar fx:id="songProgressBar" prefWidth="705.0" progress="0.0" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
+                              <Text fx:id="songProgressNumTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                                  <styleClass>
                                     <String fx:value="bold" />
                                     <String fx:value="t-montserrat" />

@@ -31,7 +31,7 @@ public class MediaController {
         mPlayer.play();
 
         mPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            this.mPlayerSubject.update(newValue.toMillis() / mPlayer.getTotalDuration().toMillis());
+            this.mPlayerSubject.update(newValue, mPlayer.getTotalDuration());
         });
     }
 
