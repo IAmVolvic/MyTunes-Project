@@ -10,6 +10,8 @@ public class Song {
     private String date;
     private long duration;
 
+    private Button editButton;
+
     public Song(int id, String name, String date, long duration){
         this.id = id;
         this.name = name;
@@ -29,7 +31,15 @@ public class Song {
         return this.date;
     }
 
+    public Button getEditButton() {
+        return this.editButton;
+    }
+
     public long getDuration() {
         return this.duration;
+    }
+
+    public void setEditButton(Button newButton) {
+        this.editButton = newButton;
     }
 }

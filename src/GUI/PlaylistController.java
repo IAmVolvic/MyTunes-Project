@@ -6,9 +6,12 @@ import BE.Song;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.SongList;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -76,12 +79,20 @@ public class PlaylistController {
 
 
     private void setViewSongList() {
+        int index = 1;
         ArrayList<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
-            Song songConstruct = new Song(val.getId(), val.getName(), val.getDate(), 0);
+            Song songConstruct = new Song(index, val.getName(), val.getDate(), 0);
+
+            Button editButton = new Button();
+            editButton.getStyleClass().add("editButton");
+            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
+            songConstruct.setEditButton(editButton);
+
             songData.add(songConstruct);
+            index++;
         }
 
         tableController.addSong(songData);

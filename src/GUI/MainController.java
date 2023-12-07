@@ -47,7 +47,9 @@ public class MainController {
     public TableColumn<String, Integer> col1;
     public TableColumn<String, String>  col2;
     public TableColumn<String, String>  col3;
-    public TableColumn<String, Long>  col4;
+    public TableColumn<String, Long>    col4;
+    public TableColumn<String, Button>  col5;
+
 
 
     //Icons
@@ -106,7 +108,7 @@ public class MainController {
     // Post Initialize
     private void postInitialize() {
         // Get and start the songs table / initialize it
-        tableController = new SongList(songList, col1, col2, col3, col4);
+        tableController = new SongList(songList, col1, col2, col3, col4, col5);
 
 
         //Set Playlist Controller

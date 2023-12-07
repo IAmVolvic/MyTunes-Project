@@ -148,7 +148,7 @@
                               <TableView fx:id="songList" prefHeight="390.0" prefWidth="980.0" HBox.hgrow="ALWAYS">
                                  <columns>
                                     <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column" text="#" />
-                                    <TableColumn fx:id="col2" editable="false" maxWidth="2000.0" minWidth="120.0" prefWidth="610.0" text="Title" />
+                                    <TableColumn fx:id="col2" editable="false" maxWidth="2000.0" minWidth="120.0" prefWidth="450.0" text="Title" />
                                     <TableColumn fx:id="col3" editable="false" maxWidth="200.0" minWidth="140.0" prefWidth="200.0" resizable="false" text="Date added" />
                                     <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column">
                                        <graphic>
@@ -159,6 +159,7 @@
                                           </FontAwesomeIconView>
                                        </graphic>
                                     </TableColumn>
+                                    <TableColumn fx:id="col5" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" styleClass="centered-column" />
                                  </columns>
                                  <styleClass>
                                     <String fx:value="bg-transparent" />
