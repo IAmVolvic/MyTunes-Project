@@ -4,8 +4,9 @@ import BE.Playlist;
 import BE.Song;
 import DAL.Logic.MyPlaylistController;
 import DAL.Logic.MySongsController;
-import DLL.Components.MediaController;
-import DLL.Components.FileController;
+import DLL.Media.MediaController;
+import DLL.FIle.FileController;
+import DLL.Media.MediaPlayerObservable;
 import javafx.event.ActionEvent;
 
 import java.io.File;
@@ -43,7 +44,6 @@ public class DllController {
     }
 
 
-
     public File callFileChooser(ActionEvent event, String filters){
         return fileController.promptFilerChooser(event, filters);
     }
@@ -75,5 +75,9 @@ public class DllController {
 
     public ArrayList<Song> getSongs(int playlistId) {
         return mySongs.getPlaylistSongs(playlistId);
+    }
+
+    public void bindProgressObserver(MediaPlayerObservable observable) {
+        this.mediaController.bindProgressListener(observable);
     }
 }

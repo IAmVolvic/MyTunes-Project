@@ -3,6 +3,7 @@ package GUI;
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
+import DLL.Media.MediaPlayerObservable;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.Modal.ModalConfigs.AddSongModalView;
@@ -14,14 +15,11 @@ import GUI.Components.VolumeControl;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -40,7 +38,9 @@ public class MainController {
 
 
     // Volume slider
+    public ProgressBar songProgressBar;
     public JFXSlider volume;
+
 
     // Getting the table columns
     public TableView songList;
@@ -69,6 +69,8 @@ public class MainController {
 
     // Backend Controllers
     private final DllController dllController = new DllController();
+
+    private MediaPlayerObservable mediaPlayerObservable;
 
 
     //Constructor
@@ -133,6 +135,9 @@ public class MainController {
         // Get and start the modal controller
         modalController = new ModalController(modal_main);
         buildPlaylistButtons();
+
+        mediaPlayerObservable = new MediaPlayerObservable(songProgressBar);
+        dllController.bindProgressObserver(this.mediaPlayerObservable);
     }
 
 

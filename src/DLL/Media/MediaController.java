@@ -1,4 +1,4 @@
-package DLL.Components;
+package DLL.Media;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -12,6 +12,11 @@ public class MediaController {
 
     private double lastVolume = 0.01;
 
+    private final MediaPlayerSubject mPlayerSubject;
+
+    public MediaController() {
+        this.mPlayerSubject = new MediaPlayerSubject();
+    }
 
     public void playSong(File Song) {
         System.out.println(Song.getName());
@@ -24,6 +29,10 @@ public class MediaController {
 
         mPlayer.setVolume(lastVolume);
         mPlayer.play();
+
+        mPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            this.mPlayerSubject.update(newValue.toMillis() / mPlayer.getTotalDuration().toMillis());
+        });
     }
 
     public void pauseSong() {
@@ -37,4 +46,8 @@ public class MediaController {
         lastVolume = newVolume;
     }
 
+
+    public void bindProgressListener(MediaPlayerObservable listener) {
+        this.mPlayerSubject.registerObserver(listener);
+    }
 }
