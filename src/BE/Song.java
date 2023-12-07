@@ -8,6 +8,8 @@ public class Song {
     private int id;
     private String name;
     private String date;
+    private String genre;
+
     private long duration;
 
     private Button editButton;
