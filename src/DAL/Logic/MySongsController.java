@@ -1,12 +1,16 @@
 package DAL.Logic;
 
+import BE.Playlist;
 import BE.Song;
 import DAL.ConnectionManager;
 import javafx.scene.control.Button;
 
 import java.sql.*;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MySongsController {
     private final ConnectionManager cm = new ConnectionManager();
@@ -33,6 +37,37 @@ public class MySongsController {
             }
 
             return songList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Song newSong(int playlistId, String songTitle) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "INSERT INTO songs(playlist_id, song_name, created_date) VALUES (?, ?, ?)";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setInt(1, playlistId);
+            pt.setString(2, songTitle);
+            pt.setString(3, dateFormat.format(cal.getTime()));
+
+            int affectedRows = pt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating playlist failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = pt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return new Song(generatedKeys.getInt(1),songTitle, dateFormat.format(cal.getTime()), 0);
+                }
+                else {
+                    throw new SQLException("Creating playlist failed, no ID obtained.");
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

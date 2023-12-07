@@ -11,6 +11,8 @@ import GUI.Components.SongList;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -23,7 +25,7 @@ import java.io.File;
 
 public class AddSongModalView extends ModalView {
     //Class verbs
-    String pathToImage;
+    String pathToSong;
 
     //View FXML Elements
     private final Button songSelect = new Button();
@@ -61,9 +63,9 @@ public class AddSongModalView extends ModalView {
             File file = dllController.callFileChooser(event, "music_add");
 
             if(file != null){
-                songTitleInput.setText(file.getName());
+                songTitleInput.setText(file.getName().substring(0, file.getName().lastIndexOf('.')));
                 songSelectSelected.setText(file.getName());
-                pathToImage = file.getPath();
+                pathToSong = file.getPath();
             }
         });
 
@@ -104,29 +106,23 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        ObservableList<Song> songData = FXCollections.observableArrayList();
-//
-//        Song test = new Song(1,  "Cool song name", formatter.format(now), 2 );
-//        songData.add(test);
-//
-//        tableController.addSong(songData);
-    }
-
-    private void createSong() {
-        //  Make sure the file selected isn't null
-        //  Make sure title isn't null or empty
-        //  Make sure title can follow set of rules
-        //  1, The string cannot have a space at the beginning or end of the string ( anywhere in between is fine ) : [a-zA-Z0-9]...
-        //  2, The string cannot at any point have any special characters : ...[a-zA-Z0-9\s]...
-        //  4, The string can only be up to 32 characters long : ...{0,30}
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || !songTitleInput.getText().matches("^[a-zA-Z0-9][a-zA-Z0-9\\s]{0,30}[a-zA-Z0-9]$") || pathToImage == null) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || !songTitleInput.getText().matches("^[a-zA-Z0-9][a-zA-Z0-9\\s]{0,30}[a-zA-Z0-9]$") || pathToSong == null) {
             System.out.println("Something went wrong");
             return;
         }
 
+        Song songConstruct = dllController.createSong(1, pathToSong, songTitleInput.getText());
+
+        ObservableList<Song> songData = FXCollections.observableArrayList();
+
+        Button editButton = new Button();
+        editButton.getStyleClass().add("editButton");
+        editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
+        songConstruct.setEditButton(editButton);
+
+        songData.add(songConstruct);
+
+        tableController.addSong(songData);
     }
 
     public HBox getView() {

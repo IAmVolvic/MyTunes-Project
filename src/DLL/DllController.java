@@ -72,6 +72,12 @@ public class DllController {
     }
 
 
+    public Song createSong(int playListId, String songPath, String songTitle){
+        Song newSong = mySongs.newSong(playListId, songTitle);
+
+        return newSong;
+    }
+
 
     public ArrayList<Song> getSongs(int playlistId) {
         return mySongs.getPlaylistSongs(playlistId);
