@@ -1,33 +1,23 @@
 package GUI.Components.Modal.ModalConfigs;
 
-import APP_SETTINGS.AppConfig;
-import BE.Playlist;
-import BE.Song;
 import DLL.DllController;
-import GUI.Components.FXMLCustom.PlaylistButton;
+
 import GUI.Components.Modal.ModalController;
 import GUI.Components.Modal.ModalView;
 import GUI.Components.SongList;
-import GUI.PlaylistController;
+
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
+
 
 public class AddSongModalView extends ModalView {
     //Class verbs
