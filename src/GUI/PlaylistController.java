@@ -5,6 +5,7 @@ import BE.Playlist;
 import BE.Song;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,10 +23,11 @@ public class PlaylistController {
     private PlaylistButton selectedPlaylistButton;
     private Playlist selectedPlaylistData;
 
-
     //Dll Controller
+    private MediaButtons mediaButtons;
     private DllController dllController;
     private SongList tableController;
+
 
     //Extra
     private VBox playlist_list;
@@ -33,7 +35,11 @@ public class PlaylistController {
     private Label playlist_viewTitle;
     private Label playlist_viewTotalSongs;
 
-    public void setNodes(DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel){
+    private Pane playlist_currentlyPlayingIcon;
+    private Label playlist_currentlyPlayingTitle;
+
+    public void setNodes(MediaButtons mb, DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl){
+        mediaButtons = mb;
         dllController = dc;
         tableController = tC;
 
@@ -41,6 +47,9 @@ public class PlaylistController {
         playlist_viewIcon = viewIcon;
         playlist_viewTitle = viewTitle;
         playlist_viewTotalSongs = viewTotalSongsLabel;
+
+        playlist_currentlyPlayingIcon = cpi;
+        playlist_currentlyPlayingTitle = cpl;
     }
 
     public void setPlaylistView(PlaylistButton plBtn) {
@@ -97,17 +106,22 @@ public class PlaylistController {
     }
 
     private void changeViewStyles() {
+        mediaButtons.resetIcon();
+
         File icon = dllController.getFile(
                 AppConfig.getPlaylistPath() + selectedPlaylistData.playlistId() + "_" + selectedPlaylistData.playlistName(),
                 "icon"
         );
 
         if(icon != null){
+            playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('" + icon.toURI() + "'); ");
             playlist_viewIcon.setStyle("-fx-background-image: url('" + icon.toURI() + "'); ");
         }else{
+            playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('images/My.png');");
             playlist_viewIcon.setStyle("-fx-background-image: url('images/My.png');");
         }
 
+        playlist_currentlyPlayingTitle.setText(selectedPlaylistData.playlistName());
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
         updateTotalSongsNum(dllController.getSongs(selectedPlaylistData.playlistId(), null).size());
     }
@@ -126,8 +140,13 @@ public class PlaylistController {
         }
 
         tableController.addSong(songData);
+        setMediaPlaylist();
     }
 
+
+    public void setMediaPlaylist(){
+       dllController.setPlaylistSongs(selectedPlaylistData);
+    }
 
     private Playlist getDetails(int id) {
         ArrayList<Playlist> playlistTable = dllController.getPlaylistsSingle();

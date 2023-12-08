@@ -8,6 +8,7 @@ import DLL.Media.MediaController;
 import DLL.FIle.FileController;
 import DLL.Media.MediaPlayerObservable;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -21,29 +22,32 @@ public class DllController {
     private ArrayList<Playlist> playLists;
 
 
-    private final String currentSong = "ThxSoMchHate.mp3";
-
-
     // Controllers
     MyPlaylistController myPlaylist = new MyPlaylistController();
     MySongsController mySongs = new MySongsController();
     FileController fileController = new FileController(myPlaylist);
-    MediaController mediaController = new MediaController();
+    MediaController mediaController = new MediaController(fileController);
 
 
-
+    // CONSTRUCTOR
     public DllController(){}
 
 
 
+    // MEDIA CONTROLS
+    public void inzSongLabel(Label songLabel){ mediaController.setLabel(songLabel); }
     public void PlaySong(){
-        if(fileController.getSong(currentSong) != null){
-            mediaController.playSong(fileController.getSong(currentSong));
-        }
+        mediaController.playSong();
     }
 
     public void PauseSong(){
         mediaController.pauseSong();
+    }
+
+    public void skipSong() { mediaController.skipSong(); }
+
+    public void prevSong() {
+        mediaController.prevSong();
     }
 
     public void SetVolume(Double newVolume){
@@ -51,16 +55,8 @@ public class DllController {
     }
 
 
-    public File callFileChooser(ActionEvent event, String filters){
-        return fileController.promptFilerChooser(event, filters);
-    }
 
-    public File getFile(String path, String filter) {
-        return fileController.findFile(path, filter);
-    }
-
-
-
+    //PLAYLIST
     public ArrayList<Playlist> getPlaylistsINT() {
         ArrayList<Playlist> dbPlaylists = myPlaylist.getAllPlaylists();
 
@@ -78,8 +74,6 @@ public class DllController {
         return playLists;
     }
 
-
-
     public Playlist createPlaylist(String iconPath, String playlistTitle){
         //Add the Data to the DB
         Playlist newPlaylist = myPlaylist.createPlaylist(playlistTitle);
@@ -94,6 +88,20 @@ public class DllController {
         return newPlaylist;
     }
 
+
+
+    //SONGS
+    public void setCurrentSongLabel(Label songLabel){}
+    public List<Song> getSongs(int getPlaylistWithId, String searchFilter) {
+        return playLists.stream()
+                .filter(playlist -> playlist.playlistId() == getPlaylistWithId)
+                .findFirst()
+                .map(Playlist::getSongTable)
+                .orElse(new ArrayList<>())
+                .stream()
+                .filter(song -> searchFilter == null || isSimilar(song.getName().toLowerCase(), searchFilter.toLowerCase()))
+                .collect(Collectors.toList());
+    }
 
     public ArrayList<Song> createSong(int playListId, String playListName, String songPath, String songTitle){
         //New File Name
@@ -113,25 +121,24 @@ public class DllController {
         return songsTable.get().getSongTable();
     }
 
+    public void setPlaylistSongs(Playlist playlist){ mediaController.setPlaylist(playlist); }
 
-    public List<Song> getSongs(int getPlaylistWithId, String searchFilter) {
-        return playLists.stream()
-                .filter(playlist -> playlist.playlistId() == getPlaylistWithId)
-                .findFirst()
-                .map(Playlist::getSongTable)
-                .orElse(new ArrayList<>())
-                .stream()
-                .filter(song -> searchFilter == null || isSimilar(song.getName().toLowerCase(), searchFilter.toLowerCase()))
-                .collect(Collectors.toList());
+
+    //OTHER
+    public File callFileChooser(ActionEvent event, String filters){
+        return fileController.promptFilerChooser(event, filters);
+    }
+
+    public File getFile(String path, String filter) {
+        return fileController.findFile(path, filter);
+    }
+
+    public void bindProgressObserver(MediaPlayerObservable observable) {
+        this.mediaController.bindProgressListener(observable);
     }
 
     private boolean isSimilar(String str1, String str2) {
         // Adjust this condition based on your similarity criteria
         return str1.contains(str2);
-    }
-
-
-    public void bindProgressObserver(MediaPlayerObservable observable) {
-        this.mediaController.bindProgressListener(observable);
     }
 }

@@ -17,29 +17,11 @@ public class FileController {
     private final MyPlaylistController myPlaylist;
     private final String playlistPath = AppConfig.getPlaylistPath();
 
-    File musicFolder = new File("resources/music");
-    File[] listOfFiles = musicFolder.listFiles();
-
-
 
     public FileController(MyPlaylistController mPlayList) {
         myPlaylist = mPlayList;
         createPlaylistPath();
         playlistPathCleanup();
-    }
-
-
-    public File getSong(String songName) {
-        isValid();
-
-        for (File file : listOfFiles) {
-            if (file.getName().equals(songName)) {
-                return file;
-            }
-        }
-
-        System.out.println("Song not found");
-        return null;
     }
 
 
@@ -101,15 +83,6 @@ public class FileController {
         } else {
             return fileName.substring(dotIndex + 1);
         }
-    }
-
-
-    private boolean isValid() {
-        if (listOfFiles == null) {
-            System.out.println("No files found in the specified directory: " + musicFolder.getAbsolutePath());
-            return false;
-        }
-        return true;
     }
 
 

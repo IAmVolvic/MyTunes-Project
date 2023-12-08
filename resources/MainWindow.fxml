@@ -176,10 +176,10 @@
          <bottom>
             <HBox prefHeight="80.0" prefWidth="1062.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane maxHeight="65.0" maxWidth="65.0" minHeight="65.0" minWidth="65.0" styleClass="Image" />
+                  <Pane fx:id="playlistIconPlaying" maxHeight="65.0" maxWidth="65.0" minHeight="65.0" minWidth="65.0" styleClass="Image" />
                   <VBox alignment="CENTER_LEFT" minWidth="70.0" prefHeight="65.0" prefWidth="205.0" spacing="3.0">
                      <children>
-                        <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" text="Love &amp; Hate" textFill="WHITE">
+                        <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" textFill="WHITE">
                            <styleClass>
                               <String fx:value="t-white" />
                               <String fx:value="bold" />
@@ -189,7 +189,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="songLabelCreator" prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne" textFill="WHITE">
+                        <Label fx:id="playlistNamePlaying" prefHeight="17.0" prefWidth="205.0" textFill="WHITE">
                            <styleClass>
                               <String fx:value="t-white" />
                               <String fx:value="normal" />
@@ -208,7 +208,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="140.0" spacing="10.0">
                            <children>
-                              <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="media-button">
+                              <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#previousSong" styleClass="media-button">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="BACKWARD" size="15" styleClass="media-button-child" translateX="-1.0">
                                        <rotationAxis>
@@ -228,7 +228,7 @@
                                     <FontAwesomeIconView fx:id="iPlay" glyphName="PLAY" size="15" styleClass="media-button-child" textAlignment="CENTER" translateX="0.5" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="media-button">
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#skipSong" styleClass="media-button">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="FORWARD" size="15" styleClass="media-button-child" translateX="1.0" />
                                  </graphic>

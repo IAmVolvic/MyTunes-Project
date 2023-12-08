@@ -127,6 +127,7 @@ public class AddSongModalView extends ModalView {
 
         tableController.addSong(songData);
         playlistController.updateTotalSongsNum(newSongConstruct.size());
+        playlistController.setMediaPlaylist();
 
         modalController.closeModal();
     }

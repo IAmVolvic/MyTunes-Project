@@ -9,7 +9,7 @@ import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.Modal.ModalConfigs.AddSongModalView;
 import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
 import GUI.Components.Modal.ModalController;
-import GUI.Components.PlayButton;
+import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
 import GUI.Components.VolumeControl;
 
@@ -22,6 +22,7 @@ import javafx.scene.control.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -36,6 +37,11 @@ public class MainController {
     public Pane playlistViewIcon;
     public Label playlistViewTitle;
     public Label viewTotalSongs;
+
+    //Currently Playing
+    public Pane playlistIconPlaying;
+    public Label playlistNamePlaying;
+    public Label songLabel;
 
 
     // Volume slider
@@ -62,12 +68,14 @@ public class MainController {
     //Modal Parts
     public StackPane modal_main;
 
+
     //Search
     public TextField searchInput;
     private final Timeline timeline = new Timeline();
 
+
     //Frontend Controllers
-    private PlayButton playBTNController;
+    private MediaButtons mediaButtons;
     private VolumeControl volumeController;
     private ModalController modalController;
     private final PlaylistController playlistController = new PlaylistController();
@@ -98,11 +106,18 @@ public class MainController {
     }
 
 
-    //Play Button
+    //Media Buttons
     public void playBtn(ActionEvent actionEvent) {
         //Send Button Logic to its own container
-        playBTNController.playButtonClicked(actionEvent);
-        volumeController.initialize();
+        mediaButtons.playButtonClicked(actionEvent);
+    }
+
+    public void skipSong(ActionEvent actionEvent) {
+        mediaButtons.skipSong(actionEvent);
+    }
+
+    public void previousSong(ActionEvent actionEvent) {
+        mediaButtons.prevSong(actionEvent);
     }
 
 
@@ -114,23 +129,29 @@ public class MainController {
 
     // Post Initialize
     private void postInitialize() {
+        dllController.inzSongLabel(songLabel);
+
+
         // Get and start the songs table / initialize it
         tableController = new SongList(songList, col1, col2, col3, col4, col5);
+
+        //Set PlayButton Controller
+        mediaButtons = new MediaButtons(iPlay, dllController);
 
 
         //Set Playlist Controller
         playlistController.setNodes(
+                mediaButtons,
                 dllController,
                 tableController,
                 playlist_list,
                 playlistViewIcon,
                 playlistViewTitle,
-                viewTotalSongs
+                viewTotalSongs,
+                playlistIconPlaying,
+                playlistNamePlaying
         );
 
-
-        //Set PlayButton Controller
-        playBTNController = new PlayButton(iPlay, dllController);
 
 
         // Get and start the volume controller / initialize it
