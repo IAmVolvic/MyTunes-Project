@@ -4,6 +4,9 @@ import javafx.util.Duration;
 
 public class AppConfig {
     private static String playlistPath;
+    private static final Duration DELAY = Duration.seconds(0.2);
+
+
 
     public static String getPlaylistPath() {
         return playlistPath;
@@ -19,6 +22,8 @@ public class AppConfig {
 
         return songInMins + ":" + String.format("%02d", songInSec % 60);
     }
+
+    public static Duration getDelay() { return DELAY; }
 
 
     public static String getPlaylistTotalSongs(int totalSongs){

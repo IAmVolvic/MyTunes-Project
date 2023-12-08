@@ -43,12 +43,17 @@ public class FileController {
     }
 
 
+    public void createSong(String songPath, String songName, int playListId, String playListName) {
+        copyTo(songPath, playlistPath + playListId + "_" + playListName + "/", songName);
+    }
+
+
     public void createPlaylistPathSingle(String folderName, int playlistID) {
         createPath(playlistPath + playlistID + "_" + folderName);
     }
 
     public void createPlaylistIcon(String icon, String playlistName, int playlistId){
-        copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/");
+        copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/", "icon");
     }
 
 
@@ -66,7 +71,7 @@ public class FileController {
     }
 
 
-    private void copyTo(String filePath, String toPath) {
+    private void copyTo(String filePath, String toPath, String newFileName) {
         Path from = Paths.get(filePath);
         Path to = Paths.get(toPath + from.getFileName());
 
@@ -79,7 +84,7 @@ public class FileController {
             Files.copy(from, to, options);
             Files.move(
                 to,
-                to.resolveSibling("icon." + getFileExtension( from.getFileName().toString() ) ),
+                to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ),
                 StandardCopyOption.REPLACE_EXISTING
             );
         } catch (IOException e) {

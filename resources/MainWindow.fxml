@@ -312,7 +312,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </FontAwesomeIconView>
-                              <TextField focusTraversable="false" prefWidth="250.0" promptText="Search">
+                              <TextField fx:id="searchInput" focusTraversable="false" prefWidth="250.0" promptText="Search">
                                  <styleClass>
                                     <String fx:value="bg-sub" />
                                     <String fx:value="input-area" />

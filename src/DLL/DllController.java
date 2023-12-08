@@ -11,7 +11,10 @@ import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DllController {
     //Single
@@ -92,7 +95,11 @@ public class DllController {
     }
 
 
-    public ArrayList<Song> createSong(int playListId, String songPath, String songTitle){
+    public ArrayList<Song> createSong(int playListId, String playListName, String songPath, String songTitle){
+        //New File Name
+        String baseEncoded = Base64.getEncoder().encodeToString(songTitle.getBytes());
+
+        // Store the new song in the DB, and update the cache
         Song newSong = mySongs.newSong(playListId, songTitle);
         Optional<Playlist> songsTable = playLists.stream()
                 .filter(playlist -> playlist.playlistId() == playListId)
@@ -100,17 +107,29 @@ public class DllController {
         songsTable.get().addSong(newSong);
 
 
+        // Store / rename the audio file
+        fileController.createSong(songPath, baseEncoded, playListId, playListName);
+
         return songsTable.get().getSongTable();
     }
 
 
-    public ArrayList<Song> getSongs(int getPlaylistWithId) {
-        Optional<Playlist> songsTable = playLists.stream()
+    public List<Song> getSongs(int getPlaylistWithId, String searchFilter) {
+        return playLists.stream()
                 .filter(playlist -> playlist.playlistId() == getPlaylistWithId)
-                .findFirst();
-
-        return songsTable.get().getSongTable();
+                .findFirst()
+                .map(Playlist::getSongTable)
+                .orElse(new ArrayList<>())
+                .stream()
+                .filter(song -> searchFilter == null || isSimilar(song.getName().toLowerCase(), searchFilter.toLowerCase()))
+                .collect(Collectors.toList());
     }
+
+    private boolean isSimilar(String str1, String str2) {
+        // Adjust this condition based on your similarity criteria
+        return str1.contains(str2);
+    }
+
 
     public void bindProgressObserver(MediaPlayerObservable observable) {
         this.mediaController.bindProgressListener(observable);

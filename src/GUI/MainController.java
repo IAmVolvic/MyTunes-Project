@@ -13,6 +13,8 @@ import GUI.Components.PlayButton;
 import GUI.Components.SongList;
 import GUI.Components.VolumeControl;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
@@ -24,14 +26,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-
 import java.io.File;
 import java.util.ArrayList;
 
 
 public class MainController {
-    public StackPane globalBase;
-
     // Playlist list nodes
     public VBox playlist_list;
     public Pane playlistViewIcon;
@@ -63,6 +62,9 @@ public class MainController {
     //Modal Parts
     public StackPane modal_main;
 
+    //Search
+    public TextField searchInput;
+    private final Timeline timeline = new Timeline();
 
     //Frontend Controllers
     private PlayButton playBTNController;
@@ -142,6 +144,22 @@ public class MainController {
 
         mediaPlayerObservable = new MediaPlayerObservable(songProgressBar, songProgressNum, songProgressNumTotal);
         dllController.bindProgressObserver(this.mediaPlayerObservable);
+
+
+        //Search
+        searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            timeline.stop();
+
+            // Create a new timeline
+            timeline.getKeyFrames().clear();
+            timeline.getKeyFrames().add(new KeyFrame(AppConfig.getDelay(), event -> {
+                // This block will be executed after the delay
+                playlistController.updateViewSongList(newValue);
+            }));
+
+            // Start the timeline
+            timeline.playFromStart();
+        });
     }
 
 
@@ -159,7 +177,7 @@ public class MainController {
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setId(val.playlistId());
             playlistButton.setTitle(val.playlistName());
-            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(dllController.getSongs(val.playlistId()).size()));
+            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(dllController.getSongs(val.playlistId(), null).size()));
 
             if(icon != null){
                 playlistButton.setIcon(icon);
@@ -173,6 +191,5 @@ public class MainController {
             index++;
         }
     }
-
 
 }

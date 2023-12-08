@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistController {
     private PlaylistButton selectedPlaylistButton;
@@ -58,6 +59,42 @@ public class PlaylistController {
     }
 
 
+    public void updateViewSongList(String searchFilter) {
+        int index = 1;
+        List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), searchFilter);
+        ObservableList<Song> songData = FXCollections.observableArrayList();
+
+        for(Song val : songs){
+            Button editButton = new Button();
+            editButton.getStyleClass().add("editButton");
+            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
+            val.setEditButton(editButton);
+            val.setTableId(index);
+
+            songData.add(val);
+            index++;
+        }
+
+        tableController.addSong(songData);
+    }
+
+
+    public int getPlaylistId(){
+        return selectedPlaylistData.playlistId();
+    }
+    public String getPlaylistName(){
+        return selectedPlaylistData.playlistName();
+    }
+
+    public void updateTotalSongsNum(int Number) {
+        String newTitle = AppConfig.getPlaylistTotalSongs(Number);
+
+        selectedPlaylistButton.setNumOfSongs(newTitle);
+        playlist_viewTotalSongs.setText(newTitle);
+    }
+
+
+
     private void changeButtonStyles() {
         ObservableList<Node> children = playlist_list.getChildren();
         for (Node val : children) {
@@ -79,13 +116,13 @@ public class PlaylistController {
         }
 
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
-        updateTotalSongsNum(dllController.getSongs(selectedPlaylistData.playlistId()).size());
+        updateTotalSongsNum(dllController.getSongs(selectedPlaylistData.playlistId(), null).size());
     }
 
 
     private void setViewSongList() {
         int index = 1;
-        ArrayList<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId());
+        List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), null);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
@@ -112,17 +149,5 @@ public class PlaylistController {
             }
         }
         return null;
-    }
-
-
-    public int getPlaylistId(){
-        return selectedPlaylistData.playlistId();
-    }
-
-    public void updateTotalSongsNum(int Number) {
-        String newTitle = AppConfig.getPlaylistTotalSongs(Number);
-
-        selectedPlaylistButton.setNumOfSongs(newTitle);
-        playlist_viewTotalSongs.setText(newTitle);
     }
 }

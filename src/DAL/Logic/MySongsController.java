@@ -1,16 +1,14 @@
 package DAL.Logic;
 
-import BE.Playlist;
+
 import BE.Song;
 import DAL.ConnectionManager;
-import javafx.scene.control.Button;
-
 import java.sql.*;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 
 public class MySongsController {
     private final ConnectionManager cm = new ConnectionManager();

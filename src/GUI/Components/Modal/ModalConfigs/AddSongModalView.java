@@ -109,14 +109,14 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || !songTitleInput.getText().matches("^[a-zA-Z0-9][a-zA-Z0-9\\s]{0,30}[a-zA-Z0-9]$") || pathToSong == null) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null) {
             System.out.println("Something went wrong");
             return;
         }
 
         int index = 1;
 
-        ArrayList<Song> newSongConstruct = dllController.createSong(playlistController.getPlaylistId(), pathToSong, songTitleInput.getText());
+        ArrayList<Song> newSongConstruct = dllController.createSong(playlistController.getPlaylistId(), playlistController.getPlaylistName(), pathToSong, songTitleInput.getText());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : newSongConstruct){

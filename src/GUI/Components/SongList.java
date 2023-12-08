@@ -2,7 +2,6 @@ package GUI.Components;
 
 
 import BE.Song;
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
