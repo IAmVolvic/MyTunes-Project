@@ -1,6 +1,5 @@
 package GUI.Components.Modal.ModalConfigs;
 
-import BE.Playlist;
 import BE.Song;
 import DLL.DllController;
 
@@ -8,6 +7,7 @@ import GUI.Components.Modal.ModalController;
 import GUI.Components.Modal.ModalView;
 import GUI.Components.SongList;
 
+import GUI.PlaylistController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class AddSongModalView extends ModalView {
@@ -39,15 +40,17 @@ public class AddSongModalView extends ModalView {
     DllController dllController;
     ModalController modalController;
     SongList tableController;
+    PlaylistController playlistController;
 
 
-    public AddSongModalView(DllController dllC, ModalController modalC, SongList tC) {
+    public AddSongModalView(DllController dllC, ModalController modalC, SongList tC, PlaylistController pC) {
         super();
 
         //Setting outside controllers
         dllController = dllC;
         modalController = modalC;
         tableController = tC;
+        playlistController = pC;
 
         this.setTitle("Add Song To Playlist");
         this.setActionTitle("Add");
@@ -111,18 +114,27 @@ public class AddSongModalView extends ModalView {
             return;
         }
 
-        Song songConstruct = dllController.createSong(1, pathToSong, songTitleInput.getText());
+        int index = 1;
 
+        ArrayList<Song> newSongConstruct = dllController.createSong(playlistController.getPlaylistId(), pathToSong, songTitleInput.getText());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
-        Button editButton = new Button();
-        editButton.getStyleClass().add("editButton");
-        editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
-        songConstruct.setEditButton(editButton);
+        for(Song val : newSongConstruct){
+            Button editButton = new Button();
+            editButton.getStyleClass().add("editButton");
+            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
+            val.setEditButton(editButton);
+            val.setTableId(index);
 
-        songData.add(songConstruct);
+            songData.add(val);
+
+            index++;
+        }
 
         tableController.addSong(songData);
+        playlistController.updateTotalSongsNum(newSongConstruct.size());
+
+        modalController.closeModal();
     }
 
     public HBox getView() {

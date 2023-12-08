@@ -38,7 +38,7 @@ public class SongList {
         col5.setReorderable(false);
 
         // Set the tables cell value
-        col1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col1.setCellValueFactory(new PropertyValueFactory<>("tableId"));
         col2.setCellValueFactory(new PropertyValueFactory<>("name"));
         col3.setCellValueFactory(new PropertyValueFactory<>("date"));
         col4.setCellValueFactory(new PropertyValueFactory<>("duration"));

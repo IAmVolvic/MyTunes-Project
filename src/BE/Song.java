@@ -2,9 +2,8 @@ package BE;
 
 import javafx.scene.control.Button;
 
-import java.util.Date;
-
 public class Song {
+    private int tableId;
     private int id;
     private String name;
     private String date;
@@ -19,6 +18,10 @@ public class Song {
         this.name = name;
         this.date = date;
         this.duration = duration;
+    }
+
+    public int getTableId() {
+        return this.tableId;
     }
 
     public int getId() {
@@ -37,11 +40,17 @@ public class Song {
         return this.editButton;
     }
 
+
+
     public long getDuration() {
         return this.duration;
     }
 
     public void setEditButton(Button newButton) {
         this.editButton = newButton;
+    }
+
+    public void setTableId(int newId) {
+        this.tableId = newId;
     }
 }

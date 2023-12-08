@@ -11,10 +11,14 @@ import javafx.event.ActionEvent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class DllController {
-    private final String currentSong = "ThxSoMchHate.mp3";
+    //Single
+    private ArrayList<Playlist> playLists;
 
+
+    private final String currentSong = "ThxSoMchHate.mp3";
 
 
     // Controllers
@@ -54,13 +58,29 @@ public class DllController {
 
 
 
-    public ArrayList<Playlist> getPlaylists() {
-        return myPlaylist.getAllPlaylists();
+    public ArrayList<Playlist> getPlaylistsINT() {
+        ArrayList<Playlist> dbPlaylists = myPlaylist.getAllPlaylists();
+
+        for(Playlist val : dbPlaylists){
+            ArrayList<Song> dbSongsFromPlaylist = mySongs.getPlaylistSongs(val.playlistId());
+            val.addSongTable(dbSongsFromPlaylist);
+        }
+
+        playLists = dbPlaylists;
+
+        return dbPlaylists;
     }
+
+    public ArrayList<Playlist> getPlaylistsSingle() {
+        return playLists;
+    }
+
+
 
     public Playlist createPlaylist(String iconPath, String playlistTitle){
         //Add the Data to the DB
         Playlist newPlaylist = myPlaylist.createPlaylist(playlistTitle);
+        playLists.add(newPlaylist);
 
         //Create the Folder
         fileController.createPlaylistPathSingle(playlistTitle, newPlaylist.playlistId());
@@ -72,15 +92,24 @@ public class DllController {
     }
 
 
-    public Song createSong(int playListId, String songPath, String songTitle){
+    public ArrayList<Song> createSong(int playListId, String songPath, String songTitle){
         Song newSong = mySongs.newSong(playListId, songTitle);
+        Optional<Playlist> songsTable = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playListId)
+                .findFirst();
+        songsTable.get().addSong(newSong);
 
-        return newSong;
+
+        return songsTable.get().getSongTable();
     }
 
 
-    public ArrayList<Song> getSongs(int playlistId) {
-        return mySongs.getPlaylistSongs(playlistId);
+    public ArrayList<Song> getSongs(int getPlaylistWithId) {
+        Optional<Playlist> songsTable = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == getPlaylistWithId)
+                .findFirst();
+
+        return songsTable.get().getSongTable();
     }
 
     public void bindProgressObserver(MediaPlayerObservable observable) {

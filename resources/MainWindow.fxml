@@ -91,7 +91,7 @@
                                           <Font size="25.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
+                                    <Label fx:id="viewTotalSongs" prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="normal" />

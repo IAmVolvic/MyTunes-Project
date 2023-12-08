@@ -36,6 +36,7 @@ public class MainController {
     public VBox playlist_list;
     public Pane playlistViewIcon;
     public Label playlistViewTitle;
+    public Label viewTotalSongs;
 
 
     // Volume slider
@@ -90,7 +91,7 @@ public class MainController {
 
 
     public void newSong(ActionEvent actionEvent) {
-        AddSongModalView modalView = new AddSongModalView(dllController, modalController, tableController);
+        AddSongModalView modalView = new AddSongModalView(dllController, modalController, tableController, playlistController);
         modalController.openModal(modalView.getView());
     }
 
@@ -121,7 +122,8 @@ public class MainController {
                 tableController,
                 playlist_list,
                 playlistViewIcon,
-                playlistViewTitle
+                playlistViewTitle,
+                viewTotalSongs
         );
 
 
@@ -145,7 +147,8 @@ public class MainController {
 
     private void buildPlaylistButtons(){
         int index = 0;
-        ArrayList<Playlist> playlist = dllController.getPlaylists();
+        ArrayList<Playlist> playlist = dllController.getPlaylistsINT();
+
 
         for(Playlist val : playlist){
             File icon = dllController.getFile(
@@ -156,6 +159,9 @@ public class MainController {
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setId(val.playlistId());
             playlistButton.setTitle(val.playlistName());
+
+            String newTitle = "Playlist - " + dllController.getSongs(val.playlistId()).size() + " songs";
+            playlistButton.setNumOfSongs(newTitle);
 
             if(icon != null){
                 playlistButton.setIcon(icon);

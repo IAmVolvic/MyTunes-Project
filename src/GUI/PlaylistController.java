@@ -32,14 +32,16 @@ public class PlaylistController {
     private VBox playlist_list;
     private Pane playlist_viewIcon;
     private Label playlist_viewTitle;
+    private Label playlist_viewTotalSongs;
 
-    public void setNodes(DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle){
+    public void setNodes(DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel){
         dllController = dc;
         tableController = tC;
 
         playlist_list = pl;
         playlist_viewIcon = viewIcon;
         playlist_viewTitle = viewTitle;
+        playlist_viewTotalSongs = viewTotalSongsLabel;
     }
 
     public void setPlaylistView(PlaylistButton plBtn) {
@@ -72,9 +74,12 @@ public class PlaylistController {
 
         if(icon != null){
             playlist_viewIcon.setStyle("-fx-background-image: url('" + icon.toURI() + "'); ");
+        }else{
+            playlist_viewIcon.setStyle("-fx-background-image: url('images/My.png');");
         }
 
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
+        updateTotalSongsNum(dllController.getSongs(selectedPlaylistData.playlistId()).size());
     }
 
 
@@ -84,14 +89,13 @@ public class PlaylistController {
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
-            Song songConstruct = new Song(index, val.getName(), val.getDate(), 0);
-
             Button editButton = new Button();
             editButton.getStyleClass().add("editButton");
             editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
-            songConstruct.setEditButton(editButton);
+            val.setEditButton(editButton);
+            val.setTableId(index);
 
-            songData.add(songConstruct);
+            songData.add(val);
             index++;
         }
 
@@ -100,7 +104,7 @@ public class PlaylistController {
 
 
     private Playlist getDetails(int id) {
-        ArrayList<Playlist> playlistTable = dllController.getPlaylists();
+        ArrayList<Playlist> playlistTable = dllController.getPlaylistsSingle();
 
         for(Playlist val : playlistTable){
             if(val.playlistId() == id){
@@ -108,5 +112,17 @@ public class PlaylistController {
             }
         }
         return null;
+    }
+
+
+    public int getPlaylistId(){
+        return selectedPlaylistData.playlistId();
+    }
+
+    public void updateTotalSongsNum(int Number) {
+        String newTitle = "Playlist - " + Number + " songs";
+
+        selectedPlaylistButton.setNumOfSongs(newTitle);
+        playlist_viewTotalSongs.setText(newTitle);
     }
 }
