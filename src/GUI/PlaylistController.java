@@ -6,18 +6,16 @@ import BE.Song;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
 import GUI.Components.SongList;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PlaylistController {
@@ -65,12 +63,7 @@ public class PlaylistController {
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
-            Button editButton = new Button();
-            editButton.getStyleClass().add("editButton");
-            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
-            val.setEditButton(editButton);
             val.setTableId(index);
-
             songData.add(val);
             index++;
         }
@@ -125,13 +118,9 @@ public class PlaylistController {
         List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), null);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
+        songs.sort(Comparator.comparingInt(Song::getTableId));
         for(Song val : songs){
-            Button editButton = new Button();
-            editButton.getStyleClass().add("editButton");
-            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
-            val.setEditButton(editButton);
             val.setTableId(index);
-
             songData.add(val);
             index++;
         }

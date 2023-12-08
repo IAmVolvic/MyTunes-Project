@@ -1,5 +1,7 @@
 package BE;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.Button;
 
 public class Song {
@@ -11,13 +13,16 @@ public class Song {
 
     private long duration;
 
-    private Button editButton;
+    private Button editButton = new Button();
 
     public Song(int id, String name, String date, long duration){
         this.id = id;
         this.name = name;
         this.date = date;
         this.duration = duration;
+
+        editButton.getStyleClass().add("editButton");
+        editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
     }
 
     public int getTableId() {

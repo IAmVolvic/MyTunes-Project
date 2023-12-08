@@ -120,14 +120,8 @@ public class AddSongModalView extends ModalView {
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : newSongConstruct){
-            Button editButton = new Button();
-            editButton.getStyleClass().add("editButton");
-            editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
-            val.setEditButton(editButton);
             val.setTableId(index);
-
             songData.add(val);
-
             index++;
         }
 
