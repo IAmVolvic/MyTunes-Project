@@ -120,7 +120,7 @@ public class PlaylistController {
     }
 
     public void updateTotalSongsNum(int Number) {
-        String newTitle = "Playlist - " + Number + " songs";
+        String newTitle = AppConfig.getPlaylistTotalSongs(Number);
 
         selectedPlaylistButton.setNumOfSongs(newTitle);
         playlist_viewTotalSongs.setText(newTitle);

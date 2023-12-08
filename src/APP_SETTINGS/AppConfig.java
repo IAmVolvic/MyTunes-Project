@@ -19,4 +19,9 @@ public class AppConfig {
 
         return songInMins + ":" + String.format("%02d", songInSec % 60);
     }
+
+
+    public static String getPlaylistTotalSongs(int totalSongs){
+        return "Playlist - " + totalSongs + " songs";
+    }
 }

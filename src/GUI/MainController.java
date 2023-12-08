@@ -159,9 +159,7 @@ public class MainController {
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setId(val.playlistId());
             playlistButton.setTitle(val.playlistName());
-
-            String newTitle = "Playlist - " + dllController.getSongs(val.playlistId()).size() + " songs";
-            playlistButton.setNumOfSongs(newTitle);
+            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(dllController.getSongs(val.playlistId()).size()));
 
             if(icon != null){
                 playlistButton.setIcon(icon);
