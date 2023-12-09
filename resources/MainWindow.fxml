@@ -91,7 +91,7 @@
                                           <Font size="25.0" />
                                        </font>
                                     </Label>
-                                    <Label prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
+                                    <Label fx:id="viewTotalSongs" prefHeight="17.0" prefWidth="400.0" text="Playlist - 0 songs" textFill="WHITE">
                                        <styleClass>
                                           <String fx:value="t-white" />
                                           <String fx:value="normal" />
@@ -108,7 +108,7 @@
                               </VBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="380.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#addSong" opacity="0.5" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
+                                    <Button mnemonicParsing="false" onAction="#newSong" style="-fx-background-color: #222326; -fx-background-radius: 7px;">
                                        <graphic>
                                           <HBox alignment="CENTER" prefHeight="25.0" prefWidth="100.0" spacing="5.0">
                                              <children>
@@ -147,10 +147,10 @@
                            <children>
                               <TableView fx:id="songList" prefHeight="390.0" prefWidth="980.0" HBox.hgrow="ALWAYS">
                                  <columns>
-                                    <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="#" />
-                                    <TableColumn fx:id="col2" editable="false" maxWidth="610.0" minWidth="120.0" prefWidth="610.0" resizable="false" text="Title" />
-                                    <TableColumn fx:id="col3" editable="false" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" resizable="false" text="Date added" />
-                                    <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false">
+                                    <TableColumn fx:id="col1" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column" text="#" />
+                                    <TableColumn fx:id="col2" editable="false" maxWidth="2000.0" minWidth="120.0" prefWidth="450.0" text="Title" />
+                                    <TableColumn fx:id="col3" editable="false" maxWidth="200.0" minWidth="140.0" prefWidth="200.0" resizable="false" text="Date added" />
+                                    <TableColumn fx:id="col4" editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" styleClass="centered-column">
                                        <graphic>
                                           <FontAwesomeIconView glyphName="CLOCK_ALT" size="16" styleClass="t-sub2">
                                              <font>
@@ -159,6 +159,7 @@
                                           </FontAwesomeIconView>
                                        </graphic>
                                     </TableColumn>
+                                    <TableColumn fx:id="col5" editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" styleClass="centered-column" />
                                  </columns>
                                  <styleClass>
                                     <String fx:value="bg-transparent" />
@@ -175,10 +176,10 @@
          <bottom>
             <HBox prefHeight="80.0" prefWidth="1062.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Pane maxHeight="65.0" maxWidth="65.0" minHeight="65.0" minWidth="65.0" styleClass="Image" />
+                  <Pane fx:id="playlistIconPlaying" maxHeight="65.0" maxWidth="65.0" minHeight="65.0" minWidth="65.0" styleClass="Image" />
                   <VBox alignment="CENTER_LEFT" minWidth="70.0" prefHeight="65.0" prefWidth="205.0" spacing="3.0">
                      <children>
-                        <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" text="Love &amp; Hate" textFill="WHITE">
+                        <Label fx:id="songLabel" prefHeight="17.0" prefWidth="160.0" text="..." textFill="WHITE">
                            <styleClass>
                               <String fx:value="t-white" />
                               <String fx:value="bold" />
@@ -188,7 +189,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="songLabelCreator" prefHeight="17.0" prefWidth="205.0" text="Kyle Sword, Thom Browne" textFill="WHITE">
+                        <Label fx:id="playlistNamePlaying" prefHeight="17.0" prefWidth="205.0" textFill="WHITE">
                            <styleClass>
                               <String fx:value="t-white" />
                               <String fx:value="normal" />
@@ -207,7 +208,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="140.0" spacing="10.0">
                            <children>
-                              <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="media-button">
+                              <Button fx:id="previousButton" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#previousSong" styleClass="media-button">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="BACKWARD" size="15" styleClass="media-button-child" translateX="-1.0">
                                        <rotationAxis>
@@ -227,7 +228,7 @@
                                     <FontAwesomeIconView fx:id="iPlay" glyphName="PLAY" size="15" styleClass="media-button-child" textAlignment="CENTER" translateX="0.5" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="media-button">
+                              <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#skipSong" styleClass="media-button">
                                  <graphic>
                                     <FontAwesomeIconView glyphName="FORWARD" size="15" styleClass="media-button-child" translateX="1.0" />
                                  </graphic>
@@ -239,7 +240,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="65.0" prefWidth="367.0" spacing="10.0">
                            <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
+                              <Text fx:id="songProgressNum" strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                                  <styleClass>
                                     <String fx:value="bold" />
                                     <String fx:value="t-montserrat" />
@@ -250,7 +251,7 @@
                                  </font>
                               </Text>
                               <ProgressBar fx:id="songProgressBar" prefWidth="705.0" progress="0.0" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
+                              <Text fx:id="songProgressNumTotal" strokeType="OUTSIDE" strokeWidth="0.0" text="0:00">
                                  <styleClass>
                                     <String fx:value="bold" />
                                     <String fx:value="t-montserrat" />
@@ -267,7 +268,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <HBox alignment="CENTER" minWidth="70.0" prefHeight="65.0" prefWidth="120.0">
+                  <HBox alignment="CENTER" minWidth="100.0" prefHeight="65.0" prefWidth="120.0">
                      <children>
                         <JFXSlider fx:id="volume" value="1.0" />
                      </children>
@@ -311,7 +312,7 @@
                                     <Insets />
                                  </HBox.margin>
                               </FontAwesomeIconView>
-                              <TextField focusTraversable="false" prefWidth="250.0" promptText="Search">
+                              <TextField fx:id="searchInput" focusTraversable="false" prefWidth="250.0" promptText="Search">
                                  <styleClass>
                                     <String fx:value="bg-sub" />
                                     <String fx:value="input-area" />

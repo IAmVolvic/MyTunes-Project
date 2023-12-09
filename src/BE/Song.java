@@ -1,38 +1,61 @@
 package BE;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.Button;
 
 public class Song {
-    private int id=-1;
+    private int tableId;
+    private int id;
     private String name;
+    private String date;
+    private String genre;
 
-    private Button buttonAction;
+    private long duration;
 
-    public Song(int id, String name, Button btn){
+    private Button editButton = new Button();
+
+    public Song(int id, String name, String date, long duration){
         this.id = id;
         this.name = name;
-        this.buttonAction = btn;
+        this.date = date;
+        this.duration = duration;
+
+        editButton.getStyleClass().add("editButton");
+        editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
+    }
+
+    public int getTableId() {
+        return this.tableId;
     }
 
     public int getId() {
         return this.id;
     }
+
     public String getName() {
         return this.name;
     }
 
-    public Button getButton() {
-        return this.buttonAction;
+    public String getDate() {
+        return this.date;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public Button getEditButton() {
+        return this.editButton;
     }
 
-    public void setButton(Button button) {
-        this.buttonAction = button;
+
+
+    public long getDuration() {
+        return this.duration;
+    }
+
+    public void setEditButton(Button newButton) {
+        this.editButton = newButton;
+    }
+
+    public void setTableId(int newId) {
+        this.tableId = newId;
     }
 }

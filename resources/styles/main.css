@@ -150,3 +150,11 @@ BorderPane {
     -fx-background-position: center center;
     -fx-background-size: cover;
 }
+
+.editButton {
+    -fx-background-color: transparent;
+}
+.editButton > FontAwesomeIconView {
+    -fx-fill: #f2f2f2;
+    -fx-text-fill: #f2f2f2;
+}

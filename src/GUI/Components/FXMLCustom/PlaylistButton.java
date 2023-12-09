@@ -100,6 +100,10 @@ public class PlaylistButton{
         this.playlistTitle.setText(newTitle);
     }
 
+    public void setNumOfSongs(String newString){
+        this.numOfSongs.setText(newString);
+    }
+
     public void setIcon(File newIcon) {
         this.plIcon.setStyle("-fx-background-image: url('" + newIcon.toURI().toString() + "'); ");
     }

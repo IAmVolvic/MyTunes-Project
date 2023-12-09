@@ -1,4 +1,4 @@
-package DLL.Components;
+package DLL.FIle;
 import APP_SETTINGS.AppConfig;
 
 import BE.Playlist;
@@ -17,10 +17,6 @@ public class FileController {
     private final MyPlaylistController myPlaylist;
     private final String playlistPath = AppConfig.getPlaylistPath();
 
-    File musicFolder = new File("resources/music");
-    File[] listOfFiles = musicFolder.listFiles();
-
-
 
     public FileController(MyPlaylistController mPlayList) {
         myPlaylist = mPlayList;
@@ -29,17 +25,8 @@ public class FileController {
     }
 
 
-    public File getSong(String songName) {
-        isValid();
-
-        for (File file : listOfFiles) {
-            if (file.getName().equals(songName)) {
-                return file;
-            }
-        }
-
-        System.out.println("Song not found");
-        return null;
+    public void createSong(String songPath, String songName, int playListId, String playListName) {
+        copyTo(songPath, playlistPath + playListId + "_" + playListName + "/", songName);
     }
 
 
@@ -48,7 +35,7 @@ public class FileController {
     }
 
     public void createPlaylistIcon(String icon, String playlistName, int playlistId){
-        copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/");
+        copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/", "icon");
     }
 
 
@@ -66,7 +53,7 @@ public class FileController {
     }
 
 
-    private void copyTo(String filePath, String toPath) {
+    private void copyTo(String filePath, String toPath, String newFileName) {
         Path from = Paths.get(filePath);
         Path to = Paths.get(toPath + from.getFileName());
 
@@ -79,12 +66,10 @@ public class FileController {
             Files.copy(from, to, options);
             Files.move(
                 to,
-                to.resolveSibling("icon." + getFileExtension( from.getFileName().toString() ) ),
+                to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ),
                 StandardCopyOption.REPLACE_EXISTING
             );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {}
     }
 
 
@@ -96,15 +81,6 @@ public class FileController {
         } else {
             return fileName.substring(dotIndex + 1);
         }
-    }
-
-
-    private boolean isValid() {
-        if (listOfFiles == null) {
-            System.out.println("No files found in the specified directory: " + musicFolder.getAbsolutePath());
-            return false;
-        }
-        return true;
     }
 
 
@@ -165,18 +141,35 @@ public class FileController {
     }
 
 
-    public File promptFilerChooser(ActionEvent event){
+    public File promptFilerChooser(ActionEvent event, String filters){
         Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
+        String fileTitle;
+        FileChooser.ExtensionFilter fileFilters = null;
 
-        fileChooser.setTitle("Playlist Icon");
+        switch (filters) {
+            case "music_edit":
+                fileTitle = "Edit Song";
+                fileFilters = new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3", "*.wav", "*.ogg");
+                break;
 
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif")
-        );
+            case "music_add":
+                fileTitle = "Add Song";
+                fileFilters = new FileChooser.ExtensionFilter("AUDIO FILES", "*.mp3", "*.wav", "*.ogg");
+                break;
 
-        File file = fileChooser.showOpenDialog(stage);
+            case "playlist_edit", "playlist_add":
+                fileTitle = "Playlist Icon";
+                fileFilters = new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif");
+                break;
 
-        return file;
+            default:
+                return null;
+        }
+
+        fileChooser.setTitle(fileTitle);
+        fileChooser.getExtensionFilters().addAll(fileFilters);
+
+        return fileChooser.showOpenDialog(stage);
     }
 }
