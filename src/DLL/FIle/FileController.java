@@ -69,9 +69,7 @@ public class FileController {
                 to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ),
                 StandardCopyOption.REPLACE_EXISTING
             );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {}
     }
 
 

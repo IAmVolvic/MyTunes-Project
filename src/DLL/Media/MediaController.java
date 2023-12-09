@@ -76,6 +76,8 @@ public class MediaController {
 
     //Skip / Prev
     public void skipSong() {
+        if(mPlayer == null || currentPlaylist == null || currentPlaylist.getSongTable().isEmpty()){ return; }
+
         currentSongIndex = (currentSongIndex + 1) % currentPlaylist.getSongTable().size();
         clearSong();
         setSong();
@@ -86,6 +88,8 @@ public class MediaController {
     }
 
     public void prevSong() {
+        if(mPlayer == null || currentPlaylist == null || currentPlaylist.getSongTable().isEmpty()){ return; }
+
         int playlistSize = currentPlaylist.getSongTable().size();
         currentSongIndex = (currentSongIndex - 1 + playlistSize) % playlistSize;
         clearSong();
@@ -118,6 +122,8 @@ public class MediaController {
                 mPlayer = new MediaPlayer(new Media(songPath.toURI().toString()));
                 currentlyPlaying.setText(currentPlaylist.getSongTable().get(currentSongIndex).getName());
             }
+        }else{
+            currentlyPlaying.setText("...");
         }
     }
 

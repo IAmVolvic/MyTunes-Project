@@ -145,7 +145,8 @@ public class PlaylistController {
 
 
     public void setMediaPlaylist(){
-       dllController.setPlaylistSongs(selectedPlaylistData);
+        mediaButtons.resetIcon();
+        dllController.setPlaylistSongs(selectedPlaylistData);
     }
 
     private Playlist getDetails(int id) {

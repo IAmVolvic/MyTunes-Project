@@ -30,21 +30,22 @@ public class MediaButtons {
     }
 
     public void resetIcon(){
+        playState = false;
         changeIcon();
     }
 
     private void playSong(){
         if (playState){
-            dllController.PauseSong();
+            dllController.pauseSong();
         }else{
-            dllController.PlaySong();
+            dllController.playSong();
         }
 
         playState = !playState;
         changeIcon();
     }
 
-    
+
     private void changeIcon(){
         String switcherIcon = (playState) ? "PAUSE" : "PLAY";
         double switcherTransform = (playState) ? -0.5 : 1;

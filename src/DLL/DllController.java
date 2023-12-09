@@ -36,11 +36,12 @@ public class DllController {
 
     // MEDIA CONTROLS
     public void inzSongLabel(Label songLabel){ mediaController.setLabel(songLabel); }
-    public void PlaySong(){
+
+    public void playSong(){
         mediaController.playSong();
     }
 
-    public void PauseSong(){
+    public void pauseSong(){
         mediaController.pauseSong();
     }
 
@@ -91,7 +92,6 @@ public class DllController {
 
 
     //SONGS
-    public void setCurrentSongLabel(Label songLabel){}
     public List<Song> getSongs(int getPlaylistWithId, String searchFilter) {
         return playLists.stream()
                 .filter(playlist -> playlist.playlistId() == getPlaylistWithId)
