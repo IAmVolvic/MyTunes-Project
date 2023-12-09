@@ -4,11 +4,9 @@ import APP_SETTINGS.AppConfig;
 
 import BE.Playlist;
 
-import GUI.Components.FXMLCustom.PlaylistButton;
-import GUI.Components.Modal.ModalController;
+import GUI.Components.PlaylistButton;
 import GUI.Components.Modal.ModalView;
 import GUI.GUISingleton;
-import GUI.PlaylistController;
 import javafx.scene.Cursor;
 import javafx.scene.layout.HBox;
 
@@ -39,17 +37,13 @@ public class NewPlaylistModalView extends ModalView {
 
 
     //Outside Controllers
-    ModalController modalController;
-    PlaylistController playlistController;
     VBox playlist_list;
 
 
-    public NewPlaylistModalView(ModalController modalC, PlaylistController plC, VBox pl) {
+    public NewPlaylistModalView(VBox pl) {
         super();
 
         //Setting outside controllers
-        modalController = modalC;
-        playlistController = plC;
         playlist_list = pl;
 
         this.setTitle("Create New Playlist");
@@ -127,15 +121,15 @@ public class NewPlaylistModalView extends ModalView {
                     "icon"
             );
 
-            PlaylistButton playlistButton = new PlaylistButton(playlistController);
+            PlaylistButton playlistButton = new PlaylistButton();
             playlistButton.setTitle(playlistTitleInput.getText());
             playlistButton.setIcon(icon);
             playlistButton.setId(creatPlaylist.playlistId());
             playlist_list.getChildren().add(playlistButton.getButton());
 
-            playlistController.setPlaylistView(playlistButton);
+            single.getPlaylistController().setPlaylistView(playlistButton);
 
-            modalController.closeModal();
+            single.getModalController().closeModal();
         }
     }
 

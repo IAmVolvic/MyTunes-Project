@@ -5,6 +5,7 @@ import BE.Song;
 import GUI.Components.Modal.ModalConfigs.DeleteSongModalView;
 import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
 import GUI.Components.Modal.ModalController;
+import GUI.GUISingleton;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -15,6 +16,9 @@ import javafx.scene.input.*;
 import java.util.stream.IntStream;
 
 public class SongList {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
     private final TableView<Song> songList;
@@ -23,10 +27,8 @@ public class SongList {
     private final TableColumn<String, String>   col3;
     private final TableColumn<String, Long>     col4;
 
-    private ModalController modalController;
 
-    public SongList(ModalController modalCR, TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, Long> coL4){
-        modalController = modalCR;
+    public SongList(TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, Long> coL4){
         songList = sl;
         col1 = coL1;
         col2 = coL2;
@@ -136,8 +138,8 @@ public class SongList {
         deleteButton.setOnAction(event -> {
             Song selectedItem = row.getItem();
 
-           // NewPlaylistModalView modalView = new DeleteSongModalView(dllController, modalController, playlistController, playlist_list);
-            //modalController.openModal(modalView.getView());
+            DeleteSongModalView modalView = new DeleteSongModalView();
+            single.getModalController().openModal(modalView.getView());
         });
 
 

@@ -1,6 +1,7 @@
-package GUI.Components.FXMLCustom;
+package GUI.Components;
 
-import GUI.PlaylistController;
+import GUI.Components.Modal.ModalConfigs.DeletePlaylistModalView;
+import GUI.GUISingleton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -13,13 +14,16 @@ import javafx.scene.layout.VBox;
 import java.io.File;
 
 public class PlaylistButton{
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
+
     //Button Settings
     private int perWidth = 300;
     private int perHeight = 66;
     private int btnID;
 
-    //Controller
-    private final PlaylistController playlistController;
+
 
     // ButtonBase
     private final Button buttonBase       = new Button("");
@@ -32,14 +36,14 @@ public class PlaylistButton{
     // Num of songs Label
     private final Label numOfSongs        = new Label();
 
+
     //Context Menu
     private final ContextMenu contextMenu = new ContextMenu();
 
 
-    //Constructor
-    public PlaylistButton(PlaylistController plController){
-        playlistController = plController;
 
+    //Constructor
+    public PlaylistButton(){
         //Button Base
         buttonBase.setOnAction(event -> {
             setPlaylistView(this);
@@ -125,7 +129,7 @@ public class PlaylistButton{
     }
 
     private void setPlaylistView(PlaylistButton btn) {
-        playlistController.setPlaylistView(btn);
+        single.getPlaylistController().setPlaylistView(btn);
     }
 
     //Getters
@@ -146,6 +150,12 @@ public class PlaylistButton{
         editButton.getStyleClass().add("customContext-Btn");
         deleteButton.getStyleClass().add("customContext-Btn-Danger");
 
+        editButton.setOnAction(event -> {});
+
+        deleteButton.setOnAction(event -> {
+            DeletePlaylistModalView modalView = new DeletePlaylistModalView();
+            single.getModalController().openModal(modalView.getView());
+        });
 
         contextMenu.getItems().addAll(editButton, spacer, deleteButton);
         this.buttonBase.setContextMenu(contextMenu);

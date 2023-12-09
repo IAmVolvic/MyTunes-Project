@@ -5,28 +5,48 @@ package GUI;
 
 
 import DLL.DllController;
+import GUI.Components.Modal.ModalController;
 
 public class GUISingleton {
-    private static GUISingleton instance = null;
+    // Single instance of GUISingleton
+    private static final GUISingleton instance = new GUISingleton();
 
     // Controllers
-    private DllController dllController = new DllController();
+    private final DllController dllController;
+    private PlaylistController playlistController;
+    private final ModalController modalController;
 
-    private GUISingleton() {}
+    // Private constructor to prevent instantiation from outside
+    private GUISingleton() {
+        // Initialize controllers
+        dllController = new DllController();
+        modalController = new ModalController();
+    }
+
 
 
     // Getters
-    // -- Dll Controller --
     public DllController getDllController() {
         return dllController;
     }
 
 
-    // Get the singleton, once this is called once it will set it and next call will be getting the already set singleton
-    public static GUISingleton getInstance() {
-        if (instance == null) {
-            instance = new GUISingleton();
+    // This prevents a circular dependency.
+    public PlaylistController getPlaylistController() {
+        if (playlistController == null) {
+            playlistController = new PlaylistController(this);
         }
+        return playlistController;
+    }
+
+
+    public ModalController getModalController() {
+        return modalController;
+    }
+
+
+    // Get the singleton instance
+    public static GUISingleton getInstance() {
         return instance;
     }
 }

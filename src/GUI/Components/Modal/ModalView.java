@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 public class ModalView {
     //Base
-    private final HBox modalBase = new HBox();
+    protected final HBox modalBase = new HBox();
     private final VBox modalBaseChild = new VBox();
 
     // Title and Body

@@ -4,7 +4,7 @@ import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
 import DLL.DllController;
-import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.PlaylistButton;
 import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
 import javafx.collections.FXCollections;
@@ -20,8 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class PlaylistController {
-    // GUI SINGLETON
-    private final GUISingleton single = GUISingleton.getInstance();
+    private GUISingleton single;
 
     private PlaylistButton selectedPlaylistButton;
     private Playlist selectedPlaylistData;
@@ -39,6 +38,12 @@ public class PlaylistController {
 
     private Pane playlist_currentlyPlayingIcon;
     private Label playlist_currentlyPlayingTitle;
+
+    private DllController dllController;
+    public PlaylistController(GUISingleton newSingle) {
+        single = newSingle;
+    }
+
 
     public void setNodes(MediaButtons mb, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl){
         mediaButtons = mb;

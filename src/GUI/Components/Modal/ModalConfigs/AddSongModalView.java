@@ -42,18 +42,14 @@ public class AddSongModalView extends ModalView {
 
 
     //Outside Controllers
-    ModalController modalController;
     SongList tableController;
-    PlaylistController playlistController;
 
 
-    public AddSongModalView(ModalController modalC, SongList tC, PlaylistController pC) {
+    public AddSongModalView(SongList tC) {
         super();
 
         //Setting outside controllers
-        modalController = modalC;
         tableController = tC;
-        playlistController = pC;
 
         this.setTitle("Add Song To Playlist");
         this.setActionTitle("Add");
@@ -112,14 +108,14 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null || playlistController.getPlaylistId() < 1) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null || single.getPlaylistController().getPlaylistId() < 1) {
             System.out.println("Something went wrong");
             return;
         }
 
         int index = 1;
 
-        ArrayList<Song> newSongConstruct = single.getDllController().createSong(playlistController.getPlaylistId(), playlistController.getPlaylistName(), pathToSong, songTitleInput.getText());
+        ArrayList<Song> newSongConstruct = single.getDllController().createSong(single.getPlaylistController().getPlaylistId(), single.getPlaylistController().getPlaylistName(), pathToSong, songTitleInput.getText());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : newSongConstruct){
@@ -129,10 +125,10 @@ public class AddSongModalView extends ModalView {
         }
 
         tableController.addSong(songData);
-        playlistController.updateTotalSongsNum(newSongConstruct.size());
-        playlistController.setMediaPlaylist();
+        single.getPlaylistController().updateTotalSongsNum(newSongConstruct.size());
+        single.getPlaylistController().setMediaPlaylist();
 
-        modalController.closeModal();
+        single.getModalController().closeModal();
     }
 
     public HBox getView() {
