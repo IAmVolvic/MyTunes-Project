@@ -2,6 +2,7 @@ package GUI.Components;
 
 import DLL.DllController;
 
+import GUI.GUISingleton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
@@ -9,18 +10,18 @@ import javafx.event.ActionEvent;
 
 
 public class MediaButtons {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
+
     // Play Button
     public FontAwesomeIconView iPlay;
     private Boolean playState = false;
 
-    //Controller
-    private final DllController dllController;
-
 
     //Constructor
-    public MediaButtons(FontAwesomeIconView Icon, DllController dllController){
+    public MediaButtons(FontAwesomeIconView Icon){
         iPlay   = Icon;
-        this.dllController = dllController;
     }
 
 
@@ -36,9 +37,9 @@ public class MediaButtons {
 
     private void playSong(){
         if (playState){
-            dllController.pauseSong();
+            single.getDllController().pauseSong();
         }else{
-            dllController.playSong();
+            single.getDllController().playSong();
         }
 
         playState = !playState;
@@ -57,11 +58,11 @@ public class MediaButtons {
 
     // Skip methods
     public void skipSong(ActionEvent actionEvent){
-        dllController.skipSong();
+        single.getDllController().skipSong();
     }
 
     // Prev methods
     public void prevSong(ActionEvent actionEvent){
-        dllController.prevSong();
+        single.getDllController().prevSong();
     }
 }

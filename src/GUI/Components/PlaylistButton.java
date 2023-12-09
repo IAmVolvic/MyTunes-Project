@@ -1,11 +1,11 @@
-package GUI.Components.FXMLCustom;
+package GUI.Components;
 
-import GUI.PlaylistController;
+import GUI.Components.Modal.ModalConfigs.DeletePlaylistModalView;
+import GUI.GUISingleton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 import javafx.scene.layout.Pane;
@@ -14,30 +14,36 @@ import javafx.scene.layout.VBox;
 import java.io.File;
 
 public class PlaylistButton{
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
+
     //Button Settings
     private int perWidth = 300;
     private int perHeight = 66;
     private int btnID;
 
-    //Controller
-    private final PlaylistController playlistController;
+
 
     // ButtonBase
-    Button buttonBase       = new Button("");
-    // HBox Base
-    HBox hboxBase           = new HBox();
+    private final Button buttonBase       = new Button("");
+    // Button Child
+    private final HBox hboxBase = new HBox();
     // PlayList Icon
-    Pane plIcon             = new Pane();
-    // VBox Base
-    VBox vboxBase           = new VBox();
+    private final Pane plIcon             = new Pane();
     // Title Label
-    Label playlistTitle     = new Label();
+    private final Label playlistTitle     = new Label();
     // Num of songs Label
-    Label numOfSongs        = new Label();
+    private final Label numOfSongs        = new Label();
 
-    public PlaylistButton(PlaylistController plController){
-        playlistController = plController;
 
+    //Context Menu
+    private final ContextMenu contextMenu = new ContextMenu();
+
+
+
+    //Constructor
+    public PlaylistButton(){
         //Button Base
         buttonBase.setOnAction(event -> {
             setPlaylistView(this);
@@ -50,7 +56,8 @@ public class PlaylistButton{
         buttonBase.getStyleClass().add("playlist");
         buttonBase.setCursor(Cursor.HAND);
 
-        //HBox Base
+
+        // HBox Base
         hboxBase.setFillHeight(false);
         hboxBase.setSpacing(10);
 
@@ -62,6 +69,8 @@ public class PlaylistButton{
         plIcon.setMaxWidth(50);
 
         //VBox Base
+        // VBox Base
+        VBox vboxBase = new VBox();
         vboxBase.setAlignment(Pos.CENTER_LEFT);
         vboxBase.setSpacing(3);
         vboxBase.setPrefWidth(213);
@@ -84,6 +93,7 @@ public class PlaylistButton{
         numOfSongs.getStyleClass().add("t-sm");
 
         //Build the button
+        createContextMenu();
         vboxBase.getChildren().add(playlistTitle);
         vboxBase.getChildren().add(numOfSongs);
         hboxBase.getChildren().add(plIcon);
@@ -92,10 +102,12 @@ public class PlaylistButton{
     }
 
 
+    //Return the created button
     public Button getButton(){
         return this.buttonBase;
     }
 
+    //Setters
     public void setTitle(String newTitle){
         this.playlistTitle.setText(newTitle);
     }
@@ -112,18 +124,40 @@ public class PlaylistButton{
         this.btnID = newId;
     }
 
+    public void setActiveStyle(){
+        buttonBase.getStyleClass().add("playlist-active");
+    }
+
+    private void setPlaylistView(PlaylistButton btn) {
+        single.getPlaylistController().setPlaylistView(btn);
+    }
+
+    //Getters
     public int getId() {
         return this.btnID;
     }
 
 
-    public void setActiveStyle(){
-        buttonBase.getStyleClass().add("playlist-active");
-    }
+    //Context Menu
+    private void createContextMenu() {
+        //Edit Context menu
+        contextMenu.getStyleClass().add("customContext");
+        //Create Sub buttons
+        MenuItem editButton         = new MenuItem("Edit");
+        SeparatorMenuItem spacer    = new SeparatorMenuItem();
+        MenuItem deleteButton       = new MenuItem("Delete");
 
+        editButton.getStyleClass().add("customContext-Btn");
+        deleteButton.getStyleClass().add("customContext-Btn-Danger");
 
+        editButton.setOnAction(event -> {});
 
-    private void setPlaylistView(PlaylistButton btn) {
-        playlistController.setPlaylistView(btn);
+        deleteButton.setOnAction(event -> {
+            DeletePlaylistModalView modalView = new DeletePlaylistModalView();
+            single.getModalController().openModal(modalView.getView());
+        });
+
+        contextMenu.getItems().addAll(editButton, spacer, deleteButton);
+        this.buttonBase.setContextMenu(contextMenu);
     }
 }

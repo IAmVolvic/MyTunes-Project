@@ -4,18 +4,14 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 public class ModalController {
-    private boolean isOpen = false;
-    private final StackPane modal_main;
+    private StackPane modal_main;
     private Node currentView;
 
-    public ModalController(StackPane modalMain) {
+
+    public void setModalMain(StackPane modalMain) {
         modal_main = modalMain;
     }
 
-
-    public boolean isModalOpen() {
-        return isOpen;
-    }
 
     public void openModal(Node view) {
         if(currentView != view){
@@ -28,11 +24,10 @@ public class ModalController {
         }
 
         modal_main.setVisible(true);
-        isOpen = true;
     }
+
 
     public void closeModal() {
         modal_main.setVisible(false);
-        isOpen = false;
     }
 }

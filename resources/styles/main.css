@@ -13,6 +13,12 @@ BorderPane {
     -fx-text-fill: #464950;
 }
 
+.t-muted {
+    -fx-fill: #b0b0c0;
+    -fx-text-fill: #b0b0c0;
+}
+
+
 .t-sm {
     -fx-font-size: 11px;
 }
@@ -50,6 +56,7 @@ BorderPane {
 .bg-sub {
     -fx-background-color: #222326
 }
+
 
 .bg-grad {
     -fx-background-color: linear-gradient(
@@ -157,4 +164,39 @@ BorderPane {
 .editButton > FontAwesomeIconView {
     -fx-fill: #f2f2f2;
     -fx-text-fill: #f2f2f2;
+}
+
+
+.customContext {
+    -fx-background-color: #222326;
+    -fx-background-radius: 7.5px;
+    -fx-padding: 2.5px;
+}
+
+.customContext > * > .separator > .line {
+    -fx-border-color: transparent;
+    -fx-pref-height: 10px;
+}
+
+.customContext .menu-item{
+    -fx-pref-width: 100;
+}
+
+.customContext .menu-item:focused {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-background-radius: 5px;
+}
+
+.customContext-Btn .label {
+    -fx-padding: 5;
+    -fx-fill: #f2f2f2;
+    -fx-text-fill: #f2f2f2;
+    -fx-font-size: 12px;
+}
+
+.customContext-Btn-Danger .label {
+    -fx-padding: 5;
+    -fx-fill: #b62323;
+    -fx-text-fill: #b62323;
+    -fx-font-size: 12px;
 }

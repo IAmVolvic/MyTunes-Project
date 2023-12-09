@@ -1,15 +1,12 @@
 package GUI.Components.Modal.ModalConfigs;
 
 import APP_SETTINGS.AppConfig;
-import DLL.DllController;
-
 
 import BE.Playlist;
 
-import GUI.Components.FXMLCustom.PlaylistButton;
-import GUI.Components.Modal.ModalController;
+import GUI.Components.PlaylistButton;
 import GUI.Components.Modal.ModalView;
-import GUI.PlaylistController;
+import GUI.GUISingleton;
 import javafx.scene.Cursor;
 import javafx.scene.layout.HBox;
 
@@ -25,6 +22,9 @@ import javafx.scene.layout.VBox;
 import java.io.File;
 
 public class NewPlaylistModalView extends ModalView {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
     //Class verbs
     String pathToImage;
 
@@ -37,19 +37,13 @@ public class NewPlaylistModalView extends ModalView {
 
 
     //Outside Controllers
-    DllController dllController;
-    ModalController modalController;
-    PlaylistController playlistController;
     VBox playlist_list;
 
 
-    public NewPlaylistModalView(DllController dllC, ModalController modalC, PlaylistController plC, VBox pl) {
+    public NewPlaylistModalView(VBox pl) {
         super();
 
         //Setting outside controllers
-        dllController = dllC;
-        modalController = modalC;
-        playlistController = plC;
         playlist_list = pl;
 
         this.setTitle("Create New Playlist");
@@ -62,7 +56,7 @@ public class NewPlaylistModalView extends ModalView {
         super.createBody();
 
         imageSelect.setOnAction(event -> {
-            File file = dllController.callFileChooser(event, "playlist_add");
+            File file = single.getDllController().callFileChooser(event, "playlist_add");
 
             if(file != null){
                 imageSelectSelected.setText(file.getName());
@@ -119,23 +113,23 @@ public class NewPlaylistModalView extends ModalView {
             return;
         }
 
-        Playlist creatPlaylist = dllController.createPlaylist(pathToImage, playlistTitleInput.getText());
+        Playlist creatPlaylist = single.getDllController().createPlaylist(pathToImage, playlistTitleInput.getText());
 
         if(creatPlaylist != null){
-            File icon = dllController.getFile(
+            File icon = single.getDllController().getFile(
                     AppConfig.getPlaylistPath() + creatPlaylist.playlistId() + "_" + playlistTitleInput.getText(),
                     "icon"
             );
 
-            PlaylistButton playlistButton = new PlaylistButton(playlistController);
+            PlaylistButton playlistButton = new PlaylistButton();
             playlistButton.setTitle(playlistTitleInput.getText());
             playlistButton.setIcon(icon);
             playlistButton.setId(creatPlaylist.playlistId());
             playlist_list.getChildren().add(playlistButton.getButton());
 
-            playlistController.setPlaylistView(playlistButton);
+            single.getPlaylistController().setPlaylistView(playlistButton);
 
-            modalController.closeModal();
+            single.getModalController().closeModal();
         }
     }
 

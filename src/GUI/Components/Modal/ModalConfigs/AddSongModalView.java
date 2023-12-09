@@ -7,6 +7,7 @@ import GUI.Components.Modal.ModalController;
 import GUI.Components.Modal.ModalView;
 import GUI.Components.SongList;
 
+import GUI.GUISingleton;
 import GUI.PlaylistController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -25,6 +26,10 @@ import java.util.ArrayList;
 
 
 public class AddSongModalView extends ModalView {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
+
     //Class verbs
     String pathToSong;
 
@@ -37,20 +42,14 @@ public class AddSongModalView extends ModalView {
 
 
     //Outside Controllers
-    DllController dllController;
-    ModalController modalController;
     SongList tableController;
-    PlaylistController playlistController;
 
 
-    public AddSongModalView(DllController dllC, ModalController modalC, SongList tC, PlaylistController pC) {
+    public AddSongModalView(SongList tC) {
         super();
 
         //Setting outside controllers
-        dllController = dllC;
-        modalController = modalC;
         tableController = tC;
-        playlistController = pC;
 
         this.setTitle("Add Song To Playlist");
         this.setActionTitle("Add");
@@ -63,7 +62,7 @@ public class AddSongModalView extends ModalView {
         super.createBody();
 
         songSelect.setOnAction(event -> {
-            File file = dllController.callFileChooser(event, "music_add");
+            File file = single.getDllController().callFileChooser(event, "music_add");
 
             if(file != null){
                 songTitleInput.setText(file.getName().substring(0, file.getName().lastIndexOf('.')));
@@ -109,14 +108,14 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null || single.getPlaylistController().getPlaylistId() < 1) {
             System.out.println("Something went wrong");
             return;
         }
 
         int index = 1;
 
-        ArrayList<Song> newSongConstruct = dllController.createSong(playlistController.getPlaylistId(), playlistController.getPlaylistName(), pathToSong, songTitleInput.getText());
+        ArrayList<Song> newSongConstruct = single.getDllController().createSong(single.getPlaylistController().getPlaylistId(), single.getPlaylistController().getPlaylistName(), pathToSong, songTitleInput.getText());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : newSongConstruct){
@@ -126,10 +125,10 @@ public class AddSongModalView extends ModalView {
         }
 
         tableController.addSong(songData);
-        playlistController.updateTotalSongsNum(newSongConstruct.size());
-        playlistController.setMediaPlaylist();
+        single.getPlaylistController().updateTotalSongsNum(newSongConstruct.size());
+        single.getPlaylistController().setMediaPlaylist();
 
-        modalController.closeModal();
+        single.getModalController().closeModal();
     }
 
     public HBox getView() {

@@ -25,3 +25,8 @@
     -fx-background-color: #fff;
     -fx-background-radius: 10px;
 }
+
+.modal-actionButton-Danger {
+    -fx-background-color: #b62323;
+    -fx-background-radius: 10px;
+}

@@ -4,7 +4,7 @@ import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
 import DLL.DllController;
-import GUI.Components.FXMLCustom.PlaylistButton;
+import GUI.Components.PlaylistButton;
 import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
 import javafx.collections.FXCollections;
@@ -20,12 +20,13 @@ import java.util.Comparator;
 import java.util.List;
 
 public class PlaylistController {
+    private GUISingleton single;
+
     private PlaylistButton selectedPlaylistButton;
     private Playlist selectedPlaylistData;
 
     //Dll Controller
     private MediaButtons mediaButtons;
-    private DllController dllController;
     private SongList tableController;
 
 
@@ -38,9 +39,14 @@ public class PlaylistController {
     private Pane playlist_currentlyPlayingIcon;
     private Label playlist_currentlyPlayingTitle;
 
-    public void setNodes(MediaButtons mb, DllController dc, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl){
+    private DllController dllController;
+    public PlaylistController(GUISingleton newSingle) {
+        single = newSingle;
+    }
+
+
+    public void setNodes(MediaButtons mb, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl){
         mediaButtons = mb;
-        dllController = dc;
         tableController = tC;
 
         playlist_list = pl;
@@ -67,8 +73,9 @@ public class PlaylistController {
 
 
     public void updateViewSongList(String searchFilter) {
+        if(selectedPlaylistData == null){return;}
         int index = 1;
-        List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), searchFilter);
+        List<Song> songs = single.getDllController().getSongs(selectedPlaylistData.playlistId(), searchFilter);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
@@ -82,6 +89,7 @@ public class PlaylistController {
 
 
     public int getPlaylistId(){
+        if(selectedPlaylistData == null){ return 0; }
         return selectedPlaylistData.playlistId();
     }
     public String getPlaylistName(){
@@ -108,7 +116,7 @@ public class PlaylistController {
     private void changeViewStyles() {
         mediaButtons.resetIcon();
 
-        File icon = dllController.getFile(
+        File icon = single.getDllController().getFile(
                 AppConfig.getPlaylistPath() + selectedPlaylistData.playlistId() + "_" + selectedPlaylistData.playlistName(),
                 "icon"
         );
@@ -123,13 +131,13 @@ public class PlaylistController {
 
         playlist_currentlyPlayingTitle.setText(selectedPlaylistData.playlistName());
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
-        updateTotalSongsNum(dllController.getSongs(selectedPlaylistData.playlistId(), null).size());
+        updateTotalSongsNum(single.getDllController().getSongs(selectedPlaylistData.playlistId(), null).size());
     }
 
 
     private void setViewSongList() {
         int index = 1;
-        List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), null);
+        List<Song> songs = single.getDllController().getSongs(selectedPlaylistData.playlistId(), null);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         songs.sort(Comparator.comparingInt(Song::getTableId));
@@ -146,11 +154,11 @@ public class PlaylistController {
 
     public void setMediaPlaylist(){
         mediaButtons.resetIcon();
-        dllController.setPlaylistSongs(selectedPlaylistData);
+        single.getDllController().setPlaylistSongs(selectedPlaylistData);
     }
 
     private Playlist getDetails(int id) {
-        ArrayList<Playlist> playlistTable = dllController.getPlaylistsSingle();
+        ArrayList<Playlist> playlistTable = single.getDllController().getPlaylistsSingle();
 
         for(Playlist val : playlistTable){
             if(val.playlistId() == id){
