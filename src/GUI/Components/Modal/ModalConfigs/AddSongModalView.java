@@ -109,7 +109,7 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null || playlistController.getPlaylistId() < 1) {
             System.out.println("Something went wrong");
             return;
         }

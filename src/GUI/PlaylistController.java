@@ -67,6 +67,7 @@ public class PlaylistController {
 
 
     public void updateViewSongList(String searchFilter) {
+        if(selectedPlaylistData == null){return;}
         int index = 1;
         List<Song> songs = dllController.getSongs(selectedPlaylistData.playlistId(), searchFilter);
         ObservableList<Song> songData = FXCollections.observableArrayList();
@@ -82,6 +83,7 @@ public class PlaylistController {
 
 
     public int getPlaylistId(){
+        if(selectedPlaylistData == null){ return 0; }
         return selectedPlaylistData.playlistId();
     }
     public String getPlaylistName(){

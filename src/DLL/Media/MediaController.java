@@ -113,6 +113,7 @@ public class MediaController {
 
 
     private void setSong() {
+
         if(currentPlaylist != null && !currentPlaylist.getSongTable().isEmpty()) {
             String decodeSong = Base64.getEncoder().encodeToString(currentPlaylist.getSongTable().get(currentSongIndex).getName().getBytes());
             String playlistPath = AppConfig.getPlaylistPath() + currentPlaylist.playlistId() + "_" + currentPlaylist.playlistName() + "/";
