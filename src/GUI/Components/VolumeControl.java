@@ -1,23 +1,23 @@
 package GUI.Components;
 
 import DLL.DllController;
+import GUI.GUISingleton;
 import com.jfoenix.controls.JFXSlider;
 
 public class VolumeControl {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
     private final JFXSlider volumeControl;
 
-    // Controller
-    private final DllController dllController;
-
-    public VolumeControl(JFXSlider volume, DllController dllController){
+    public VolumeControl(JFXSlider volume){
         volumeControl = volume;
-        this.dllController = dllController;
     }
 
 
     public void initialize() {
         volumeControl.valueProperty().addListener(e -> {
-            dllController.SetVolume(volumeControl.getValue()/100);
+            single.getDllController().setVolume(volumeControl.getValue()/100);
         });
     }
 }

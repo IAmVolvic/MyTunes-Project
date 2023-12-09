@@ -2,16 +2,15 @@ package GUI.Components;
 
 
 import BE.Song;
+import GUI.Components.Modal.ModalConfigs.DeleteSongModalView;
+import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
+import GUI.Components.Modal.ModalController;
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 
 import java.util.stream.IntStream;
 
@@ -23,15 +22,16 @@ public class SongList {
     private final TableColumn<String, String>   col2;
     private final TableColumn<String, String>   col3;
     private final TableColumn<String, Long>     col4;
-    private final TableColumn<String, Button>   col5;
 
-    public SongList(TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, Long> coL4, TableColumn<String, Button> coL5){
+    private ModalController modalController;
+
+    public SongList(ModalController modalCR, TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, Long> coL4){
+        modalController = modalCR;
         songList = sl;
         col1 = coL1;
         col2 = coL2;
         col3 = coL3;
         col4 = coL4;
-        col5 = coL5;
 
         initialize();
     }
@@ -43,7 +43,6 @@ public class SongList {
         col2.setReorderable(false);
         col3.setReorderable(false);
         col4.setReorderable(false);
-        col5.setReorderable(false);
 
         // Set the tables cell value
         col1.setCellValueFactory(new PropertyValueFactory<>("tableId"));
@@ -51,14 +50,13 @@ public class SongList {
         col3.setCellValueFactory(new PropertyValueFactory<>("date"));
         col4.setCellValueFactory(new PropertyValueFactory<>("duration"));
 
-        col5.setCellValueFactory(new PropertyValueFactory<>("editButton"));
-
         //Resize the list
         songList.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         songList.setRowFactory(tv -> {
             TableRow<Song> row = new TableRow<>();
 
+            createContextMenu(row);
 
             row.setOnDragDetected(event -> {
                 if (!row.isEmpty()) {
@@ -110,10 +108,48 @@ public class SongList {
 
             return row;
         });
+
+
     }
 
     public void addSong(ObservableList<Song> newSong) {
         songList.setItems(newSong);
     }
 
+
+    private void createContextMenu(TableRow<Song> row) {
+        // Create Sub buttons
+        MenuItem editButton = new MenuItem("Edit");
+        SeparatorMenuItem spacer = new SeparatorMenuItem();
+        MenuItem deleteButton = new MenuItem("Delete");
+
+        editButton.getStyleClass().add("customContext-Btn");
+        deleteButton.getStyleClass().add("customContext-Btn-Danger");
+
+
+        // Add event handlers
+        editButton.setOnAction(event -> {
+            Song selectedItem = row.getItem();
+            System.out.println(selectedItem.getName());
+        });
+
+        deleteButton.setOnAction(event -> {
+            Song selectedItem = row.getItem();
+
+           // NewPlaylistModalView modalView = new DeleteSongModalView(dllController, modalController, playlistController, playlist_list);
+            //modalController.openModal(modalView.getView());
+        });
+
+
+        ContextMenu rowContextMenu = new ContextMenu(editButton, spacer, deleteButton);
+        rowContextMenu.getStyleClass().add("customContext");
+
+
+        // Set the context menu only for non-empty rows
+        row.contextMenuProperty().bind(
+                Bindings.when(row.emptyProperty())
+                        .then((ContextMenu) null)
+                        .otherwise(rowContextMenu)
+        );
+    }
 }

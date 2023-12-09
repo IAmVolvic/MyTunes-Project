@@ -35,7 +35,7 @@ public class DllController {
 
 
     // MEDIA CONTROLS
-    public void inzSongLabel(Label songLabel){ mediaController.setLabel(songLabel); }
+    public void initializeSongLabel(Label songLabel){ mediaController.setLabel(songLabel); }
 
     public void playSong(){
         mediaController.playSong();
@@ -51,7 +51,7 @@ public class DllController {
         mediaController.prevSong();
     }
 
-    public void SetVolume(Double newVolume){
+    public void setVolume(Double newVolume){
         mediaController.setVolume(newVolume);
     }
 

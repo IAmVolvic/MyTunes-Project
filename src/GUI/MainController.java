@@ -3,6 +3,7 @@ package GUI;
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
+import BE.Song;
 import DLL.Media.MediaPlayerObservable;
 import DLL.DllController;
 import GUI.Components.FXMLCustom.PlaylistButton;
@@ -22,7 +23,6 @@ import javafx.scene.control.*;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 
 import com.jfoenix.controls.JFXSlider;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -32,6 +32,10 @@ import java.util.ArrayList;
 
 
 public class MainController {
+    // GUI SINGLETON
+    private final GUISingleton single = GUISingleton.getInstance();
+
+
     // Playlist list nodes
     public VBox playlist_list;
     public Pane playlistViewIcon;
@@ -52,12 +56,11 @@ public class MainController {
 
 
     // Getting the table columns
-    public TableView songList;
+    public TableView<Song> songList;
     public TableColumn<String, Integer> col1;
     public TableColumn<String, String>  col2;
     public TableColumn<String, String>  col3;
     public TableColumn<String, Long>    col4;
-    public TableColumn<String, Button>  col5;
 
 
 
@@ -81,8 +84,8 @@ public class MainController {
     private final PlaylistController playlistController = new PlaylistController();
     private SongList tableController;
 
-    // Backend Controllers
-    private final DllController dllController = new DllController();
+
+
     private MediaPlayerObservable mediaPlayerObservable;
 
 
@@ -95,13 +98,13 @@ public class MainController {
 
     //New Playlist Button
     public void newPlaylist(ActionEvent o) {
-        NewPlaylistModalView modalView = new NewPlaylistModalView(dllController, modalController, playlistController, playlist_list);
+        NewPlaylistModalView modalView = new NewPlaylistModalView(modalController, playlistController, playlist_list);
         modalController.openModal(modalView.getView());
     }
 
 
     public void newSong(ActionEvent actionEvent) {
-        AddSongModalView modalView = new AddSongModalView(dllController, modalController, tableController, playlistController);
+        AddSongModalView modalView = new AddSongModalView(modalController, tableController, playlistController);
         modalController.openModal(modalView.getView());
     }
 
@@ -129,20 +132,20 @@ public class MainController {
 
     // Post Initialize
     private void postInitialize() {
-        dllController.inzSongLabel(songLabel);
-
+        //Setting the Label for DLL -> MediaController to use
+        single.getDllController().initializeSongLabel(songLabel);
 
         // Get and start the songs table / initialize it
-        tableController = new SongList(songList, col1, col2, col3, col4, col5);
+        tableController = new SongList(modalController, songList, col1, col2, col3, col4);
+
 
         //Set PlayButton Controller
-        mediaButtons = new MediaButtons(iPlay, dllController);
+        mediaButtons = new MediaButtons(iPlay);
 
 
         //Set Playlist Controller
         playlistController.setNodes(
                 mediaButtons,
-                dllController,
                 tableController,
                 playlist_list,
                 playlistViewIcon,
@@ -155,7 +158,7 @@ public class MainController {
 
 
         // Get and start the volume controller / initialize it
-        volumeController = new VolumeControl(volume, dllController);
+        volumeController = new VolumeControl(volume);
         volumeController.initialize();
 
 
@@ -164,7 +167,7 @@ public class MainController {
         buildPlaylistButtons();
 
         mediaPlayerObservable = new MediaPlayerObservable(songProgressBar, songProgressNum, songProgressNumTotal);
-        dllController.bindProgressObserver(this.mediaPlayerObservable);
+        single.getDllController().bindProgressObserver(this.mediaPlayerObservable);
 
 
         //Search
@@ -184,13 +187,14 @@ public class MainController {
     }
 
 
+    // Start creating the playlist buttons on first load
     private void buildPlaylistButtons(){
         int index = 0;
-        ArrayList<Playlist> playlist = dllController.getPlaylistsINT();
+        ArrayList<Playlist> playlist = single.getDllController().getPlaylistsINT();
 
 
         for(Playlist val : playlist){
-            File icon = dllController.getFile(
+            File icon = single.getDllController().getFile(
                     AppConfig.getPlaylistPath() + val.playlistId() + "_" + val.playlistName(),
                     "icon"
             );
@@ -198,7 +202,7 @@ public class MainController {
             PlaylistButton playlistButton = new PlaylistButton(playlistController);
             playlistButton.setId(val.playlistId());
             playlistButton.setTitle(val.playlistName());
-            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(dllController.getSongs(val.playlistId(), null).size()));
+            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(single.getDllController().getSongs(val.playlistId(), null).size()));
 
             if(icon != null){
                 playlistButton.setIcon(icon);

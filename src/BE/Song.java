@@ -13,16 +13,11 @@ public class Song {
 
     private long duration;
 
-    private Button editButton = new Button();
-
     public Song(int id, String name, String date, long duration){
         this.id = id;
         this.name = name;
         this.date = date;
         this.duration = duration;
-
-        editButton.getStyleClass().add("editButton");
-        editButton.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.EDIT, "18"));
     }
 
     public int getTableId() {
@@ -41,19 +36,11 @@ public class Song {
         return this.date;
     }
 
-    public Button getEditButton() {
-        return this.editButton;
-    }
-
-
 
     public long getDuration() {
         return this.duration;
     }
 
-    public void setEditButton(Button newButton) {
-        this.editButton = newButton;
-    }
 
     public void setTableId(int newId) {
         this.tableId = newId;
