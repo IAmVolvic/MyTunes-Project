@@ -16,6 +16,7 @@ public class GUISingleton {
     private PlaylistController playlistController;
     private final ModalController modalController;
 
+
     // Private constructor to prevent instantiation from outside
     private GUISingleton() {
         // Initialize controllers

@@ -4,6 +4,8 @@ import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import DLL.DllController;
 import DLL.FIle.FileController;
+import javafx.beans.value.ChangeListener;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -28,6 +30,13 @@ public class MediaController {
     //JFX Element
     private Label currentlyPlaying;
 
+    //
+    private ChangeListener<Duration> currentTimeListener;
+    private Runnable endOfMediaListener;
+
+
+
+
     //Constructor
     public MediaController(FileController fc) {
         fileController = fc;
@@ -39,6 +48,7 @@ public class MediaController {
     public void setLabel(Label currentlyPlayingLabel){ currentlyPlaying = currentlyPlayingLabel; }
 
 
+
     public void playSong() {
         if(mPlayer == null){ return; }
 
@@ -47,17 +57,7 @@ public class MediaController {
         mPlayer.setVolume(lastVolume);
         mPlayer.play();
 
-
-        mPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
-            if(mPlayer == null){ return; }
-            this.mPlayerSubject.update(newValue, mPlayer.getTotalDuration());
-        });
-
-        mPlayer.setOnEndOfMedia(() -> {
-            currentSongIndex = (currentSongIndex + 1) % currentPlaylist.getSongTable().size();
-            setSong();
-            playSong();
-        });
+        setUpListeners();
     }
 
 
@@ -104,16 +104,18 @@ public class MediaController {
 
     //Load Song List
     public void setPlaylist(Playlist playList) {
+        if(currentPlaylist != null) {
+            clearSong();
+        }
+
         currentSongIndex = 0;
         currentPlaylist = playList;
 
-        clearSong();
         setSong();
     }
 
 
     private void setSong() {
-
         if(currentPlaylist != null && !currentPlaylist.getSongTable().isEmpty()) {
             String decodeSong = Base64.getEncoder().encodeToString(currentPlaylist.getSongTable().get(currentSongIndex).getName().getBytes());
             String playlistPath = AppConfig.getPlaylistPath() + currentPlaylist.playlistId() + "_" + currentPlaylist.playlistName() + "/";
@@ -121,6 +123,9 @@ public class MediaController {
 
             if(songPath != null){
                 mPlayer = new MediaPlayer(new Media(songPath.toURI().toString()));
+                mPlayer.setOnError(() -> {
+                    System.out.println(mPlayer.getError().toString());
+                });
                 currentlyPlaying.setText(currentPlaylist.getSongTable().get(currentSongIndex).getName());
             }
         }else{
@@ -129,17 +134,56 @@ public class MediaController {
     }
 
 
+    public void stopEverything() {
+        clearSong();
+    }
+
+
     private void clearSong() {
-        if(mPlayer == null){ return; }
+        if (mPlayer == null) {
+            return;
+        }
+
         mPlayer.stop();
+
+        if (currentTimeListener != null) {
+            mPlayer.currentTimeProperty().removeListener(currentTimeListener);
+            currentTimeListener = null;
+        }
+
+        if (endOfMediaListener != null) {
+            mPlayer.setOnEndOfMedia(null);
+            endOfMediaListener = null;
+        }
+
+        
+        mPlayer.dispose();
+        System.gc();
         mPlayer = null;
+
         this.mPlayerSubject.update(new Duration(0), new Duration(0));
     }
 
 
-
-
     //Listeners
+    private void setUpListeners() {
+        currentTimeListener = (observable, oldValue, newValue) -> {
+            if (mPlayer == null) {
+                return;
+            }
+            this.mPlayerSubject.update(newValue, mPlayer.getTotalDuration());
+        };
+
+        endOfMediaListener = () -> {
+            currentSongIndex = (currentSongIndex + 1) % currentPlaylist.getSongTable().size();
+            setSong();
+            playSong();
+        };
+
+        mPlayer.currentTimeProperty().addListener(currentTimeListener);
+        mPlayer.setOnEndOfMedia(endOfMediaListener);
+    }
+
     public void bindProgressListener(MediaPlayerObservable listener) {
         this.mPlayerSubject.registerObserver(listener);
     }

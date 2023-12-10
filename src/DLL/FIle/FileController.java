@@ -67,12 +67,7 @@ public class FileController {
         };
 
         try {
-            Files.copy(from, to, options);
-            Files.move(
-                to,
-                to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ),
-                StandardCopyOption.REPLACE_EXISTING
-            );
+            Files.copy(from, to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ), options);
         } catch (IOException e) {}
     }
 
@@ -141,6 +136,7 @@ public class FileController {
                 deletePath(file);
             }
         }
+
         return path.delete();
     }
 

@@ -71,7 +71,19 @@ public class MySongsController {
         }
     }
 
-    public void deleteSongFromPlaylistSingle(int playlistId){}
+    public void deleteSongFromPlaylistSingle(int songId){
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM songs WHERE song_id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setInt(1, songId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void deleteSongFromPlaylistAll(int playlistId){
         try(Connection con = cm.getConnection())

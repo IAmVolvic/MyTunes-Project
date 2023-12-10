@@ -114,9 +114,14 @@ public class SongList {
 
     }
 
+
     public void addSong(ObservableList<Song> newSong) {
         songList.setItems(newSong);
     }
+
+
+    public void clearTable(){ songList.getItems().clear(); }
+
 
 
     private void createContextMenu(TableRow<Song> row) {
@@ -138,7 +143,7 @@ public class SongList {
         deleteButton.setOnAction(event -> {
             Song selectedItem = row.getItem();
 
-            DeleteSongModalView modalView = new DeleteSongModalView();
+            DeleteSongModalView modalView = new DeleteSongModalView(selectedItem);
             single.getModalController().openModal(modalView.getView());
         });
 

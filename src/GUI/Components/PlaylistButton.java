@@ -153,7 +153,7 @@ public class PlaylistButton{
         editButton.setOnAction(event -> {});
 
         deleteButton.setOnAction(event -> {
-            DeletePlaylistModalView modalView = new DeletePlaylistModalView(btnID);
+            DeletePlaylistModalView modalView = new DeletePlaylistModalView(this.buttonBase, btnID);
             single.getModalController().openModal(modalView.getView());
         });
 

@@ -91,6 +91,8 @@ public class DllController {
     }
 
     public void deletePlaylist(int playlistId){
+        mediaController.stopEverything();
+
         // Get playlist data
         Optional<Playlist> data = playLists.stream()
                 .filter(playlist -> playlist.playlistId() == playlistId)
@@ -107,8 +109,6 @@ public class DllController {
 
         // Update cache
         data.ifPresent(playLists::remove);
-
-        mediaController.setPlaylist(null);
     }
 
 
@@ -124,6 +124,7 @@ public class DllController {
                 .collect(Collectors.toList());
     }
 
+
     public ArrayList<Song> createSong(int playListId, String playListName, String songPath, String songTitle){
         //New File Name
         String baseEncoded = Base64.getEncoder().encodeToString(songTitle.getBytes());
@@ -133,8 +134,8 @@ public class DllController {
         Optional<Playlist> songsTable = playLists.stream()
                 .filter(playlist -> playlist.playlistId() == playListId)
                 .findFirst();
-        songsTable.get().addSong(newSong);
 
+        songsTable.ifPresent(song -> song.addSong(newSong));
 
         // Store / rename the audio file
         fileController.createSong(songPath, baseEncoded, playListId, playListName);
@@ -142,7 +143,49 @@ public class DllController {
         return songsTable.get().getSongTable();
     }
 
+
     public void setPlaylistSongs(Playlist playlist){ mediaController.setPlaylist(playlist); }
+
+
+    public List<Song> deleteSong(int playListId, int songId) {
+        mediaController.stopEverything();
+
+        // Get playlist data
+        Optional<Playlist> playlistData = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playListId)
+                .findFirst();
+
+        List<Song> updatedSongTable = new ArrayList<>();
+
+        playlistData.ifPresent(playlist -> {
+            Optional<Song> songToRemove = playlist.getSongTable().stream()
+                    .filter(song -> song.getId() == songId)
+                    .findFirst();
+
+            songToRemove.ifPresent(song -> {
+                String dirPath = AppConfig.getPlaylistPath() + playListId + "_" + playlistData.get().playlistName();
+                String baseEncoded = Base64.getEncoder().encodeToString(song.getName().getBytes());
+                File getFile = fileController.findFile(dirPath, baseEncoded);
+
+                // Delete File
+                fileController.deleteItem(getFile.getPath());
+
+                // Remove the song from the SongTable
+                playlist.getSongTable().remove(song);
+
+                updatedSongTable.addAll(playlist.getSongTable());
+            });
+
+            // Delete the data from DB
+            mySongs.deleteSongFromPlaylistSingle(songId);
+
+
+            mediaController.setPlaylist(playlist);
+        });
+
+        return updatedSongTable;
+    }
+
 
 
     //OTHER
