@@ -1,5 +1,6 @@
 package DLL;
 
+import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
 import DAL.Logic.MyPlaylistController;
@@ -89,6 +90,26 @@ public class DllController {
         return newPlaylist;
     }
 
+    public void deletePlaylist(int playlistId){
+        // Get playlist data
+        Optional<Playlist> data = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playlistId)
+                .findFirst();
+
+
+        // Delete playlist
+        myPlaylist.deletePlaylist(playlistId);
+        // Delete playlist songs
+        mySongs.deleteSongFromPlaylistAll(playlistId);
+
+        // Delete Folder
+        fileController.deleteItem(AppConfig.getPlaylistPath() + playlistId + "_" + data.get().playlistName());
+
+        // Update cache
+        data.ifPresent(playLists::remove);
+
+        mediaController.setPlaylist(null);
+    }
 
 
     //SONGS

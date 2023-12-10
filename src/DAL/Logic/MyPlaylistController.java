@@ -67,4 +67,17 @@ public class MyPlaylistController {
             throw new RuntimeException(e);
         }
     }
+
+    public void deletePlaylist(int playListId) {
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM playlists WHERE id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setInt(1, playListId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

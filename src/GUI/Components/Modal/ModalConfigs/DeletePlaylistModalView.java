@@ -18,9 +18,12 @@ public class DeletePlaylistModalView extends ModalView {
     //Outside Controllers
     SongList tableController;
 
+    private int currentPlaylistId;
 
-    public DeletePlaylistModalView() {
+    public DeletePlaylistModalView(int plId) {
         super();
+        currentPlaylistId = plId;
+
 
         this.modalBase.setMaxHeight(200);
 
@@ -55,10 +58,12 @@ public class DeletePlaylistModalView extends ModalView {
 
 
     private void deleteSong(){
-        if (single.getPlaylistController().getPlaylistId() < 1) {
+        if (currentPlaylistId < 1) {
             System.out.println("Something went wrong");
             return;
         }
+
+        single.getDllController().deletePlaylist(currentPlaylistId);
 
         single.getModalController().closeModal();
     }

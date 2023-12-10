@@ -34,6 +34,7 @@ public class FileController {
         createPath(playlistPath + playlistID + "_" + folderName);
     }
 
+
     public void createPlaylistIcon(String icon, String playlistName, int playlistId){
         copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/", "icon");
     }
@@ -52,6 +53,9 @@ public class FileController {
         return null;
     }
 
+    public void deleteItem(String path) {
+        deletePath(new File(path));
+    }
 
     private void copyTo(String filePath, String toPath, String newFileName) {
         Path from = Paths.get(filePath);
