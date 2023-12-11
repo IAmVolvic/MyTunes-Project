@@ -10,9 +10,15 @@ import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
+import java.io.IOException;
 import java.util.Base64;
+import java.util.Map;
 
 public class MediaController {
     private MediaPlayer mPlayer;
@@ -138,7 +144,20 @@ public class MediaController {
         clearSong();
     }
 
-    public String getMediaDuration(File media){ return "0:0"; }
+    public String getMediaDuration(File media){
+        try {
+            AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(media);
+            if(fileFormat instanceof TAudioFileFormat){
+                Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
+                String key = "duration";
+                Long microseconds = (Long) properties.get(key);
+                int mili = (int) (microseconds / 1000);
+
+                return AppConfig.getTimeFormat(new Duration(mili));
+            }
+        } catch (UnsupportedAudioFileException | IOException e) {}
+        return "0:0";
+    }
 
     private void clearSong() {
         if (mPlayer == null) {
