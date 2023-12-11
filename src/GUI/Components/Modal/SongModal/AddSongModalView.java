@@ -1,4 +1,4 @@
-package GUI.Components.Modal.ModalConfigs;
+package GUI.Components.Modal.ModalConfigs.SongModal.SongModal;
 
 import BE.Song;
 import DLL.DllController;

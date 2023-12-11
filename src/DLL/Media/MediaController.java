@@ -119,7 +119,7 @@ public class MediaController {
         if(currentPlaylist != null && !currentPlaylist.getSongTable().isEmpty()) {
             String decodeSong = Base64.getEncoder().encodeToString(currentPlaylist.getSongTable().get(currentSongIndex).getName().getBytes());
             String playlistPath = AppConfig.getPlaylistPath() + currentPlaylist.playlistId() + "_" + currentPlaylist.playlistName() + "/";
-            File songPath = fileController.findFile(playlistPath, decodeSong);
+            File songPath = fileController.findFile(playlistPath, currentPlaylist.getSongTable().get(currentSongIndex).getId() + "_" +decodeSong);
 
             if(songPath != null){
                 mPlayer = new MediaPlayer(new Media(songPath.toURI().toString()));

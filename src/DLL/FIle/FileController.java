@@ -71,6 +71,20 @@ public class FileController {
         } catch (IOException e) {}
     }
 
+    public void renameTo(String path, String newName, boolean isFolder) {
+        Path from = Paths.get(path);
+        String fullPath;
+
+        if(isFolder){
+            fullPath = newName + "." + getFileExtension(path);
+        }else{
+            fullPath = newName;
+        }
+
+        try {
+            Files.move(from, from.resolveSibling(fullPath), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {}
+    };
 
     private String getFileExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');

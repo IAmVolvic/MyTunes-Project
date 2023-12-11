@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -111,6 +112,37 @@ public class DllController {
         data.ifPresent(playLists::remove);
     }
 
+    public void editPlaylist(int playlistId, String newName, String newIcon) {
+        // Playlist Data
+        Optional<Playlist> playlistData = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playlistId)
+                .findFirst();
+
+        //Verbs
+        String playlistPath = AppConfig.getPlaylistPath() + playlistId + "_" + playlistData.get().playlistName();
+
+        // Update DB
+        myPlaylist.updatePlaylist(playlistId, newName);
+
+        // Update Icon if set
+        if(newIcon != null){
+            //This just deletes the old one, doing this allows me to not have left over icons because of the file type
+            fileController.deleteItem(getFile(playlistPath, "icon").getPath());
+            fileController.createPlaylistIcon(newIcon, playlistData.get().playlistName(), playlistId);
+        }
+
+        // Update File
+        fileController.renameTo(
+                playlistPath,
+                playlistId + "_" + newName,
+                true
+        );
+
+        // Update cache
+        playlistData.get().newName(newName);
+    }
+
+
 
     //SONGS
     public List<Song> getSongs(int getPlaylistWithId, String searchFilter) {
@@ -138,7 +170,7 @@ public class DllController {
         songsTable.ifPresent(song -> song.addSong(newSong));
 
         // Store / rename the audio file
-        fileController.createSong(songPath, baseEncoded, playListId, playListName);
+        fileController.createSong(songPath, newSong.getId() + "_" + baseEncoded, playListId, playListName);
 
         return songsTable.get().getSongTable();
     }
@@ -165,10 +197,12 @@ public class DllController {
             songToRemove.ifPresent(song -> {
                 String dirPath = AppConfig.getPlaylistPath() + playListId + "_" + playlistData.get().playlistName();
                 String baseEncoded = Base64.getEncoder().encodeToString(song.getName().getBytes());
-                File getFile = fileController.findFile(dirPath, baseEncoded);
+                File getFile = fileController.findFile(dirPath, songId + "_" + baseEncoded);
 
                 // Delete File
-                fileController.deleteItem(getFile.getPath());
+                if(getFile != null) {
+                    fileController.deleteItem(getFile.getPath());
+                }
 
                 // Remove the song from the SongTable
                 playlist.getSongTable().remove(song);

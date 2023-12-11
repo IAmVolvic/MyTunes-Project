@@ -2,13 +2,10 @@ package GUI.Components;
 
 
 import BE.Song;
-import GUI.Components.Modal.ModalConfigs.DeleteSongModalView;
-import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
-import GUI.Components.Modal.ModalController;
+import GUI.Components.Modal.ModalConfigs.SongModal.SongModal.DeleteSongModalView;
 import GUI.GUISingleton;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;

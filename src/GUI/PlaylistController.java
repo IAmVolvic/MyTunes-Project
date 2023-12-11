@@ -77,7 +77,6 @@ public class PlaylistController {
         playlist_viewTotalSongs.setText("Playlist - 0 songs");
     }
 
-
     public void setPlaylistView(PlaylistButton plBtn) {
         Playlist data = getDetails(plBtn.getId());
 
@@ -92,6 +91,10 @@ public class PlaylistController {
         }
     }
 
+    public void updateFullView(){
+        changeButtonStyles();
+        changeViewStyles();
+    }
 
     public void deleteSong(List<Song> newList){
         resetMediaButtons();
@@ -193,6 +196,13 @@ public class PlaylistController {
     private void resetMediaButtons() {
         mediaButtons.resetIcon();
     }
+
+
+    public Playlist getPlaylistData(int playlistId){
+        return getDetails(playlistId);
+    }
+
+    public Playlist getSelected(){ return this.selectedPlaylistData; }
 
     private Playlist getDetails(int id) {
         ArrayList<Playlist> playlistTable = single.getDllController().getPlaylistsSingle();
