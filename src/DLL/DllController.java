@@ -177,6 +177,7 @@ public class DllController {
 
         // Store the new song in the DB, and update the cache
         Song newSong = mySongs.newSong(playListId, songTitle);
+        newSong.setDuration(mediaController.getMediaDuration( new File(songPath)));
         Optional<Playlist> songsTable = playLists.stream()
                 .filter(playlist -> playlist.playlistId() == playListId)
                 .findFirst();
