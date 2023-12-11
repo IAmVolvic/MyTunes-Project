@@ -45,4 +45,9 @@ public class Song {
     public void setTableId(int newId) {
         this.tableId = newId;
     }
+
+
+    public void setName(String newName) {
+        this.name = newName;
+    }
 }

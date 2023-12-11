@@ -97,4 +97,19 @@ public class MySongsController {
             throw new RuntimeException(e);
         }
     }
+
+
+    public void editSong(int songId, String newName){
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "UPDATE songs SET song_name = ? WHERE song_id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setString(1, newName);
+            pt.setInt(2, songId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

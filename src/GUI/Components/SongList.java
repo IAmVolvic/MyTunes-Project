@@ -3,6 +3,7 @@ package GUI.Components;
 
 import BE.Song;
 import GUI.Components.Modal.ModalConfigs.SongModal.SongModal.DeleteSongModalView;
+import GUI.Components.Modal.SongModal.EditSongModalView;
 import GUI.GUISingleton;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -134,7 +135,9 @@ public class SongList {
         // Add event handlers
         editButton.setOnAction(event -> {
             Song selectedItem = row.getItem();
-            System.out.println(selectedItem.getName());
+
+            EditSongModalView modalView = new EditSongModalView(selectedItem);
+            single.getModalController().openModal(modalView.getView());
         });
 
         deleteButton.setOnAction(event -> {

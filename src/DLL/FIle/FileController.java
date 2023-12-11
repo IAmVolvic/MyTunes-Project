@@ -75,7 +75,7 @@ public class FileController {
         Path from = Paths.get(path);
         String fullPath;
 
-        if(isFolder){
+        if(!isFolder){
             fullPath = newName + "." + getFileExtension(path);
         }else{
             fullPath = newName;

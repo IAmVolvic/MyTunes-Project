@@ -103,6 +103,13 @@ public class PlaylistController {
         setViewSongList(newList, false);
     }
 
+    public void editSong(){
+        resetMediaButtons();
+        updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
+        tableController.clearTable();
+        updateViewSongList(null);
+    }
+
 
     public void setMediaPlaylist(){
         resetMediaButtons();
