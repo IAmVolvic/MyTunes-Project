@@ -10,6 +10,7 @@ import GUI.Components.SongList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -39,7 +40,6 @@ public class PlaylistController {
     private Pane playlist_currentlyPlayingIcon;
     private Label playlist_currentlyPlayingTitle;
 
-    private DllController dllController;
     public PlaylistController(GUISingleton newSingle) {
         single = newSingle;
     }
@@ -58,6 +58,25 @@ public class PlaylistController {
         playlist_currentlyPlayingTitle = cpl;
     }
 
+
+    public void resetFullView(Button toDelete){
+        playlist_list.getChildren().remove(toDelete);
+
+        tableController.clearTable();
+
+        selectedPlaylistButton = null;
+        selectedPlaylistData = null;
+
+        mediaButtons.resetIcon();
+
+        playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('images/My.png');");
+        playlist_viewIcon.setStyle("-fx-background-image: url('images/My.png');");
+
+        playlist_currentlyPlayingTitle.setText(" ");
+        playlist_viewTitle.setText(" ");
+        playlist_viewTotalSongs.setText("Playlist - 0 songs");
+    }
+
     public void setPlaylistView(PlaylistButton plBtn) {
         Playlist data = getDetails(plBtn.getId());
 
@@ -67,8 +86,35 @@ public class PlaylistController {
 
             changeButtonStyles();
             changeViewStyles();
-            setViewSongList();
+            assert data != null;
+            setViewSongList(data.getSongTable(), true);
         }
+    }
+
+    public void updateFullView(){
+        changeButtonStyles();
+        changeViewStyles();
+    }
+
+    public void deleteSong(List<Song> newList){
+        resetMediaButtons();
+        updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
+
+        setViewSongList(newList, false);
+    }
+
+    public void editSong(){
+        resetMediaButtons();
+        updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
+        tableController.clearTable();
+        updateViewSongList(null);
+    }
+
+
+    public void setMediaPlaylist(){
+        resetMediaButtons();
+        single.getDllController().setPlaylistSongs(selectedPlaylistData);
+        updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
     }
 
 
@@ -92,9 +138,12 @@ public class PlaylistController {
         if(selectedPlaylistData == null){ return 0; }
         return selectedPlaylistData.playlistId();
     }
+
+
     public String getPlaylistName(){
         return selectedPlaylistData.playlistName();
     }
+
 
     public void updateTotalSongsNum(int Number) {
         String newTitle = AppConfig.getPlaylistTotalSongs(Number);
@@ -104,7 +153,6 @@ public class PlaylistController {
     }
 
 
-
     private void changeButtonStyles() {
         ObservableList<Node> children = playlist_list.getChildren();
         for (Node val : children) {
@@ -112,6 +160,7 @@ public class PlaylistController {
         }
         selectedPlaylistButton.setActiveStyle();
     }
+
 
     private void changeViewStyles() {
         mediaButtons.resetIcon();
@@ -135,27 +184,32 @@ public class PlaylistController {
     }
 
 
-    private void setViewSongList() {
+    private void setViewSongList(List<Song> songTable, boolean runMedia) {
         int index = 1;
-        List<Song> songs = single.getDllController().getSongs(selectedPlaylistData.playlistId(), null);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
-        songs.sort(Comparator.comparingInt(Song::getTableId));
-        for(Song val : songs){
+        songTable.sort(Comparator.comparingInt(Song::getTableId));
+        for(Song val : songTable){
             val.setTableId(index);
             songData.add(val);
             index++;
         }
 
         tableController.addSong(songData);
-        setMediaPlaylist();
+        if(runMedia){ setMediaPlaylist(); }
     }
 
 
-    public void setMediaPlaylist(){
+    private void resetMediaButtons() {
         mediaButtons.resetIcon();
-        single.getDllController().setPlaylistSongs(selectedPlaylistData);
     }
+
+
+    public Playlist getPlaylistData(int playlistId){
+        return getDetails(playlistId);
+    }
+
+    public Playlist getSelected(){ return this.selectedPlaylistData; }
 
     private Playlist getDetails(int id) {
         ArrayList<Playlist> playlistTable = single.getDllController().getPlaylistsSingle();

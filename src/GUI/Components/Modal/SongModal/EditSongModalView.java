@@ -1,17 +1,11 @@
-package GUI.Components.Modal.ModalConfigs;
+package GUI.Components.Modal.SongModal;
 
 import BE.Song;
-import DLL.DllController;
-
-import GUI.Components.Modal.ModalController;
 import GUI.Components.Modal.ModalView;
 import GUI.Components.SongList;
-
 import GUI.GUISingleton;
-import GUI.PlaylistController;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
@@ -23,14 +17,16 @@ import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class AddSongModalView extends ModalView {
+public class EditSongModalView extends ModalView {
     // GUI SINGLETON
     private final GUISingleton single = GUISingleton.getInstance();
 
 
     //Class verbs
+    private final Song songData;
     String pathToSong;
 
     //View FXML Elements
@@ -41,18 +37,13 @@ public class AddSongModalView extends ModalView {
     private final TextField songTitleInput = new TextField();
 
 
-    //Outside Controllers
-    SongList tableController;
-
-
-    public AddSongModalView(SongList tC) {
+    public EditSongModalView(Song song) {
         super();
+        songData = song;
 
-        //Setting outside controllers
-        tableController = tC;
 
-        this.setTitle("Add Song To Playlist");
-        this.setActionTitle("Add");
+        this.setTitle("Edit This Song");
+        this.setActionTitle("Save");
         this.createBody();
         this.createActionButton();
     }
@@ -108,25 +99,16 @@ public class AddSongModalView extends ModalView {
 
 
     private void addSong(){
-        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || pathToSong == null || single.getPlaylistController().getPlaylistId() < 1) {
+        if (songTitleInput.getText() == null || songTitleInput.getText().trim().isEmpty() || single.getPlaylistController().getPlaylistId() < 1) {
             System.out.println("Something went wrong");
             return;
         }
 
-        int index = 1;
+        // Ask DLL to update the song
+        single.getDllController().editSong(single.getPlaylistController().getPlaylistId(), songData.getId(), pathToSong, songTitleInput.getText());
 
-        ArrayList<Song> newSongConstruct = single.getDllController().createSong(single.getPlaylistController().getPlaylistId(), single.getPlaylistController().getPlaylistName(), pathToSong, songTitleInput.getText());
-        ObservableList<Song> songData = FXCollections.observableArrayList();
-
-        for(Song val : newSongConstruct){
-            val.setTableId(index);
-            songData.add(val);
-            index++;
-        }
-
-        tableController.addSong(songData);
-        single.getPlaylistController().updateTotalSongsNum(newSongConstruct.size());
-        single.getPlaylistController().setMediaPlaylist();
+        // Ask frontend to update its view
+        single.getPlaylistController().editSong();
 
         single.getModalController().closeModal();
     }

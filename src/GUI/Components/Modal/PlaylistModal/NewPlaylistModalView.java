@@ -1,4 +1,4 @@
-package GUI.Components.Modal.ModalConfigs;
+package GUI.Components.Modal.PlaylistModal;
 
 import APP_SETTINGS.AppConfig;
 

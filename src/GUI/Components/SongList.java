@@ -2,13 +2,11 @@ package GUI.Components;
 
 
 import BE.Song;
-import GUI.Components.Modal.ModalConfigs.DeleteSongModalView;
-import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
-import GUI.Components.Modal.ModalController;
+import GUI.Components.Modal.ModalConfigs.SongModal.SongModal.DeleteSongModalView;
+import GUI.Components.Modal.SongModal.EditSongModalView;
 import GUI.GUISingleton;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.*;
@@ -114,9 +112,14 @@ public class SongList {
 
     }
 
+
     public void addSong(ObservableList<Song> newSong) {
         songList.setItems(newSong);
     }
+
+
+    public void clearTable(){ songList.getItems().clear(); }
+
 
 
     private void createContextMenu(TableRow<Song> row) {
@@ -132,13 +135,15 @@ public class SongList {
         // Add event handlers
         editButton.setOnAction(event -> {
             Song selectedItem = row.getItem();
-            System.out.println(selectedItem.getName());
+
+            EditSongModalView modalView = new EditSongModalView(selectedItem);
+            single.getModalController().openModal(modalView.getView());
         });
 
         deleteButton.setOnAction(event -> {
             Song selectedItem = row.getItem();
 
-            DeleteSongModalView modalView = new DeleteSongModalView();
+            DeleteSongModalView modalView = new DeleteSongModalView(selectedItem);
             single.getModalController().openModal(modalView.getView());
         });
 

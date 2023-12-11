@@ -6,8 +6,7 @@ import BE.Playlist;
 import BE.Song;
 import DLL.Media.MediaPlayerObservable;
 import GUI.Components.PlaylistButton;
-import GUI.Components.Modal.ModalConfigs.AddSongModalView;
-import GUI.Components.Modal.ModalConfigs.NewPlaylistModalView;
+import GUI.Components.Modal.PlaylistModal.NewPlaylistModalView;
 import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
 import GUI.Components.VolumeControl;
@@ -99,7 +98,7 @@ public class MainController {
 
 
     public void newSong(ActionEvent actionEvent) {
-        AddSongModalView modalView = new AddSongModalView(tableController);
+        GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView modalView = new GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView(tableController);
         single.getModalController().openModal(modalView.getView());
     }
 

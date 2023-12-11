@@ -70,4 +70,46 @@ public class MySongsController {
             throw new RuntimeException(e);
         }
     }
+
+    public void deleteSongFromPlaylistSingle(int songId){
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM songs WHERE song_id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setInt(1, songId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void deleteSongFromPlaylistAll(int playlistId){
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "DELETE FROM songs WHERE playlist_id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setInt(1, playlistId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void editSong(int songId, String newName){
+        try(Connection con = cm.getConnection())
+        {
+            String sql = "UPDATE songs SET song_name = ? WHERE song_id = ?";
+            PreparedStatement pt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pt.setString(1, newName);
+            pt.setInt(2, songId);
+            pt.executeQuery();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

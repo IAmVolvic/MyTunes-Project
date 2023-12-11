@@ -1,6 +1,7 @@
 package GUI.Components;
 
-import GUI.Components.Modal.ModalConfigs.DeletePlaylistModalView;
+import GUI.Components.Modal.PlaylistModal.DeletePlaylistModalView;
+import GUI.Components.Modal.PlaylistModal.EditPlaylistModalView;
 import GUI.GUISingleton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -150,10 +151,13 @@ public class PlaylistButton{
         editButton.getStyleClass().add("customContext-Btn");
         deleteButton.getStyleClass().add("customContext-Btn-Danger");
 
-        editButton.setOnAction(event -> {});
+        editButton.setOnAction(event -> {
+            EditPlaylistModalView modalView = new EditPlaylistModalView(this, btnID);
+            single.getModalController().openModal(modalView.getView());
+        });
 
         deleteButton.setOnAction(event -> {
-            DeletePlaylistModalView modalView = new DeletePlaylistModalView();
+            DeletePlaylistModalView modalView = new DeletePlaylistModalView(this.buttonBase, btnID);
             single.getModalController().openModal(modalView.getView());
         });
 

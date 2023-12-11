@@ -4,9 +4,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Playlist {
-    private String playlistName;
-    private int playlistId;
-    private String playlistDate;
+    private String  playlistName;
+    private int     playlistId;
+    private String  playlistDate;
 
     private ArrayList<Song> songs = new ArrayList<>();
 
@@ -15,13 +15,14 @@ public class Playlist {
         playlistId = id;
         playlistDate = date;
     }
+
     public String playlistName(){
         return this.playlistName;
     }
+
     public int playlistId(){
         return this.playlistId;
     }
-
 
     public void addSongTable(ArrayList<Song> newSongTable){
         this.songs = newSongTable;
@@ -33,5 +34,9 @@ public class Playlist {
 
     public void addSong(Song newSong){
         this.songs.add(newSong);
+    }
+
+    public void newName(String name){
+        this.playlistName = name;
     }
 }

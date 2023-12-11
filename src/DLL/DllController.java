@@ -1,5 +1,6 @@
 package DLL;
 
+import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
 import DAL.Logic.MyPlaylistController;
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -89,6 +91,62 @@ public class DllController {
         return newPlaylist;
     }
 
+    public void deletePlaylist(int playlistId){
+        mediaController.stopEverything();
+
+        // Get playlist data
+        Optional<Playlist> data = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playlistId)
+                .findFirst();
+
+
+        // Delete playlist
+        myPlaylist.deletePlaylist(playlistId);
+        // Delete playlist songs
+        mySongs.deleteSongFromPlaylistAll(playlistId);
+
+        // Delete Folder
+        fileController.deleteItem(AppConfig.getPlaylistPath() + playlistId + "_" + data.get().playlistName());
+
+        // Update cache
+        data.ifPresent(playLists::remove);
+    }
+
+    public void editPlaylist(int playlistId, String newName, String newIcon) {
+        // Playlist Data
+        Optional<Playlist> playlistData = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playlistId)
+                .findFirst();
+
+        //Verbs
+        String playlistPath = AppConfig.getPlaylistPath() + playlistId + "_" + playlistData.get().playlistName();
+
+        // Update DB
+        myPlaylist.updatePlaylist(playlistId, newName);
+
+        // Update Icon if set
+        if(newIcon != null){
+            File getFile = fileController.findFile(playlistPath, "icon");
+
+            if(getFile != null){
+                //This just deletes the old one, doing this allows me to not have left over icons because of the file type
+                fileController.deleteItem(getFile.getPath());
+            }
+
+            fileController.createPlaylistIcon(newIcon, playlistData.get().playlistName(), playlistId);
+        }
+
+        // Update File
+        fileController.renameTo(
+                playlistPath,
+                playlistId + "_" + newName,
+                true
+        );
+
+        // Update cache
+        playlistData.get().newName(newName);
+    }
+
 
 
     //SONGS
@@ -112,16 +170,107 @@ public class DllController {
         Optional<Playlist> songsTable = playLists.stream()
                 .filter(playlist -> playlist.playlistId() == playListId)
                 .findFirst();
-        songsTable.get().addSong(newSong);
 
+        songsTable.ifPresent(song -> song.addSong(newSong));
 
         // Store / rename the audio file
-        fileController.createSong(songPath, baseEncoded, playListId, playListName);
+        fileController.createSong(songPath, newSong.getId() + "_" + baseEncoded, playListId, playListName);
 
         return songsTable.get().getSongTable();
     }
 
     public void setPlaylistSongs(Playlist playlist){ mediaController.setPlaylist(playlist); }
+
+    public List<Song> deleteSong(int playListId, int songId) {
+        mediaController.stopEverything();
+
+        // Get playlist data
+        Optional<Playlist> playlistData = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playListId)
+                .findFirst();
+
+        List<Song> updatedSongTable = new ArrayList<>();
+
+        playlistData.ifPresent(playlist -> {
+            Optional<Song> songToRemove = playlist.getSongTable().stream()
+                    .filter(song -> song.getId() == songId)
+                    .findFirst();
+
+            songToRemove.ifPresent(song -> {
+                String dirPath = AppConfig.getPlaylistPath() + playListId + "_" + playlistData.get().playlistName();
+                String baseEncoded = Base64.getEncoder().encodeToString(song.getName().getBytes());
+                File getFile = fileController.findFile(dirPath, songId + "_" + baseEncoded);
+
+                // Delete File
+                if(getFile != null) {
+                    fileController.deleteItem(getFile.getPath());
+                }
+
+                // Remove the song from the SongTable
+                playlist.getSongTable().remove(song);
+
+                updatedSongTable.addAll(playlist.getSongTable());
+            });
+
+            // Delete the data from DB
+            mySongs.deleteSongFromPlaylistSingle(songId);
+
+
+            mediaController.setPlaylist(playlist);
+        });
+
+        return updatedSongTable;
+    }
+
+    public void editSong(int playlistId, int songId, String newSong, String newSongName) {
+        mediaController.stopEverything();
+
+        // Get playlist data
+        Optional<Playlist> playlistData = playLists.stream()
+                .filter(playlist -> playlist.playlistId() == playlistId)
+                .findFirst();
+
+        Optional<Song> songData = playlistData.get().getSongTable().stream()
+                .filter(songs -> songs.getId() == songId)
+                .findFirst();
+
+        //Verbs
+        String playlistPath = AppConfig.getPlaylistPath() + playlistId + "_" + playlistData.get().playlistName();
+        String oldSongNameBase = Base64.getEncoder().encodeToString(songData.get().getName().getBytes());
+        File getFile = fileController.findFile(playlistPath, songId + "_" + oldSongNameBase);
+
+        songData.ifPresent(songFromData -> {
+            // Edit the DB
+            mySongs.editSong(songId, newSongName);
+
+            if(getFile != null) {
+                // Edit the file
+                if(newSong != null){
+                    // Delete the old file
+                    fileController.deleteItem(getFile.getPath());
+
+                    // Create the new song
+                    String newSongNameBase = Base64.getEncoder().encodeToString(newSongName.getBytes());
+                    fileController.createSong(newSong, songId + "_" + newSongNameBase, playlistId, playlistData.get().playlistName());
+                }else{
+                    File getOldFile = fileController.findFile(playlistPath, songId + "_" + oldSongNameBase);
+
+                    fileController.renameTo(
+                            getOldFile.getPath(),
+                            songId + "_" + Base64.getEncoder().encodeToString(newSongName.getBytes()),
+                            false
+                    );
+                }
+            }
+
+            songFromData.setName(newSongName);
+
+            playlistData.ifPresent(playlist -> {
+                mediaController.setPlaylist(playlist);
+            });
+        });
+    }
+
 
 
     //OTHER

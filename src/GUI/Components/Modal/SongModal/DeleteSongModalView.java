@@ -1,4 +1,4 @@
-package GUI.Components.Modal.ModalConfigs;
+package GUI.Components.Modal.ModalConfigs.SongModal.SongModal;
 
 import BE.Song;
 import DLL.DllController;
@@ -14,27 +14,25 @@ import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DeleteSongModalView extends ModalView {
     // GUI SINGLETON
     private final GUISingleton single = GUISingleton.getInstance();
 
-    //Class verbs
-    String pathToSong;
+    private final Song songData;
 
-    //Outside Controllers
-    SongList tableController;
-
-
-    public DeleteSongModalView() {
+    public DeleteSongModalView(Song song) {
         super();
+        songData = song;
 
 
         this.modalBase.setMaxHeight(200);
@@ -73,6 +71,14 @@ public class DeleteSongModalView extends ModalView {
         if (single.getPlaylistController().getPlaylistId() < 1) {
             System.out.println("Something went wrong");
             return;
+        }
+
+        // Ask DLL to remove the song
+        List<Song> newSongList = single.getDllController().deleteSong(single.getPlaylistController().getPlaylistId(), songData.getId());
+
+        // Remove the song from the list
+        if(newSongList != null) {
+            single.getPlaylistController().deleteSong(newSongList);
         }
 
         single.getModalController().closeModal();

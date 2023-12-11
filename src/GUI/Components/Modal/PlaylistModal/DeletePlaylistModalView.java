@@ -1,9 +1,8 @@
-package GUI.Components.Modal.ModalConfigs;
+package GUI.Components.Modal.PlaylistModal;
 
-import GUI.Components.Modal.ModalController;
 import GUI.Components.Modal.ModalView;
-import GUI.Components.SongList;
 import GUI.GUISingleton;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
@@ -13,14 +12,14 @@ public class DeletePlaylistModalView extends ModalView {
     private final GUISingleton single = GUISingleton.getInstance();
 
     //Class verbs
-    String pathToSong;
+    private final Button playlistButton;
+    private final int currentPlaylistId;
 
-    //Outside Controllers
-    SongList tableController;
-
-
-    public DeletePlaylistModalView() {
+    public DeletePlaylistModalView(Button playlistButtonNode, int plId) {
         super();
+        playlistButton = playlistButtonNode;
+        currentPlaylistId = plId;
+
 
         this.modalBase.setMaxHeight(200);
 
@@ -55,10 +54,15 @@ public class DeletePlaylistModalView extends ModalView {
 
 
     private void deleteSong(){
-        if (single.getPlaylistController().getPlaylistId() < 1) {
+        if (currentPlaylistId < 1) {
             System.out.println("Something went wrong");
             return;
         }
+
+        //Ask DLL to delete the playlist
+        single.getDllController().deletePlaylist(currentPlaylistId);
+        //reset the playlist view
+        single.getPlaylistController().resetFullView(playlistButton);
 
         single.getModalController().closeModal();
     }

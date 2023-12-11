@@ -34,6 +34,7 @@ public class FileController {
         createPath(playlistPath + playlistID + "_" + folderName);
     }
 
+
     public void createPlaylistIcon(String icon, String playlistName, int playlistId){
         copyTo(icon, playlistPath + playlistId + "_" + playlistName + "/", "icon");
     }
@@ -52,6 +53,9 @@ public class FileController {
         return null;
     }
 
+    public void deleteItem(String path) {
+        deletePath(new File(path));
+    }
 
     private void copyTo(String filePath, String toPath, String newFileName) {
         Path from = Paths.get(filePath);
@@ -63,15 +67,24 @@ public class FileController {
         };
 
         try {
-            Files.copy(from, to, options);
-            Files.move(
-                to,
-                to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ),
-                StandardCopyOption.REPLACE_EXISTING
-            );
+            Files.copy(from, to.resolveSibling(newFileName + "." + getFileExtension( from.getFileName().toString() ) ), options);
         } catch (IOException e) {}
     }
 
+    public void renameTo(String path, String newName, boolean isFolder) {
+        Path from = Paths.get(path);
+        String fullPath;
+
+        if(!isFolder){
+            fullPath = newName + "." + getFileExtension(path);
+        }else{
+            fullPath = newName;
+        }
+
+        try {
+            Files.move(from, from.resolveSibling(fullPath), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {}
+    };
 
     private String getFileExtension(String fileName) {
         int dotIndex = fileName.lastIndexOf('.');
@@ -137,6 +150,7 @@ public class FileController {
                 deletePath(file);
             }
         }
+
         return path.delete();
     }
 
