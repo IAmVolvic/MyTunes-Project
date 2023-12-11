@@ -57,7 +57,7 @@ public class MainController {
     public TableColumn<String, Integer> col1;
     public TableColumn<String, String>  col2;
     public TableColumn<String, String>  col3;
-    public TableColumn<String, Long>    col4;
+    public TableColumn<String, String>    col4;
 
 
 

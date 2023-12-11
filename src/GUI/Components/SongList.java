@@ -23,10 +23,10 @@ public class SongList {
     private final TableColumn<String, Integer>  col1;
     private final TableColumn<String, String>   col2;
     private final TableColumn<String, String>   col3;
-    private final TableColumn<String, Long>     col4;
+    private final TableColumn<String, String>     col4;
 
 
-    public SongList(TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, Long> coL4){
+    public SongList(TableView<Song> sl, TableColumn<String, Integer> coL1, TableColumn<String, String> coL2, TableColumn<String, String> coL3, TableColumn<String, String> coL4){
         songList = sl;
         col1 = coL1;
         col2 = coL2;

@@ -65,6 +65,16 @@ public class DllController {
 
         for(Playlist val : dbPlaylists){
             ArrayList<Song> dbSongsFromPlaylist = mySongs.getPlaylistSongs(val.playlistId());
+            for(Song dbSongVal : dbSongsFromPlaylist){
+
+                String dirPath = AppConfig.getPlaylistPath() + val.playlistId() + "_" + val.playlistName();
+                String baseEncoded = Base64.getEncoder().encodeToString(dbSongVal.getName().getBytes());
+                File getFile = fileController.findFile(dirPath, dbSongVal.getId() + "_" + baseEncoded);
+
+
+                dbSongVal.setDuration(mediaController.getMediaDuration(getFile));
+            }
+
             val.addSongTable(dbSongsFromPlaylist);
         }
 
