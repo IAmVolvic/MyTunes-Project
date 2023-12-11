@@ -30,7 +30,7 @@ public class MySongsController {
                 String name         = rs.getString("song_name");
                 String createdDate  = rs.getString("created_date");
 
-                Song song = new Song(id, name, createdDate, 0);
+                Song song = new Song(id, name, createdDate, "0:0");
                 songList.add(song);
             }
 
@@ -39,6 +39,7 @@ public class MySongsController {
             throw new RuntimeException(e);
         }
     }
+
 
     public Song newSong(int playlistId, String songTitle) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -60,7 +61,7 @@ public class MySongsController {
 
             try (ResultSet generatedKeys = pt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    return new Song(generatedKeys.getInt(1),songTitle, dateFormat.format(cal.getTime()), 0);
+                    return new Song(generatedKeys.getInt(1),songTitle, dateFormat.format(cal.getTime()), "0:0");
                 }
                 else {
                     throw new SQLException("Creating playlist failed, no ID obtained.");
@@ -70,6 +71,7 @@ public class MySongsController {
             throw new RuntimeException(e);
         }
     }
+
 
     public void deleteSongFromPlaylistSingle(int songId){
         try(Connection con = cm.getConnection())

@@ -11,9 +11,9 @@ public class Song {
     private String date;
     private String genre;
 
-    private long duration;
+    private String duration;
 
-    public Song(int id, String name, String date, long duration){
+    public Song(int id, String name, String date, String duration){
         this.id = id;
         this.name = name;
         this.date = date;
@@ -37,10 +37,11 @@ public class Song {
     }
 
 
-    public long getDuration() {
+    public String getDuration() {
         return this.duration;
     }
 
+    public void setDuration(String newDuration) { this.duration = newDuration;}
 
     public void setTableId(int newId) {
         this.tableId = newId;

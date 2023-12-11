@@ -138,6 +138,7 @@ public class MediaController {
         clearSong();
     }
 
+    public String getMediaDuration(File media){ return "0:0"; }
 
     private void clearSong() {
         if (mPlayer == null) {
