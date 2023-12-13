@@ -1,5 +1,17 @@
+/**
+ * This class represents the main controller for the GUI, managing various components and actions.
+ *
+ * Methods:
+ * - newPlaylist
+ * - newSong
+ * - playBtn
+ * - skipSong
+ * - previousSong
+ * - closeModal
+ * - postInitialize
+ * - buildPlaylistButtons
+ */
 package GUI;
-
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
@@ -16,22 +28,19 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
-
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-
 import com.jfoenix.controls.JFXSlider;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
 import java.io.File;
 import java.util.ArrayList;
-
 
 public class MainController {
     // GUI SINGLETON
     private final GUISingleton single = GUISingleton.getInstance();
-
 
     // Playlist list nodes
     public VBox playlist_list;
@@ -39,11 +48,10 @@ public class MainController {
     public Label playlistViewTitle;
     public Label viewTotalSongs;
 
-    //Currently Playing
+    // Currently Playing
     public Pane playlistIconPlaying;
     public Label playlistNamePlaying;
     public Label songLabel;
-
 
     // Volume slider
     public ProgressBar songProgressBar;
@@ -51,61 +59,50 @@ public class MainController {
     public Text songProgressNumTotal;
     public JFXSlider volume;
 
-
     // Getting the table columns
     public TableView<Song> songList;
     public TableColumn<String, Integer> col1;
-    public TableColumn<String, String>  col2;
-    public TableColumn<String, String>  col3;
-    public TableColumn<String, String>    col4;
+    public TableColumn<String, String> col2;
+    public TableColumn<String, String> col3;
+    public TableColumn<String, String> col4;
 
-
-
-    //Icons
+    // Icons
     public FontAwesomeIconView iPlay;
 
-
-    //Modal Parts
+    // Modal Parts
     public StackPane modal_main;
 
-
-    //Search
+    // Search
     public TextField searchInput;
     private final Timeline timeline = new Timeline();
 
-
-    //Frontend Controllers
+    // Frontend Controllers
     private MediaButtons mediaButtons;
     private VolumeControl volumeController;
     private SongList tableController;
-
-
     private MediaPlayerObservable mediaPlayerObservable;
 
-
-    //Constructor
+    // Constructor
     public MainController() {
         // Run later when everything is being created
         Platform.runLater(this::postInitialize);
     }
 
-
-    //New Playlist Button
+    // New Playlist Button
     public void newPlaylist(ActionEvent o) {
         NewPlaylistModalView modalView = new NewPlaylistModalView(playlist_list);
         single.getModalController().openModal(modalView.getView());
     }
 
-
     public void newSong(ActionEvent actionEvent) {
-        GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView modalView = new GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView(tableController);
+        GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView modalView =
+                new GUI.Components.Modal.ModalConfigs.SongModal.SongModal.NewSongModalView(tableController);
         single.getModalController().openModal(modalView.getView());
     }
 
-
-    //Media Buttons
+    // Media Buttons
     public void playBtn(ActionEvent actionEvent) {
-        //Send Button Logic to its own container
+        // Send Button Logic to its own container
         mediaButtons.playButtonClicked(actionEvent);
     }
 
@@ -117,16 +114,14 @@ public class MainController {
         mediaButtons.prevSong(actionEvent);
     }
 
-
-    //Close Modal Button /s
+    // Close Modal Button
     public void closeModal(ActionEvent mouseEvent) {
         single.getModalController().closeModal();
     }
 
-
     // Post Initialize
     private void postInitialize() {
-        //Setting the Label for BLL -> MediaController to use
+        // Setting the Label for BLL -> MediaController to use
         single.getBllController().initializeSongLabel(songLabel);
 
         // Get and start the modal controller
@@ -135,12 +130,10 @@ public class MainController {
         // Get and start the songs table / initialize it
         tableController = new SongList(songList, col1, col2, col3, col4);
 
-
-        //Set PlayButton Controller
+        // Set PlayButton Controller
         mediaButtons = new MediaButtons(iPlay);
 
-
-        //Set Playlist Controller
+        // Set Playlist Controller
         single.getPlaylistController().setNodes(
                 mediaButtons,
                 tableController,
@@ -152,19 +145,15 @@ public class MainController {
                 playlistNamePlaying
         );
 
-
-
         // Get and start the volume controller / initialize it
         volumeController = new VolumeControl(volume);
         volumeController.initialize();
 
-
-        //Bind progress bar and info to media player
+        // Bind progress bar and info to media player
         mediaPlayerObservable = new MediaPlayerObservable(songProgressBar, songProgressNum, songProgressNumTotal);
         single.getBllController().bindProgressObserver(this.mediaPlayerObservable);
 
-
-        //Search
+        // Search
         searchInput.textProperty().addListener((observable, oldValue, newValue) -> {
             timeline.stop();
 
@@ -182,14 +171,12 @@ public class MainController {
         buildPlaylistButtons();
     }
 
-
     // Start creating the playlist buttons on first load
-    private void buildPlaylistButtons(){
+    private void buildPlaylistButtons() {
         int index = 0;
         ArrayList<Playlist> playlist = single.getBllController().getPlaylistsINT();
 
-
-        for(Playlist val : playlist){
+        for (Playlist val : playlist) {
             File icon = single.getBllController().getFile(
                     AppConfig.getPlaylistPath() + val.playlistId() + "_" + val.playlistName(),
                     "icon"
@@ -200,11 +187,11 @@ public class MainController {
             playlistButton.setTitle(val.playlistName());
             playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(single.getBllController().getSongs(val.playlistId(), null).size()));
 
-            if(icon != null){
+            if (icon != null) {
                 playlistButton.setIcon(icon);
             }
 
-            if(index < 1){
+            if (index < 1) {
                 single.getPlaylistController().setPlaylistView(playlistButton);
             }
 
@@ -212,5 +199,4 @@ public class MainController {
             index++;
         }
     }
-
 }

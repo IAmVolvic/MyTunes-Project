@@ -1,8 +1,13 @@
+/**
+ * This class represents the GUI singleton, responsible for handling all states for the GUI only.
+ *
+ * Methods:
+ * - getInstance
+ * - getBllController
+ * - getPlaylistController
+ * - getModalController
+ */
 package GUI;
-
-//This is the GUI singleton
-//this will handle all states for the GUI ONLY
-
 
 import BLL.BllController;
 import GUI.Components.Modal.ModalController;
@@ -16,7 +21,6 @@ public class GUISingleton {
     private PlaylistController playlistController;
     private final ModalController modalController;
 
-
     // Private constructor to prevent instantiation from outside
     private GUISingleton() {
         // Initialize controllers
@@ -24,15 +28,27 @@ public class GUISingleton {
         modalController = new ModalController();
     }
 
-
+    // Get the singleton instance
+    public static GUISingleton getInstance() {
+        return instance;
+    }
 
     // Getters
+
+    /**
+     * Gets the BllController instance.
+     *
+     * @return BllController instance
+     */
     public BllController getBllController() {
         return bllController;
     }
 
-
-    // This prevents a circular dependency.
+    /**
+     * Gets the PlaylistController instance, preventing circular dependency.
+     *
+     * @return PlaylistController instance
+     */
     public PlaylistController getPlaylistController() {
         if (playlistController == null) {
             playlistController = new PlaylistController(this);
@@ -40,14 +56,12 @@ public class GUISingleton {
         return playlistController;
     }
 
-
+    /**
+     * Gets the ModalController instance.
+     *
+     * @return ModalController instance
+     */
     public ModalController getModalController() {
         return modalController;
-    }
-
-
-    // Get the singleton instance
-    public static GUISingleton getInstance() {
-        return instance;
     }
 }

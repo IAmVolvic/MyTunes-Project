@@ -19,32 +19,56 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+
+/**
+ * This class represents a controller for managing playlists in a media player application.
+ *
+ * Methods:
+ * - PlaylistController(GUISingleton newSingle)
+ * - setNodes(MediaButtons mb, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl)
+ * - resetFullView(Button toDelete)
+ * - setPlaylistView(PlaylistButton plBtn)
+ * - updateFullView()
+ * - deleteSong(List<Song> newList)
+ * - editSong()
+ * - setMediaPlaylist()
+ * - updateViewSongList(String searchFilter)
+ * - getPlaylistId()
+ * - getPlaylistName()
+ * - updateTotalSongsNum(int Number)
+ * - changeButtonStyles()
+ * - changeViewStyles()
+ * - setViewSongList(List<Song> songTable, boolean runMedia)
+ * - resetMediaButtons()
+ * - getPlaylistData(int playlistId)
+ * - getSelected()
+ * - getDetails(int id)
+ */
 public class PlaylistController {
-    private GUISingleton single;
+    // GUI Singleton
+    private final GUISingleton single;
 
     private PlaylistButton selectedPlaylistButton;
     private Playlist selectedPlaylistData;
 
-    //BLL Controller
+    // BLL Controller
     private MediaButtons mediaButtons;
     private SongList tableController;
 
-
-    //Extra
+    // Extra
     private VBox playlist_list;
     private Pane playlist_viewIcon;
     private Label playlist_viewTitle;
     private Label playlist_viewTotalSongs;
-
     private Pane playlist_currentlyPlayingIcon;
     private Label playlist_currentlyPlayingTitle;
+
 
     public PlaylistController(GUISingleton newSingle) {
         single = newSingle;
     }
 
-
-    public void setNodes(MediaButtons mb, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl){
+    public void setNodes(MediaButtons mb, SongList tC, VBox pl, Pane viewIcon, Label viewTitle, Label viewTotalSongsLabel, Pane cpi, Label cpl) {
         mediaButtons = mb;
         tableController = tC;
 
@@ -57,8 +81,7 @@ public class PlaylistController {
         playlist_currentlyPlayingTitle = cpl;
     }
 
-
-    public void resetFullView(Button toDelete){
+    public void resetFullView(Button toDelete) {
         playlist_list.getChildren().remove(toDelete);
 
         tableController.clearTable();
@@ -79,7 +102,7 @@ public class PlaylistController {
     public void setPlaylistView(PlaylistButton plBtn) {
         Playlist data = getDetails(plBtn.getId());
 
-        if(selectedPlaylistData != data){
+        if (selectedPlaylistData != data) {
             selectedPlaylistButton = plBtn;
             selectedPlaylistData = data;
 
@@ -90,40 +113,40 @@ public class PlaylistController {
         }
     }
 
-    public void updateFullView(){
+    public void updateFullView() {
         changeButtonStyles();
         changeViewStyles();
     }
 
-    public void deleteSong(List<Song> newList){
+    public void deleteSong(List<Song> newList) {
         resetMediaButtons();
         updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
 
         setViewSongList(newList, false);
     }
 
-    public void editSong(){
+    public void editSong() {
         resetMediaButtons();
         updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
         tableController.clearTable();
         updateViewSongList(null);
     }
 
-
-    public void setMediaPlaylist(){
+    public void setMediaPlaylist() {
         resetMediaButtons();
         single.getBllController().setPlaylistSongs(selectedPlaylistData);
         updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
     }
 
-
     public void updateViewSongList(String searchFilter) {
-        if(selectedPlaylistData == null){return;}
+        if (selectedPlaylistData == null) {
+            return;
+        }
         int index = 1;
         List<Song> songs = single.getBllController().getSongs(selectedPlaylistData.playlistId(), searchFilter);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
-        for(Song val : songs){
+        for (Song val : songs) {
             val.setTableId(index);
             songData.add(val);
             index++;
@@ -132,17 +155,16 @@ public class PlaylistController {
         tableController.addSong(songData);
     }
 
-
-    public int getPlaylistId(){
-        if(selectedPlaylistData == null){ return 0; }
+    public int getPlaylistId() {
+        if (selectedPlaylistData == null) {
+            return 0;
+        }
         return selectedPlaylistData.playlistId();
     }
 
-
-    public String getPlaylistName(){
+    public String getPlaylistName() {
         return selectedPlaylistData.playlistName();
     }
-
 
     public void updateTotalSongsNum(int Number) {
         String newTitle = AppConfig.getPlaylistTotalSongs(Number);
@@ -151,6 +173,13 @@ public class PlaylistController {
         playlist_viewTotalSongs.setText(newTitle);
     }
 
+    public Playlist getPlaylistData(int playlistId) {
+        return getDetails(playlistId);
+    }
+
+    public Playlist getSelected() {
+        return this.selectedPlaylistData;
+    }
 
     private void changeButtonStyles() {
         ObservableList<Node> children = playlist_list.getChildren();
@@ -160,7 +189,6 @@ public class PlaylistController {
         selectedPlaylistButton.setActiveStyle();
     }
 
-
     private void changeViewStyles() {
         mediaButtons.resetIcon();
 
@@ -169,10 +197,10 @@ public class PlaylistController {
                 "icon"
         );
 
-        if(icon != null){
+        if (icon != null) {
             playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('" + icon.toURI() + "'); ");
             playlist_viewIcon.setStyle("-fx-background-image: url('" + icon.toURI() + "'); ");
-        }else{
+        } else {
             playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('images/My.png');");
             playlist_viewIcon.setStyle("-fx-background-image: url('images/My.png');");
         }
@@ -182,39 +210,32 @@ public class PlaylistController {
         updateTotalSongsNum(single.getBllController().getSongs(selectedPlaylistData.playlistId(), null).size());
     }
 
-
     private void setViewSongList(List<Song> songTable, boolean runMedia) {
         int index = 1;
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         songTable.sort(Comparator.comparingInt(Song::getTableId));
-        for(Song val : songTable){
+        for (Song val : songTable) {
             val.setTableId(index);
             songData.add(val);
             index++;
         }
 
         tableController.addSong(songData);
-        if(runMedia){ setMediaPlaylist(); }
+        if (runMedia) {
+            setMediaPlaylist();
+        }
     }
-
 
     private void resetMediaButtons() {
         mediaButtons.resetIcon();
     }
 
-
-    public Playlist getPlaylistData(int playlistId){
-        return getDetails(playlistId);
-    }
-
-    public Playlist getSelected(){ return this.selectedPlaylistData; }
-
     private Playlist getDetails(int id) {
         ArrayList<Playlist> playlistTable = single.getBllController().getPlaylistsSingle();
 
-        for(Playlist val : playlistTable){
-            if(val.playlistId() == id){
+        for (Playlist val : playlistTable) {
+            if (val.playlistId() == id) {
                 return val;
             }
         }
