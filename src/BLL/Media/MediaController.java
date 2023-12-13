@@ -142,22 +142,6 @@ public class MediaController {
         clearSong();
     }
 
-    public String getMediaDuration(File media){
-        try {
-            AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(media);
-            if(fileFormat instanceof TAudioFileFormat){
-                Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
-                String key = "duration";
-                Long microseconds = (Long) properties.get(key);
-                int mili = (int) (microseconds / 1000);
-
-                return AppConfig.getTimeFormat(new Duration(mili));
-            }
-        } catch (UnsupportedAudioFileException | IOException e) {}
-
-        return "0:0";
-    }
-
     private void clearSong() {
         if (mPlayer == null) {
             return;
@@ -182,6 +166,24 @@ public class MediaController {
 
         this.mPlayerSubject.update(new Duration(0), new Duration(0));
     }
+
+
+    public String getMediaDuration(File media){
+        try {
+            AudioFileFormat fileFormat = AudioSystem.getAudioFileFormat(media);
+            if(fileFormat instanceof TAudioFileFormat){
+                Map<?, ?> properties = ((TAudioFileFormat) fileFormat).properties();
+                String key = "duration";
+                Long microseconds = (Long) properties.get(key);
+                int mili = (int) (microseconds / 1000);
+
+                return AppConfig.getTimeFormat(new Duration(mili));
+            }
+        } catch (UnsupportedAudioFileException | IOException e) {}
+
+        return "0:0";
+    }
+
 
 
     //Listeners

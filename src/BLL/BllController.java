@@ -112,6 +112,7 @@ public class BllController {
 
         // Delete playlist
         myPlaylist.deletePlaylist(playlistId);
+
         // Delete playlist songs
         mySongs.deleteSongFromPlaylistAll(playlistId);
 
@@ -121,6 +122,8 @@ public class BllController {
         // Update cache
         data.ifPresent(playLists::remove);
     }
+
+
 
     public void editPlaylist(int playlistId, String newName, String newIcon) {
         // Playlist Data
