@@ -59,7 +59,7 @@ public class NewSongModalView extends ModalView {
         super.createBody();
 
         songSelect.setOnAction(event -> {
-            File file = single.getDllController().callFileChooser(event, "music_add");
+            File file = single.getBllController().callFileChooser(event, "music_add");
 
             if(file != null){
                 songTitleInput.setText(file.getName().substring(0, file.getName().lastIndexOf('.')));
@@ -112,7 +112,7 @@ public class NewSongModalView extends ModalView {
 
         int index = 1;
 
-        ArrayList<Song> newSongConstruct = single.getDllController().createSong(single.getPlaylistController().getPlaylistId(), single.getPlaylistController().getPlaylistName(), pathToSong, songTitleInput.getText());
+        ArrayList<Song> newSongConstruct = single.getBllController().createSong(single.getPlaylistController().getPlaylistId(), single.getPlaylistController().getPlaylistName(), pathToSong, songTitleInput.getText());
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : newSongConstruct){

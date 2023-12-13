@@ -59,8 +59,8 @@ public class DeletePlaylistModalView extends ModalView {
             return;
         }
 
-        //Ask DLL to delete the playlist
-        single.getDllController().deletePlaylist(currentPlaylistId);
+        //Ask BLL to delete the playlist
+        single.getBllController().deletePlaylist(currentPlaylistId);
         //reset the playlist view
         single.getPlaylistController().resetFullView(playlistButton);
 

@@ -2,12 +2,9 @@ package GUI.Components.Modal.SongModal;
 
 import BE.Song;
 import GUI.Components.Modal.ModalView;
-import GUI.Components.SongList;
 import GUI.GUISingleton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,8 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class EditSongModalView extends ModalView {
@@ -53,7 +48,7 @@ public class EditSongModalView extends ModalView {
         super.createBody();
 
         songSelect.setOnAction(event -> {
-            File file = single.getDllController().callFileChooser(event, "music_add");
+            File file = single.getBllController().callFileChooser(event, "music_add");
 
             if(file != null){
                 songTitleInput.setText(file.getName().substring(0, file.getName().lastIndexOf('.')));
@@ -104,8 +99,8 @@ public class EditSongModalView extends ModalView {
             return;
         }
 
-        // Ask DLL to update the song
-        single.getDllController().editSong(single.getPlaylistController().getPlaylistId(), songData.getId(), pathToSong, songTitleInput.getText());
+        // Ask BLL to update the song
+        single.getBllController().editSong(single.getPlaylistController().getPlaylistId(), songData.getId(), pathToSong, songTitleInput.getText());
 
         // Ask frontend to update its view
         single.getPlaylistController().editSong();

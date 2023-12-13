@@ -126,8 +126,8 @@ public class MainController {
 
     // Post Initialize
     private void postInitialize() {
-        //Setting the Label for DLL -> MediaController to use
-        single.getDllController().initializeSongLabel(songLabel);
+        //Setting the Label for BLL -> MediaController to use
+        single.getBllController().initializeSongLabel(songLabel);
 
         // Get and start the modal controller
         single.getModalController().setModalMain(modal_main);
@@ -161,7 +161,7 @@ public class MainController {
 
         //Bind progress bar and info to media player
         mediaPlayerObservable = new MediaPlayerObservable(songProgressBar, songProgressNum, songProgressNumTotal);
-        single.getDllController().bindProgressObserver(this.mediaPlayerObservable);
+        single.getBllController().bindProgressObserver(this.mediaPlayerObservable);
 
 
         //Search
@@ -186,11 +186,11 @@ public class MainController {
     // Start creating the playlist buttons on first load
     private void buildPlaylistButtons(){
         int index = 0;
-        ArrayList<Playlist> playlist = single.getDllController().getPlaylistsINT();
+        ArrayList<Playlist> playlist = single.getBllController().getPlaylistsINT();
 
 
         for(Playlist val : playlist){
-            File icon = single.getDllController().getFile(
+            File icon = single.getBllController().getFile(
                     AppConfig.getPlaylistPath() + val.playlistId() + "_" + val.playlistName(),
                     "icon"
             );
@@ -198,7 +198,7 @@ public class MainController {
             PlaylistButton playlistButton = new PlaylistButton();
             playlistButton.setId(val.playlistId());
             playlistButton.setTitle(val.playlistName());
-            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(single.getDllController().getSongs(val.playlistId(), null).size()));
+            playlistButton.setNumOfSongs(AppConfig.getPlaylistTotalSongs(single.getBllController().getSongs(val.playlistId(), null).size()));
 
             if(icon != null){
                 playlistButton.setIcon(icon);
