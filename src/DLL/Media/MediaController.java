@@ -156,6 +156,7 @@ public class MediaController {
                 return AppConfig.getTimeFormat(new Duration(mili));
             }
         } catch (UnsupportedAudioFileException | IOException e) {}
+
         return "0:0";
     }
 
