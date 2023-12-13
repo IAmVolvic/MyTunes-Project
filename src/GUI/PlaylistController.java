@@ -25,7 +25,7 @@ public class PlaylistController {
     private PlaylistButton selectedPlaylistButton;
     private Playlist selectedPlaylistData;
 
-    //Dll Controller
+    //BLL Controller
     private MediaButtons mediaButtons;
     private SongList tableController;
 
@@ -112,7 +112,7 @@ public class PlaylistController {
 
     public void setMediaPlaylist(){
         resetMediaButtons();
-        single.getDllController().setPlaylistSongs(selectedPlaylistData);
+        single.getBllController().setPlaylistSongs(selectedPlaylistData);
         updateTotalSongsNum(selectedPlaylistData.getSongTable().size());
     }
 
@@ -120,7 +120,7 @@ public class PlaylistController {
     public void updateViewSongList(String searchFilter) {
         if(selectedPlaylistData == null){return;}
         int index = 1;
-        List<Song> songs = single.getDllController().getSongs(selectedPlaylistData.playlistId(), searchFilter);
+        List<Song> songs = single.getBllController().getSongs(selectedPlaylistData.playlistId(), searchFilter);
         ObservableList<Song> songData = FXCollections.observableArrayList();
 
         for(Song val : songs){
@@ -164,7 +164,7 @@ public class PlaylistController {
     private void changeViewStyles() {
         mediaButtons.resetIcon();
 
-        File icon = single.getDllController().getFile(
+        File icon = single.getBllController().getFile(
                 AppConfig.getPlaylistPath() + selectedPlaylistData.playlistId() + "_" + selectedPlaylistData.playlistName(),
                 "icon"
         );
@@ -179,7 +179,7 @@ public class PlaylistController {
 
         playlist_currentlyPlayingTitle.setText(selectedPlaylistData.playlistName());
         playlist_viewTitle.setText(selectedPlaylistData.playlistName());
-        updateTotalSongsNum(single.getDllController().getSongs(selectedPlaylistData.playlistId(), null).size());
+        updateTotalSongsNum(single.getBllController().getSongs(selectedPlaylistData.playlistId(), null).size());
     }
 
 
@@ -211,7 +211,7 @@ public class PlaylistController {
     public Playlist getSelected(){ return this.selectedPlaylistData; }
 
     private Playlist getDetails(int id) {
-        ArrayList<Playlist> playlistTable = single.getDllController().getPlaylistsSingle();
+        ArrayList<Playlist> playlistTable = single.getBllController().getPlaylistsSingle();
 
         for(Playlist val : playlistTable){
             if(val.playlistId() == id){

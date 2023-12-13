@@ -35,9 +35,9 @@ public class MediaButtons {
 
     private void playSong(){
         if (playState){
-            single.getDllController().pauseSong();
+            single.getBllController().pauseSong();
         }else{
-            single.getDllController().playSong();
+            single.getBllController().playSong();
         }
 
         playState = !playState;
@@ -56,11 +56,11 @@ public class MediaButtons {
 
     // Skip methods
     public void skipSong(ActionEvent actionEvent){
-        single.getDllController().skipSong();
+        single.getBllController().skipSong();
     }
 
     // Prev methods
     public void prevSong(ActionEvent actionEvent){
-        single.getDllController().prevSong();
+        single.getBllController().prevSong();
     }
 }

@@ -55,7 +55,7 @@ public class EditPlaylistModalView extends ModalView {
         super.createBody();
 
         imageSelect.setOnAction(event -> {
-            File file = single.getDllController().callFileChooser(event, "playlist_add");
+            File file = single.getBllController().callFileChooser(event, "playlist_add");
 
             if(file != null){
                 imageSelectSelected.setText(file.getName());
@@ -107,12 +107,12 @@ public class EditPlaylistModalView extends ModalView {
             return;
         }
 
-        // Ask the DLL to do stuff
-        single.getDllController().editPlaylist(currentPlaylistId, playlistTitleInput.getText(), pathToImage);
+        // Ask the BLL to do stuff
+        single.getBllController().editPlaylist(currentPlaylistId, playlistTitleInput.getText(), pathToImage);
 
         // Change button look
         if(pathToImage != null){
-            playlistButton.setIcon(single.getDllController().getFile(AppConfig.getPlaylistPath() + playlistButton.getId() + "_" + playlistData.playlistName(),"icon"));
+            playlistButton.setIcon(single.getBllController().getFile(AppConfig.getPlaylistPath() + playlistButton.getId() + "_" + playlistData.playlistName(),"icon"));
         }
         playlistButton.setTitle(playlistTitleInput.getText());
 

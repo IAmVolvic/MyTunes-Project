@@ -4,7 +4,7 @@ package GUI;
 //this will handle all states for the GUI ONLY
 
 
-import BLL.DllController;
+import BLL.BllController;
 import GUI.Components.Modal.ModalController;
 
 public class GUISingleton {
@@ -12,7 +12,7 @@ public class GUISingleton {
     private static final GUISingleton instance = new GUISingleton();
 
     // Controllers
-    private final DllController dllController;
+    private final BllController bllController;
     private PlaylistController playlistController;
     private final ModalController modalController;
 
@@ -20,15 +20,15 @@ public class GUISingleton {
     // Private constructor to prevent instantiation from outside
     private GUISingleton() {
         // Initialize controllers
-        dllController = new DllController();
+        bllController = new BllController();
         modalController = new ModalController();
     }
 
 
 
     // Getters
-    public DllController getDllController() {
-        return dllController;
+    public BllController getBllController() {
+        return bllController;
     }
 
 

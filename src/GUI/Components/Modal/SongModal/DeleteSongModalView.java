@@ -58,8 +58,8 @@ public class DeleteSongModalView extends ModalView {
             return;
         }
 
-        // Ask DLL to remove the song
-        List<Song> newSongList = single.getDllController().deleteSong(single.getPlaylistController().getPlaylistId(), songData.getId());
+        // Ask BLL to remove the song
+        List<Song> newSongList = single.getBllController().deleteSong(single.getPlaylistController().getPlaylistId(), songData.getId());
 
         // Remove the song from the list
         if(newSongList != null) {

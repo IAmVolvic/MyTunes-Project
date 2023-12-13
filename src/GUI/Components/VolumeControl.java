@@ -16,7 +16,7 @@ public class VolumeControl {
 
     public void initialize() {
         volumeControl.valueProperty().addListener(e -> {
-            single.getDllController().setVolume(volumeControl.getValue()/100);
+            single.getBllController().setVolume(volumeControl.getValue()/100);
         });
     }
 }
