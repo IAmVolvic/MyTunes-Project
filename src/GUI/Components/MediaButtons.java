@@ -1,7 +1,5 @@
 package GUI.Components;
 
-import DLL.DllController;
-
 import GUI.GUISingleton;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;

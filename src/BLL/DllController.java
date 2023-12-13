@@ -1,18 +1,17 @@
-package DLL;
+package BLL;
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
 import DAL.Logic.MyPlaylistController;
 import DAL.Logic.MySongsController;
-import DLL.Media.MediaController;
-import DLL.FIle.FileController;
-import DLL.Media.MediaPlayerObservable;
+import BLL.Media.MediaController;
+import BLL.FIle.FileController;
+import BLL.Media.MediaPlayerObservable;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -178,7 +177,7 @@ public class DllController {
 
         // Store the new song in the DB, and update the cache
         Song newSong = mySongs.newSong(playListId, songTitle);
-        
+
         newSong.setDuration(mediaController.getMediaDuration( new File(songPath)));
 
         Optional<Playlist> songsTable = playLists.stream()

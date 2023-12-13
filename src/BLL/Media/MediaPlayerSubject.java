@@ -1,4 +1,4 @@
-package DLL.Media;
+package BLL.Media;
 
 import javafx.util.Duration;
 
