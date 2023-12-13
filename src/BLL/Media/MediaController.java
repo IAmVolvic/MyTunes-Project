@@ -1,11 +1,9 @@
-package DLL.Media;
+package BLL.Media;
 
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
-import DLL.DllController;
-import DLL.FIle.FileController;
+import BLL.FIle.FileController;
 import javafx.beans.value.ChangeListener;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;

@@ -1,4 +1,4 @@
-package DLL.Media;
+package BLL.Media;
 
 import APP_SETTINGS.AppConfig;
 import javafx.scene.control.ProgressBar;

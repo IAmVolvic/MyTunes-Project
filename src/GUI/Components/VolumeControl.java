@@ -1,6 +1,5 @@
 package GUI.Components;
 
-import DLL.DllController;
 import GUI.GUISingleton;
 import com.jfoenix.controls.JFXSlider;
 

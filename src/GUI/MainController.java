@@ -4,7 +4,7 @@ package GUI;
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
-import DLL.Media.MediaPlayerObservable;
+import BLL.Media.MediaPlayerObservable;
 import GUI.Components.PlaylistButton;
 import GUI.Components.Modal.PlaylistModal.NewPlaylistModalView;
 import GUI.Components.MediaButtons;

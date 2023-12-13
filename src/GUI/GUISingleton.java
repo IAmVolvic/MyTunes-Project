@@ -4,7 +4,7 @@ package GUI;
 //this will handle all states for the GUI ONLY
 
 
-import DLL.DllController;
+import BLL.DllController;
 import GUI.Components.Modal.ModalController;
 
 public class GUISingleton {

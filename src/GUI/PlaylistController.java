@@ -3,7 +3,6 @@ package GUI;
 import APP_SETTINGS.AppConfig;
 import BE.Playlist;
 import BE.Song;
-import DLL.DllController;
 import GUI.Components.PlaylistButton;
 import GUI.Components.MediaButtons;
 import GUI.Components.SongList;
