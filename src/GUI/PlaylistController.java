@@ -89,7 +89,7 @@ public class PlaylistController {
         selectedPlaylistButton = null;
         selectedPlaylistData = null;
 
-        mediaButtons.resetIcon();
+        resetMediaButtons();
 
         playlist_currentlyPlayingIcon.setStyle("-fx-background-image: url('images/My.png');");
         playlist_viewIcon.setStyle("-fx-background-image: url('images/My.png');");
@@ -107,15 +107,15 @@ public class PlaylistController {
             selectedPlaylistData = data;
 
             changeButtonStyles();
-            changeViewStyles();
+            changeViewStyles(true);
             assert data != null;
             setViewSongList(data.getSongTable(), true);
         }
     }
 
-    public void updateFullView() {
+    public void updateFullView(boolean resetMedia) {
         changeButtonStyles();
-        changeViewStyles();
+        changeViewStyles(resetMedia);
     }
 
     public void deleteSong(List<Song> newList) {
@@ -189,8 +189,11 @@ public class PlaylistController {
         selectedPlaylistButton.setActiveStyle();
     }
 
-    private void changeViewStyles() {
-        mediaButtons.resetIcon();
+    private void changeViewStyles(boolean resetMedia) {
+        if (resetMedia) {
+            resetMediaButtons();
+        }
+
 
         File icon = single.getBllController().getFile(
                 AppConfig.getPlaylistPath() + selectedPlaylistData.playlistId() + "_" + selectedPlaylistData.playlistName(),

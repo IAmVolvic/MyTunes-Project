@@ -174,7 +174,7 @@ public class FileController {
 
             case "playlist_edit", "playlist_add":
                 fileTitle = "Playlist Icon";
-                fileFilters = new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif");
+                fileFilters = new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.jpeg", "*.png", "*.gif");
                 break;
 
             default:

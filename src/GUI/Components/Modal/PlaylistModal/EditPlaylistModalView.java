@@ -118,7 +118,7 @@ public class EditPlaylistModalView extends ModalView {
 
         // Set view if selected
         if(playlistData == single.getPlaylistController().getSelected()){
-            single.getPlaylistController().updateFullView();
+            single.getPlaylistController().updateFullView(false);
         }
 
         single.getModalController().closeModal();
